@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Documaster.Data.DataAccess;
 using Documaster.Model.BaseEntities;
 
@@ -24,6 +25,11 @@ namespace Documaster.Business.Services
         public TEntity Get( int id )
         {
             return _dbContext.Get<TEntity>().SingleOrDefault( x => x.Id == id );
+        }
+
+        public IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> expression)
+        {
+            return _dbContext.Get<TEntity>().Where( expression );
         }
 
         public TEntity Create( TEntity entity )

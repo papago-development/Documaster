@@ -42,6 +42,7 @@ CREATE TABLE dbo.ProjectType (
 	,[Name] NVARCHAR(50) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
+	,[Text] NVARCHAR(100) NULL
 )
 GO
 

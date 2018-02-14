@@ -55,6 +55,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -132,9 +133,13 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RequirementController.cs" />
+    <Compile Include="Controllers\ProjectTypeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProjectTypeViewModel.cs" />
+    <Compile Include="Models\AssignedRequirement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +183,14 @@
     <Content Include="Views\Customer\Create.cshtml" />
     <Content Include="Views\Customer\Edit.cshtml" />
     <Content Include="Views\Customer\Delete.cshtml" />
+    <Content Include="Views\ProjectType\Create.cshtml" />
+    <Content Include="Views\ProjectType\Delete.cshtml" />
+    <Content Include="Views\ProjectType\Edit.cshtml" />
+    <Content Include="Views\ProjectType\Index.cshtml" />
+    <Content Include="Views\Requirement\Create.cshtml" />
+    <Content Include="Views\Requirement\Delete.cshtml" />
+    <Content Include="Views\Requirement\Edit.cshtml" />
+    <Content Include="Views\Requirement\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
