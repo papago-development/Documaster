@@ -8,6 +8,7 @@ namespace Documaster.Model.Entities
 
         public int RequirementId { get; set; }
 
+        public byte[] DocumentData { get; set; }
 
         public virtual Project Project { get; set; }
 

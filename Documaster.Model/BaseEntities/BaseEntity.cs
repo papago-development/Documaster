@@ -6,7 +6,7 @@ namespace Documaster.Model.BaseEntities
 {
     public abstract class BaseEntity
     {
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         [ReadOnly( true )]
         public DateTime CreationDate { get; set; }

@@ -9,12 +9,12 @@ namespace Documaster.Data.DataAccess
     public class DocumasterDbContext : DbContext, IDbContext
     {
         // See connectionStrings section of UI project's web.config
-        public DocumasterDbContext() : base( "name = Documaster.ConnectionString" )
+        public DocumasterDbContext() : base("name = Documaster.ConnectionString")
         { }
 
         IQueryable<TEntity> IDbContext.Get<TEntity>() => Set<TEntity>();
 
-        TEntity IDbContext.Create<TEntity>( TEntity entity ) => Set<TEntity>().Add( entity );
+        TEntity IDbContext.Create<TEntity>(TEntity entity) => Set<TEntity>().Add(entity);
 
         void IDbContext.Update<TEntity>(TEntity originalEntity, TEntity updatedEntity, IEnumerable<string> propertiesToUpdate)
         {
@@ -36,24 +36,25 @@ namespace Documaster.Data.DataAccess
             }
         }
 
-        TEntity IDbContext.Delete<TEntity>( TEntity entity ) => Set<TEntity>().Remove( entity );
+        TEntity IDbContext.Delete<TEntity>(TEntity entity) => Set<TEntity>().Remove(entity);
 
         int IDbContext.SaveChanges() => base.SaveChanges();
 
         /// <inheritdoc />
-        protected override void OnModelCreating( DbModelBuilder modelBuilder )
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            base.OnModelCreating( modelBuilder );
+            base.OnModelCreating(modelBuilder);
         }
 
         public IDbSet<Customer> Customers { get; set; }
-        public IDbSet<InputDocument> InputDocuments { get; set; }
+        //   public IDbSet<InputDocument> InputDocuments { get; set; }
         public IDbSet<OutputDocument> OutputDocuments { get; set; }
         public IDbSet<Project> Projects { get; set; }
-        public IDbSet<ProjectType> ProjectTypes { get; set; }
-        public IDbSet<ProjectTypeRequirement> ProjectTypeRequirements { get; set; }
+        // public IDbSet<ProjectType> ProjectTypes { get; set; }
+        public IDbSet<ProjectRequirement> ProjectRequirements { get; set; }
         public IDbSet<Requirement> Requirements { get; set; }
         public IDbSet<Template> Templates { get; set; }
+        public IDbSet<ProjectDocument> ProjectDocuments { get; set; }
     }
 }

@@ -45,6 +45,8 @@
     <Compile Include="BaseEntities\BaseEntity.cs" />
     <Compile Include="Entities\OutputDocument.cs" />
     <Compile Include="Entities\InputDocument.cs" />
+    <Compile Include="Entities\ProjectDocument.cs" />
+    <Compile Include="Entities\ProjectRequirement.cs" />
     <Compile Include="Entities\ProjectTypeRequirement.cs" />
     <Compile Include="Entities\Requirement.cs" />
     <Compile Include="Entities\ProjectType.cs" />
