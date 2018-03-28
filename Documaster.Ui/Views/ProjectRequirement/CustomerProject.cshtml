@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Documaster.Model.Entities.ProjectRequirement>
+@{
+    ViewBag.Title = "CustomerProject";
+    var projectId = ViewBag.ProjectId;
+}
+
+<h2>CustomerProject</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.Hidden("ProjectId", (object)projectId)
+    foreach (var req in Model)
+    {
+        <div>
+            @Html.DisplayFor(modelItem => req.Project.Name)
+        </div>
+    }
+
+}
+

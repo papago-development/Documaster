@@ -67,9 +67,22 @@ namespace Documaster.Ui.Controllers
 
         public ActionResult Edit(Project project)
         {
+            //var customer = new Customer
+            //{
+            //    Id = project.Customer.Id,
+            //    Name = project.Customer.Name,
+            //    Telephone = project.Customer.Telephone,
+            //    Email = project.Customer.Email,
+            //    Address = project.Customer.Address
+            //};
 
-            _entityService.Update(project, new List<string> { "Name", });
-            //     _customerService.Update(customer, new List<string> { });
+
+            _entityService.Update(project, new List<string> { "Name" });
+            _customerService.Update(project.Customer, new List<string> { "Name", "Telephone", "Email", "Address" });
+
+
+
+
             return RedirectToAction("Index");
         }
 

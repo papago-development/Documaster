@@ -1,0 +1,40 @@
+﻿
+@using Documaster.Ui.Models
+@model IEnumerable<Documaster.Model.Entities.Requirement>
+@{
+    /**/
+
+    ViewBag.Title = "SaveProject";
+    var projectId = ViewBag.ProjectId;
+    var requirements = (IEnumerable<AssignedRequirement>)ViewBag.Requirements;
+}
+
+<h2>SaveProject</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.Hidden("ProjectId", (object)projectId)
+
+    @Html.AntiForgeryToken()
+
+    foreach (var requirement in requirements)
+    {
+
+        <td>
+            <input type="checkbox"
+                   name="projectRequirementIds"
+                   id="projectCheckbox-@requirement.Id"
+                   value="@requirement.Id"
+                   @(Html.Raw(requirement.Assigned ? "checked=\"checked\"" : "")) />
+            <label for="projectCheckbox-@requirement.Id">@requirement.Name</label>
+
+
+        </td>
+    }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+}
