@@ -9,20 +9,20 @@ namespace Documaster.Ui.Controllers
 {
     public class RequirementController : Controller
     {
-        private readonly IGenericEntityService<Requirement> _entityService;
+        private readonly IGenericEntityService<Requirement> _requirementService;
         private readonly IGenericEntityService<ProjectRequirement> _projectRequirementService;
 
         public RequirementController(IGenericEntityService<Requirement> entityService,
             IGenericEntityService<ProjectRequirement> projectRequirementService)
         {
-            _entityService = entityService;
+            _requirementService = entityService;
             _projectRequirementService = projectRequirementService;
         }
 
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _entityService.GetAll();
+            var model = _requirementService.GetAll();
             return View(model);
         }
 
@@ -35,7 +35,7 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Create(Requirement requirement)
         {
-            _entityService.Create(requirement);
+            _requirementService.Create(requirement);
 
             return RedirectToAction("Index");
         }
@@ -43,50 +43,80 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var model = _entityService.Get(id);
+            var model = _requirementService.Get(id);
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Edit(Requirement requirement)
         {
-            _entityService.Update(requirement, new List<string> { "Name" });
+            _requirementService.Update(requirement, new List<string> { "Name" });
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var model = _entityService.Get(id);
+            var model = _requirementService.Get(id);
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Delete(Requirement requirement)
         {
-            _entityService.Delete(requirement.Id);
+            _requirementService.Delete(requirement.Id);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public ActionResult SaveProject(int projectId)
         {
-            var model = _entityService.GetAll();
-            //var reqs = _entityService.GetAll().Select(x => new AssignedRequirement { Assigned = false, Name = x.Name, Id = x.Id });
-            //ViewBag.Requirements = reqs;
+            var model = _requirementService.GetAll();
+
+            var assisgnedProjectRequirements = _projectRequirementService.GetAll().Where(x => x.ProjectId == projectId);
+
+            var reqs = _requirementService.GetAll()//.Where(x=>x.ProjectRequirements.Any())
+                .Select(x => new AssignedRequirement { Assigned = x.ProjectRequirements.Any(y=>y.ProjectId == projectId), Name = x.Name, Id = x.Id });
+            ViewBag.Requirements = reqs;
             ViewBag.ProjectId = projectId;
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult SaveProject(int projectId,ProjectRequirement requirement)
+        public ActionResult SaveProject(int projectId, IEnumerable<int> assignedRequirements)
         {
-            var model = _entityService.GetAll();
-            var reqs = _entityService.GetAll().Select(x => new AssignedRequirement { Assigned = false, Name = x.Name, Id = x.Id });
-            ViewBag.Requirements = reqs;
+            
 
-            _projectRequirementService.Create(requirement);
-            return View();
+
+            var dbProjectRequirements = _projectRequirementService.Get(x => x.ProjectId == projectId).ToList();
+            var deletedProjectRequirements = dbProjectRequirements
+                .Where(x=>assignedRequirements==null ||!assignedRequirements.Any(y=>y==x.RequirementId)).ToList();
+            foreach (var item in deletedProjectRequirements)
+            {
+
+                    _projectRequirementService.Delete(item.Id);
+
+            }
+
+            //var projectRequirement = _projectRequirementService
+            //       .Get(x => x.ProjectId == projectId && x.RequirementId == item.RequirementId &&).FirstOrDefault();
+
+            var newProjectRequirements = assignedRequirements?.Where(x => !dbProjectRequirements.Any(y => y.RequirementId == x))
+                ??new List<int>();
+            
+
+            foreach (var item in newProjectRequirements)
+            {
+                var projectRequirement = new ProjectRequirement
+                {
+                    RequirementId = item,
+                    ProjectId = projectId
+                };
+
+                    _projectRequirementService.Create(projectRequirement);
+
+            }
+            return RedirectToAction("Index","Project");
         }
 
     }

@@ -19,10 +19,12 @@
 
     foreach (var requirement in requirements)
     {
+        @*@Html.Hidden("Id", (object)requirement.Id)*@
+
 
         <td>
             <input type="checkbox"
-                   name="projectRequirementIds"
+                   name="assignedRequirements"
                    id="projectCheckbox-@requirement.Id"
                    value="@requirement.Id"
                    @(Html.Raw(requirement.Assigned ? "checked=\"checked\"" : "")) />
