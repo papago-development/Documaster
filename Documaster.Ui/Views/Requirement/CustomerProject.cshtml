@@ -1,0 +1,32 @@
+﻿
+@using Documaster.Ui.Models
+@model IEnumerable<Documaster.Model.Entities.ProjectRequirement>
+@{
+    ViewBag.Title = "CustomerProject";
+    var projectId = ViewBag.ProjectId;
+    var requirements = (IEnumerable<AssignedRequirement>)ViewBag.Requirements;
+}
+
+<h2>CustomerProject</h2>
+@if (!Model.Any())
+{
+    <p>Nu ati selectat niciun aviz!</p>
+}else
+{
+using (Html.BeginForm())
+
+{
+    @Html.Hidden("ProjectId", (object)projectId)
+    foreach (var req in requirements)
+    {
+    <div>
+        @Html.DisplayFor(modelItem => req.Name)
+        @*<label>@req.Requirement.Name</label>*@
+        <button class="btn-link">Upload</button>
+        @*<input type="file" name="elementName" />*@
+    </div>
+    }
+
+}
+}
+

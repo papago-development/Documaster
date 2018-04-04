@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Documaster.Model.Entities.Project>
 @{
     ViewBag.Title = "View";
+    var projectId = ViewBag.ProjectId;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h2>View</h2>
@@ -24,6 +25,7 @@
     </tr>
     @if (Model != null)
     {
+        @Html.Hidden("ProjectId",(object)projectId)
         foreach (var item in Model)
         {
             <tr>
@@ -40,7 +42,7 @@
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Sterge", "Delete", new { id = item.Id }) |
                     @Html.ActionLink("Cerinte", "SaveProject", "Requirement", new { projectId = item.Id },"") |
-                    @Html.ActionLink("Details", "CustomerProject","ProjectRequirement",new { projectId = item.Id },"")
+                    @Html.ActionLink("Details", "CustomerProject","Requirement",new { projectId = item.Id },"")
                 </td>
             </tr>
         }

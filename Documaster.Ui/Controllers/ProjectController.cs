@@ -12,47 +12,35 @@ namespace Documaster.Ui.Controllers
     {
         private readonly IGenericEntityService<Project> _entityService;
         private readonly IGenericEntityService<Customer> _customerService;
+        private readonly IGenericEntityService<ProjectRequirement> _projectRequirementService;
 
-        public ProjectController(IGenericEntityService<Project> entityService, IGenericEntityService<Customer> customerService)
+        public ProjectController(IGenericEntityService<Project> entityService,
+            IGenericEntityService<Customer> customerService, IGenericEntityService<ProjectRequirement>
+            projectRequirementService)
         {
             _entityService = entityService;
             _customerService = customerService;
-            //_entityProjectTypeService = entityProjectTypeService;
+            _projectRequirementService = projectRequirementService;
+
         }
 
         [HttpGet]
         public ActionResult Index()
         {
             var model = _entityService.GetAll().ToList();
-            //  var customer = _customerService.Get(1);
             return View(model);
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-
-
             return View();
         }
 
         [HttpPost]
         public ActionResult Create(Project project)
         {
-            //var project = new Project
-            //{
-            //    ProjectTypeId = projectViewModel.Project.ProjectTypeId,
-            //    CustomerId = projectViewModel.Project.CustomerId,
-            //    Name = projectViewModel.Project.Name
-
-            //};
-
-
             _entityService.Create(project);
-
-
-
-
             return RedirectToAction("Index");
         }
 
@@ -67,19 +55,30 @@ namespace Documaster.Ui.Controllers
 
         public ActionResult Edit(Project project)
         {
-            //var customer = new Customer
-            //{
-            //    Id = project.Customer.Id,
-            //    Name = project.Customer.Name,
-            //    Telephone = project.Customer.Telephone,
-            //    Email = project.Customer.Email,
-            //    Address = project.Customer.Address
-            //};
 
+
+
+
+
+            if (project.Customer.Id == 0)
+            {
+                var customer = new Customer
+                {
+                    Id = project.Id,
+                    Name = project.Customer.Name,
+                    Telephone = project.Customer.Telephone,
+                    Email = project.Customer.Email,
+                    Address = project.Customer.Address
+                };
+                _customerService.Create(customer);
+            }
+            else
+            {
+
+                _customerService.Update(project.Customer, new List<string> { "Name", "Telephone", "Email", "Address" });
+            }
 
             _entityService.Update(project, new List<string> { "Name" });
-            _customerService.Update(project.Customer, new List<string> { "Name", "Telephone", "Email", "Address" });
-
 
 
 
@@ -90,13 +89,44 @@ namespace Documaster.Ui.Controllers
         public ActionResult Delete(int id)
         {
             var model = _entityService.Get(id);
+            var pR = _projectRequirementService.Get(x => x.ProjectId == id).ToList();
+            ViewBag.ProjectId = pR;
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Delete(Project project)
+        public ActionResult Delete(Project project, IEnumerable<int> assignedRequirements)
         {
+            //   _projectRequirementService.Delete(project.Id);
+
+            var dbProjectRequirements = _projectRequirementService.Get(x => x.ProjectId == project.Id).ToList();
+            var deletedProjectRequirements = dbProjectRequirements
+                .Where(x => assignedRequirements == null || !assignedRequirements.Any(y => y == x.RequirementId)).ToList();
+
+            var projectIdRequirement = _projectRequirementService.GetAll().Where(x => x.ProjectId == project.Id).ToList();
+
+            var customers = _customerService.GetAll().Where(x => x.Id == project.Id).ToList();
+
+            foreach (var item in deletedProjectRequirements)
+            {
+                _projectRequirementService.Delete(item.Id);
+            }
+
+            foreach (var item in projectIdRequirement)
+            {
+                _projectRequirementService.Delete(item.ProjectId);
+                _projectRequirementService.Delete(item.RequirementId);
+
+            }
+
+            foreach (var item in customers)
+            {
+                _customerService.Delete(item.Id);
+            }
+
             _entityService.Delete(project.Id);
+            ViewBag.ProjectId = projectIdRequirement;
+
             return RedirectToAction("Index");
         }
     }

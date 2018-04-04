@@ -134,7 +134,6 @@
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ProjectRequirementController.cs" />
     <Compile Include="Controllers\RequirementController.cs" />
     <Compile Include="Controllers\ProjectTypeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -195,8 +194,7 @@
     <Content Include="Views\Project\Delete.cshtml" />
     <Content Include="Views\Project\Create.cshtml" />
     <Content Include="Views\Requirement\SaveProject.cshtml" />
-    <Content Include="Views\ProjectRequirement\CustomerProject.cshtml" />
-    <Content Include="Views\ProjectRequirement\Index.cshtml" />
+    <Content Include="Views\Requirement\CustomerProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

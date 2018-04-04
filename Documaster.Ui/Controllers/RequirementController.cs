@@ -76,7 +76,7 @@ namespace Documaster.Ui.Controllers
             var assisgnedProjectRequirements = _projectRequirementService.GetAll().Where(x => x.ProjectId == projectId);
 
             var reqs = _requirementService.GetAll()//.Where(x=>x.ProjectRequirements.Any())
-                .Select(x => new AssignedRequirement { Assigned = x.ProjectRequirements.Any(y=>y.ProjectId == projectId), Name = x.Name, Id = x.Id });
+                .Select(x => new AssignedRequirement { Assigned = x.ProjectRequirements.Any(y => y.ProjectId == projectId), Name = x.Name, Id = x.Id });
             ViewBag.Requirements = reqs;
             ViewBag.ProjectId = projectId;
             return View(model);
@@ -85,25 +85,17 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult SaveProject(int projectId, IEnumerable<int> assignedRequirements)
         {
-            
-
-
             var dbProjectRequirements = _projectRequirementService.Get(x => x.ProjectId == projectId).ToList();
             var deletedProjectRequirements = dbProjectRequirements
-                .Where(x=>assignedRequirements==null ||!assignedRequirements.Any(y=>y==x.RequirementId)).ToList();
+                .Where(x => assignedRequirements == null || !assignedRequirements.Any(y => y == x.RequirementId)).ToList();
+
             foreach (var item in deletedProjectRequirements)
             {
-
-                    _projectRequirementService.Delete(item.Id);
-
+                _projectRequirementService.Delete(item.Id);
             }
 
-            //var projectRequirement = _projectRequirementService
-            //       .Get(x => x.ProjectId == projectId && x.RequirementId == item.RequirementId &&).FirstOrDefault();
-
             var newProjectRequirements = assignedRequirements?.Where(x => !dbProjectRequirements.Any(y => y.RequirementId == x))
-                ??new List<int>();
-            
+                ?? new List<int>();
 
             foreach (var item in newProjectRequirements)
             {
@@ -112,11 +104,25 @@ namespace Documaster.Ui.Controllers
                     RequirementId = item,
                     ProjectId = projectId
                 };
-
-                    _projectRequirementService.Create(projectRequirement);
+                _projectRequirementService.Create(projectRequirement);
 
             }
-            return RedirectToAction("Index","Project");
+            return RedirectToAction("Index", "Project");
+        }
+
+
+
+        [HttpGet]
+        public ActionResult CustomerProject(int projectId)
+        {
+            var model = _projectRequirementService.GetAll().Where(p => p.ProjectId == projectId).ToList();
+            //  var model = _requirementService.GetAll().Where(p => p.ProjectId == projectId);
+            var reqs = _requirementService.GetAll().Where(x => x.ProjectRequirements.Any(p => p.ProjectId == projectId))
+           .Select(x => new AssignedRequirement { Assigned = x.ProjectRequirements.Any(y => y.ProjectId == projectId), Name = x.Name, Id = x.Id })
+           .ToList();
+            ViewBag.Requirements = reqs;
+            ViewBag.ProjectId = projectId;
+            return View(model);
         }
 
     }
