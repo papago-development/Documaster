@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using Documaster.Business.Services;
 using Documaster.Model.Entities;
@@ -11,12 +13,15 @@ namespace Documaster.Ui.Controllers
     {
         private readonly IGenericEntityService<Requirement> _requirementService;
         private readonly IGenericEntityService<ProjectRequirement> _projectRequirementService;
+        private readonly IGenericEntityService<OutputDocument> _outputDocumentService;
 
         public RequirementController(IGenericEntityService<Requirement> entityService,
-            IGenericEntityService<ProjectRequirement> projectRequirementService)
+            IGenericEntityService<ProjectRequirement> projectRequirementService,
+            IGenericEntityService<OutputDocument> outputDocumentService)
         {
             _requirementService = entityService;
             _projectRequirementService = projectRequirementService;
+            _outputDocumentService = outputDocumentService;
         }
 
         [HttpGet]
@@ -115,15 +120,36 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult CustomerProject(int projectId)
         {
-            var model = _projectRequirementService.GetAll().Where(p => p.ProjectId == projectId).ToList();
-            //  var model = _requirementService.GetAll().Where(p => p.ProjectId == projectId);
-            var reqs = _requirementService.GetAll().Where(x => x.ProjectRequirements.Any(p => p.ProjectId == projectId))
-           .Select(x => new AssignedRequirement { Assigned = x.ProjectRequirements.Any(y => y.ProjectId == projectId), Name = x.Name, Id = x.Id })
-           .ToList();
-            ViewBag.Requirements = reqs;
+
+
+            var model2 = _requirementService.GetAll().Where(x => x.ProjectRequirements.Any(y => y.ProjectId == projectId));
+
             ViewBag.ProjectId = projectId;
-            return View(model);
+            return View(model2);
         }
+
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase fileUpload, int projectId, int requirementId)
+        {
+            var length = fileUpload.ContentLength;
+            byte[] tempImage = new byte[length];
+            fileUpload.InputStream.Read(tempImage, 0, length);
+           // newImage.ActualImage = tempImage;
+
+
+            var output = new OutputDocument {
+                Name = fileUpload.FileName,
+                DocumentData = tempImage,
+                ProjectId = projectId,
+                RequirementId = requirementId
+
+            };
+            var created = _outputDocumentService.Create(output);
+
+            // return new HttpStatusCodeResult(HttpStatusCode.OK);
+            return RedirectToAction("CustomerProject",new { projectId = projectId});
+        }
+
 
     }
 }

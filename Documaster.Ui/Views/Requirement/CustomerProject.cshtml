@@ -1,32 +1,57 @@
 ﻿
 @using Documaster.Ui.Models
-@model IEnumerable<Documaster.Model.Entities.ProjectRequirement>
+@model IEnumerable<Documaster.Model.Entities.Requirement>
 @{
     ViewBag.Title = "CustomerProject";
-    var projectId = ViewBag.ProjectId;
-    var requirements = (IEnumerable<AssignedRequirement>)ViewBag.Requirements;
+    var projectId = (int)ViewBag.ProjectId;
+    //var requirements = (IEnumerable<AssignedRequirement>)ViewBag.Requirements;
 }
 
 <h2>CustomerProject</h2>
 @if (!Model.Any())
 {
     <p>Nu ati selectat niciun aviz!</p>
-}else
+}
+else
 {
-using (Html.BeginForm())
 
-{
-    @Html.Hidden("ProjectId", (object)projectId)
-    foreach (var req in requirements)
+
+
+
+    foreach (var req in Model)
     {
-    <div>
-        @Html.DisplayFor(modelItem => req.Name)
-        @*<label>@req.Requirement.Name</label>*@
-        <button class="btn-link">Upload</button>
-        @*<input type="file" name="elementName" />*@
-    </div>
+        <div>
+
+            @*<label>@req.Requirement.Name</label>*@
+
+            @using (Html.BeginForm("Upload", "Requirement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.DisplayFor(x => req.Name)
+                @Html.Hidden("projectId", projectId)
+                @Html.Hidden("requirementId", req.Id)
+                @Html.DisplayFor(x=>req.OutputDocuments.FirstOrDefault(y=>y.ProjectId == projectId).Name)
+
+
+                <input type="file" name="fileUpload" />
+
+            }
+
+
+        </div>
     }
-
-}
 }
 
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            $('input[type="file"]').each(function (index, value) {
+                $(value).on("change", function () {
+                    $(value).parent().submit();
+                });
+
+            });
+        });
+
+    </script>
+}
