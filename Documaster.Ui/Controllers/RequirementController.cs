@@ -120,34 +120,37 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult CustomerProject(int projectId)
         {
-
-
+        
             var model2 = _requirementService.GetAll().Where(x => x.ProjectRequirements.Any(y => y.ProjectId == projectId));
-
+          
+          
             ViewBag.ProjectId = projectId;
             return View(model2);
         }
 
+
+        //Metoda pentru incarcarea fisierelor 
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase fileUpload, int projectId, int requirementId)
         {
             var length = fileUpload.ContentLength;
             byte[] tempImage = new byte[length];
             fileUpload.InputStream.Read(tempImage, 0, length);
-           // newImage.ActualImage = tempImage;
+            // newImage.ActualImage = tempImage;
 
 
-            var output = new OutputDocument {
+            var output = new OutputDocument
+            {
                 Name = fileUpload.FileName,
                 DocumentData = tempImage,
+                ContentType = fileUpload.ContentType,
                 ProjectId = projectId,
                 RequirementId = requirementId
 
             };
             var created = _outputDocumentService.Create(output);
 
-            // return new HttpStatusCodeResult(HttpStatusCode.OK);
-            return RedirectToAction("CustomerProject",new { projectId = projectId});
+            return RedirectToAction("CustomerProject", new { projectId = projectId });
         }
 
 

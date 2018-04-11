@@ -10,6 +10,8 @@ namespace Documaster.Model.Entities
 
         public byte[] DocumentData { get; set; }
 
+        public string ContentType { get; set; }
+
         public virtual Project Project { get; set; }
 
         public virtual Requirement Requirement { get; set; }
