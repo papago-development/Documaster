@@ -22,3 +22,16 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.documentLine input[type="file"] {
+}
+
+.uploadButton, .formInline {
+    display: inline !important;
+
+}
+    .uploadButton  {
+        
+        visibility:hidden;
+    }
+

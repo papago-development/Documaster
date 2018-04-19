@@ -1,12 +1,10 @@
-﻿ 
+﻿
 @using Documaster.Ui.Models
-@model IEnumerable<Documaster.Model.Entities.Requirement>
+@model IEnumerable<Documaster.Ui.Models.FileToUpdate>
 @{
     ViewBag.Title = "CustomerProject";
-    var projectId = (int)ViewBag.ProjectId;
-    //var requirements = (IEnumerable<AssignedRequirement>)ViewBag.Requirements;
 }
-
+<link href="~/Content/Site.css" rel="stylesheet" />
 <h2>CustomerProject</h2>
 @if (!Model.Any())
 {
@@ -14,44 +12,60 @@
 }
 else
 {
-
-
-
-
     foreach (var req in Model)
     {
-        <div>
-
-            @*<label>@req.Requirement.Name</label>*@
-
-            @using (Html.BeginForm("Upload", "Requirement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        <div class="documentLine">
+            @using (Html.BeginForm("Upload", "Requirement", FormMethod.Post, new { enctype = "multipart/form-data", @class = "formInline" }))
             {
-                @Html.DisplayFor(x => req.Name)
-                @Html.Hidden("projectId", projectId)
-                @Html.Hidden("requirementId", req.Id)
-                @Html.DisplayFor(x=>req.OutputDocuments.FirstOrDefault(y=>y.ProjectId == projectId).Name)
 
 
-                <input type="file" name="fileUpload" />
+                <label>
+                    @Html.DisplayFor(x => req.RequirementName)
+                </label>
 
+                @Html.Hidden("projectId", req.ProjectId)
+                @Html.Hidden("requirementId", req.RequirementId)
+
+
+
+                <label>
+                    @Html.DisplayFor(x => req.FileName)
+                </label>
+                                
+                <button type="button" class="openFile">Open File Dialog</button>
+                <input class="uploadButton" type="file" name="fileUpload" />
             }
 
+            @if (req.Status)
+            {
+                @Html.ActionLink("Stergere", "DeleteDocument", new { documentId = req.Id, projectId = req.ProjectId })
 
+                @Html.ActionLink("Download", "DownloadDocument", new { documentId = req.Id })
+
+            }
         </div>
+
     }
-}
 
-@section scripts{
-    <script>
-        $(document).ready(function () {
+    @section scripts{
+        <script>
+            $(document).ready(function () {
+                $('button.openFile').each(function (index, value) {
+                    $(value).on("click", function (event) {
+                        $(value).parent().find('input[type="file"]').trigger("click");
 
-            $('input[type="file"]').each(function (index, value) {
-                $(value).on("change", function () {
-                    $(value).parent().submit();
+                    });
+
                 });
 
-            });
-        });
+                $('input[type="file"]').each(function (index, value) {
+                    $(value).on("change", function () {
+                        $(value).parent().submit();
+                    });
 
-    </script>
+                });
+            });
+
+        </script>
+    }
 }

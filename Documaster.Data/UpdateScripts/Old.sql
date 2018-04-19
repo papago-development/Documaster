@@ -100,6 +100,7 @@ CREATE TABLE dbo.Requirement (
 	,[Name] NVARCHAR(50) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
+	,ForId INT
 )
 GO
 

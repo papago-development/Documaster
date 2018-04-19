@@ -115,44 +115,102 @@ namespace Documaster.Ui.Controllers
             return RedirectToAction("Index", "Project");
         }
 
-
-
         [HttpGet]
         public ActionResult CustomerProject(int projectId)
         {
-        
-            var model2 = _requirementService.GetAll().Where(x => x.ProjectRequirements.Any(y => y.ProjectId == projectId));
-          
-          
-            ViewBag.ProjectId = projectId;
-            return View(model2);
-        }
 
+            var model2 = _requirementService.GetAll().Where(x => x.ProjectRequirements.Any(y => y.ProjectId == projectId));
+
+            //var groupRequirement = 
+
+            List<FileToUpdate> fileToUpdates = new List<FileToUpdate>();
+
+
+
+            foreach (var item in model2)
+            {
+                var file = item.OutputDocuments.FirstOrDefault();
+
+                var newFileToUpdate = new FileToUpdate
+                {
+                    Id = file?.Id ?? 0,
+                    FileName = file?.Name,
+                    ProjectId = projectId,
+                    RequirementName = item.Name,
+                    Status = !string.IsNullOrEmpty(file?.Name),
+                    RequirementId = item.Id
+                };
+
+                fileToUpdates.Add(newFileToUpdate);
+            }
+
+
+            fileToUpdates = fileToUpdates.OrderByDescending(x => x.Status).ThenBy(x => x.RequirementName).ToList();
+
+            return View(fileToUpdates);
+        }
 
         //Metoda pentru incarcarea fisierelor 
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase fileUpload, int projectId, int requirementId)
         {
-            var length = fileUpload.ContentLength;
-            byte[] tempImage = new byte[length];
-            fileUpload.InputStream.Read(tempImage, 0, length);
-            // newImage.ActualImage = tempImage;
-
-
-            var output = new OutputDocument
+            if (fileUpload == null)
             {
-                Name = fileUpload.FileName,
-                DocumentData = tempImage,
-                ContentType = fileUpload.ContentType,
-                ProjectId = projectId,
-                RequirementId = requirementId
+                return null;
+            }
+            else
+            {
+                var length = fileUpload.ContentLength;
+                byte[] tempImage = new byte[length];
+                fileUpload.InputStream.Read(tempImage, 0, length);
 
-            };
-            var created = _outputDocumentService.Create(output);
+
+
+                var output = new OutputDocument
+                {
+
+                    Name = fileUpload.FileName,
+                    DocumentData = tempImage,
+                    ContentType = fileUpload.ContentType,
+                    ProjectId = projectId,
+                    RequirementId = requirementId
+
+                };
+                var created = _outputDocumentService.Create(output);
+            }
+
+            var outputDocuments = _outputDocumentService.GetAll().Where(x=>x.ProjectId == projectId);
+            ViewBag.OutputDocuments = outputDocuments;
 
             return RedirectToAction("CustomerProject", new { projectId = projectId });
         }
 
+        public ActionResult DeleteDocument(int documentId, int projectId)
+        {
+            _outputDocumentService.Delete(documentId);
 
+
+            return RedirectToAction("CustomerProject", new { projectId = projectId });
+        }
+
+        public ActionResult DownloadDocument(int documentId)
+        {
+            var document = _outputDocumentService.Get(documentId);
+
+
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+
+                FileName = document.Name,
+
+                // always prompt the user for downloading, set to true if you want 
+                // the browser to try to show the file inline
+                Inline = false,
+            };
+            Response.AppendHeader("Content-Disposition", cd.ToString());
+            return File(document.DocumentData, document.ContentType);
+
+
+        }
     }
 }
