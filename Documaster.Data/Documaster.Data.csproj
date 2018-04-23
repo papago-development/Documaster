@@ -59,9 +59,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="UpdateScripts\01_Create old.sql" />
     <Content Include="UpdateScripts\01_Create.sql" />
-    <Content Include="UpdateScripts\Old.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

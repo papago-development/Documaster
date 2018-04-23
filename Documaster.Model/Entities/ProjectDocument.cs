@@ -14,8 +14,6 @@ namespace Documaster.Model.Entities
 
         public byte[] DocumentData { get; set; }
 
-
-
         public virtual Project Project { get; set; }
 
     }

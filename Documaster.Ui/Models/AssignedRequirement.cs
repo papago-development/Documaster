@@ -6,5 +6,8 @@
         public int RequirementId { get; set; }
         public string Name { get; set; }
         public bool Assigned { get; set; }
+
+        //
+        public string CategoryName { get; set; }
     }
 }

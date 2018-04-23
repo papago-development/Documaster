@@ -14,14 +14,17 @@ namespace Documaster.Ui.Controllers
         private readonly IGenericEntityService<Requirement> _requirementService;
         private readonly IGenericEntityService<ProjectRequirement> _projectRequirementService;
         private readonly IGenericEntityService<OutputDocument> _outputDocumentService;
+        private readonly IGenericEntityService<Category> _categoryService;
 
         public RequirementController(IGenericEntityService<Requirement> entityService,
             IGenericEntityService<ProjectRequirement> projectRequirementService,
-            IGenericEntityService<OutputDocument> outputDocumentService)
+            IGenericEntityService<OutputDocument> outputDocumentService,
+            IGenericEntityService<Category> categoryService)
         {
             _requirementService = entityService;
             _projectRequirementService = projectRequirementService;
             _outputDocumentService = outputDocumentService;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
@@ -33,7 +36,10 @@ namespace Documaster.Ui.Controllers
 
         [HttpGet]
         public ActionResult Create()
+
         {
+            //TODO: load list of all categories
+            //send them via viewbag
             return View();
         }
 
@@ -48,6 +54,8 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            //TODO: load list of all categories
+            //send them via viewbag
             var model = _requirementService.Get(id);
             return View(model);
         }
@@ -80,9 +88,42 @@ namespace Documaster.Ui.Controllers
 
             var assisgnedProjectRequirements = _projectRequirementService.GetAll().Where(x => x.ProjectId == projectId);
 
-            var reqs = _requirementService.GetAll()//.Where(x=>x.ProjectRequirements.Any())
-                .Select(x => new AssignedRequirement { Assigned = x.ProjectRequirements.Any(y => y.ProjectId == projectId), Name = x.Name, Id = x.Id });
-            ViewBag.Requirements = reqs;
+            var categories = _categoryService.GetAll().OrderBy(x => x.Name)
+    .Select(x => new AssignedCategory
+    {
+        Id = x.Id,
+        Name = x.Name,
+        //TODO incerc incarcare totul aici
+
+                    //AssignedRequirements = new List<AssignedRequirement>()
+                    //{
+
+                    //}
+
+                });
+
+            var assignedCategories = new List<AssignedCategory>();
+            foreach (var category in categories)
+            {
+                var reqs = _requirementService.GetAll().Where(x => x.CategoryId == category.Id)
+                          .Select(x => new AssignedRequirement
+                          {
+                              Assigned = x.ProjectRequirements.Any(y => y.ProjectId == projectId),
+                              Name = x.Name,
+                              Id = x.Id,
+
+                          }).ToList();
+               
+                var assignedCategory = new AssignedCategory
+                {
+                    Name = category.Name,
+                    Id = category.Id,
+                    AssignedRequirements = reqs
+                };
+                assignedCategories.Add(assignedCategory);
+            }
+
+            ViewBag.Categories = assignedCategories;
             ViewBag.ProjectId = projectId;
             return View(model);
         }
@@ -121,7 +162,8 @@ namespace Documaster.Ui.Controllers
 
             var model2 = _requirementService.GetAll().Where(x => x.ProjectRequirements.Any(y => y.ProjectId == projectId));
 
-            //var groupRequirement = 
+
+
 
             List<FileToUpdate> fileToUpdates = new List<FileToUpdate>();
 
@@ -179,7 +221,7 @@ namespace Documaster.Ui.Controllers
                 var created = _outputDocumentService.Create(output);
             }
 
-            var outputDocuments = _outputDocumentService.GetAll().Where(x=>x.ProjectId == projectId);
+            var outputDocuments = _outputDocumentService.GetAll().Where(x => x.ProjectId == projectId);
             ViewBag.OutputDocuments = outputDocuments;
 
             return RedirectToAction("CustomerProject", new { projectId = projectId });

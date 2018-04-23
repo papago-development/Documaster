@@ -3,6 +3,8 @@
 @model IEnumerable<Documaster.Ui.Models.FileToUpdate>
 @{
     ViewBag.Title = "CustomerProject";
+
+    
 }
 <link href="~/Content/Site.css" rel="stylesheet" />
 <h2>CustomerProject</h2>
@@ -27,11 +29,12 @@ else
                 @Html.Hidden("requirementId", req.RequirementId)
 
 
+                    <label>
+                        @Html.DisplayFor(x => req.FileName)
+                    </label>
+               
 
-                <label>
-                    @Html.DisplayFor(x => req.FileName)
-                </label>
-                                
+
                 <button type="button" class="openFile">Open File Dialog</button>
                 <input class="uploadButton" type="file" name="fileUpload" />
             }

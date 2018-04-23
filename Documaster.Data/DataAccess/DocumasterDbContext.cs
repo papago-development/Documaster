@@ -48,13 +48,12 @@ namespace Documaster.Data.DataAccess
         }
 
         public IDbSet<Customer> Customers { get; set; }
-        //   public IDbSet<InputDocument> InputDocuments { get; set; }
         public IDbSet<OutputDocument> OutputDocuments { get; set; }
         public IDbSet<Project> Projects { get; set; }
-        // public IDbSet<ProjectType> ProjectTypes { get; set; }
         public IDbSet<ProjectRequirement> ProjectRequirements { get; set; }
         public IDbSet<Requirement> Requirements { get; set; }
         public IDbSet<Template> Templates { get; set; }
         public IDbSet<ProjectDocument> ProjectDocuments { get; set; }
+        public IDbSet<Category> Categories { get; set; }
     }
 }

@@ -6,7 +6,9 @@ namespace Documaster.Model.Entities
 {
     public class Requirement : NamedEntity
     {
-        public int ForId { get; set; }
+        public int CategoryId { get; set; }
+
+        public Category Category { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<ProjectRequirement> ProjectRequirements { get; set; } = new List<ProjectRequirement>();

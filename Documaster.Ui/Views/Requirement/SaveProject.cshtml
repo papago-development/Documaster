@@ -6,7 +6,8 @@
 
     ViewBag.Title = "SaveProject";
     var projectId = ViewBag.ProjectId;
-    var requirements = (IEnumerable<AssignedRequirement>)ViewBag.Requirements;
+ //   var requirements = (IEnumerable<AssignedRequirement>)ViewBag.Requirements;
+    var categories = (IEnumerable<AssignedCategory>)ViewBag.Categories;
 }
 
 <h2>SaveProject</h2>
@@ -17,10 +18,13 @@
 
     @Html.AntiForgeryToken()
 
-    foreach (var requirement in requirements)
+    foreach (var category in categories)
     {
-        @*@Html.Hidden("Id", (object)requirement.Id)*@
+        //sa se afiseze numele categoriei
+        //sa se afiseze alta categorie pe alt rand
 
+        foreach (var requirement in category.AssignedRequirements)
+        {
 
         <td>
             <input type="checkbox"
@@ -31,9 +35,10 @@
             <label for="projectCheckbox-@requirement.Id">@requirement.Name</label>
 
 
-        </td>
-    }
 
+        </td>
+        }
+    }
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Save" class="btn btn-default" />
