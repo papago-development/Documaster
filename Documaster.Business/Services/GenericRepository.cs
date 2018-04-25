@@ -7,12 +7,12 @@ using Documaster.Model.BaseEntities;
 
 namespace Documaster.Business.Services
 {
-    public class GenericEntityService<TEntity> : IGenericEntityService<TEntity>
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity>
             where TEntity : BaseEntity
     {
         private readonly IDbContext _dbContext;
 
-        public GenericEntityService( IDbContext dbContext )
+        public GenericRepository( IDbContext dbContext )
         {
             _dbContext = dbContext;
         }
@@ -29,7 +29,7 @@ namespace Documaster.Business.Services
 
         public IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> expression)
         {
-            return _dbContext.Get<TEntity>().Where( expression );
+            return _dbContext.Get<TEntity>().Where( expression ).ToList();
         }
 
         public TEntity Create( TEntity entity )
@@ -42,13 +42,7 @@ namespace Documaster.Business.Services
             entity.CreationDate = DateTime.Now;
             entity.LastUpdate = DateTime.Now;
             var savedEntity = _dbContext.Create( entity );
-            if ( savedEntity != null )
-            {
-                _dbContext.SaveChanges();
-                return savedEntity;
-            }
-
-            return null;
+            return savedEntity;
         }
 
         // Disconnected update
@@ -70,7 +64,6 @@ namespace Documaster.Business.Services
             completeListOfProperties.AddRange( new List<string> {"LastUpdate"} );
 
             _dbContext.Update( existingEntity, entity, completeListOfProperties );
-            _dbContext.SaveChanges();
             return true;
         }
 
@@ -82,13 +75,7 @@ namespace Documaster.Business.Services
                 return false;
             }
 
-            if ( _dbContext.Delete( entityToDelete ) != null )
-            {
-                _dbContext.SaveChanges();
-                return true;
-            }
-
-            return false;
+            return _dbContext.Delete( entityToDelete ) != null;
         }
     }
 }

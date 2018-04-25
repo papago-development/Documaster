@@ -1,30 +1,25 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Documaster.Business.Services;
 using Documaster.Model.Entities;
-using Documaster.Ui.Models;
 
 namespace Documaster.Ui.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly IGenericEntityService<Category> _categoryService;
-        private readonly IGenericEntityService<ProjectRequirement> _projectRequirementService;
-        private readonly IGenericEntityService<OutputDocument> _outputDocumentService;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IGenericRepository<Category> _categoryRepository;
 
-        public CategoryController(IGenericEntityService<Category> categoryService)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _categoryService = categoryService;
-          
+            _unitOfWork = unitOfWork;
+            _categoryRepository = unitOfWork.Repository<Category>();
         }
 
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _categoryService.GetAll();
+            var model = _categoryRepository.GetAll();
             return View(model);
         }
 
@@ -37,7 +32,8 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Create(Category category)
         {
-            _categoryService.Create(category);
+            _categoryRepository.Create(category);
+            _unitOfWork.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -45,28 +41,32 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var model = _categoryService.Get(id);
+            var model = _categoryRepository.Get(id);
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Edit(Category category)
         {
-            _categoryService.Update(category, new List<string> { "Name" });
+            _categoryRepository.Update(category, new List<string> { "Name" });
+            _unitOfWork.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var model = _categoryService.Get(id);
+            var model = _categoryRepository.Get(id);
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Delete(Category category)
         {
-            _categoryService.Delete(category.Id);
+            _categoryRepository.Delete(category.Id);
+            _unitOfWork.SaveChanges();
+
             return RedirectToAction("Index");
         }
     }

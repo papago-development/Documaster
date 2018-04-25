@@ -5,7 +5,7 @@ using Documaster.Model.BaseEntities;
 
 namespace Documaster.Business.Services
 {
-    public interface IGenericEntityService<TEntity> : IService
+    public interface IGenericRepository<TEntity> : IService
         where TEntity : BaseEntity
     {
         IEnumerable<TEntity> GetAll();
