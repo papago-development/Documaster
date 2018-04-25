@@ -98,8 +98,8 @@ namespace Documaster.Ui.Controllers
 
         [HttpPost]
         public ActionResult Delete(Project project, IEnumerable<int> assignedRequirements)
-        {
-            //   _projectRequirementService.Delete(project.Id);
+         {
+      
 
             var dbProjectRequirements = _projectRequirementService.Get(x => x.ProjectId == project.Id).ToList();
             var deletedProjectRequirements = dbProjectRequirements

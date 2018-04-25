@@ -36,10 +36,13 @@ namespace Documaster.Ui.Controllers
 
         [HttpGet]
         public ActionResult Create()
-
         {
             //TODO: load list of all categories
             //send them via viewbag
+
+            var categoryList = _categoryService.GetAll();
+            ViewBag.Categories = categoryList;
+
             return View();
         }
 
@@ -56,6 +59,9 @@ namespace Documaster.Ui.Controllers
         {
             //TODO: load list of all categories
             //send them via viewbag
+            var categoryList = _categoryService.GetAll();
+            ViewBag.Categories = categoryList;
+
             var model = _requirementService.Get(id);
             return View(model);
         }
@@ -63,7 +69,7 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Edit(Requirement requirement)
         {
-            _requirementService.Update(requirement, new List<string> { "Name" });
+            _requirementService.Update(requirement, new List<string> { "Name","CategoryId" });
             return RedirectToAction("Index");
         }
 
@@ -95,12 +101,12 @@ namespace Documaster.Ui.Controllers
         Name = x.Name,
         //TODO incerc incarcare totul aici
 
-                    //AssignedRequirements = new List<AssignedRequirement>()
-                    //{
+        //AssignedRequirements = new List<AssignedRequirement>()
+        //{
 
-                    //}
+        //}
 
-                });
+    });
 
             var assignedCategories = new List<AssignedCategory>();
             foreach (var category in categories)
@@ -113,7 +119,7 @@ namespace Documaster.Ui.Controllers
                               Id = x.Id,
 
                           }).ToList();
-               
+
                 var assignedCategory = new AssignedCategory
                 {
                     Name = category.Name,

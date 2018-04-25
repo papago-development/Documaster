@@ -13,9 +13,6 @@ namespace Documaster.Model.Entities
         [JsonIgnore]
         public virtual ICollection<ProjectRequirement> ProjectRequirements { get; set; } = new List<ProjectRequirement>();
 
-        //[JsonIgnore]
-        //public virtual ICollection<InputDocument> InputDocuments { get; set; } = new List<InputDocument>();
-
         [JsonIgnore]
         public virtual ICollection<OutputDocument> OutputDocuments { get; set; } = new List<OutputDocument>();
     }

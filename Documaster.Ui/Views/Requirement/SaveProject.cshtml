@@ -6,7 +6,7 @@
 
     ViewBag.Title = "SaveProject";
     var projectId = ViewBag.ProjectId;
- //   var requirements = (IEnumerable<AssignedRequirement>)ViewBag.Requirements;
+    //   var requirements = (IEnumerable<AssignedRequirement>)ViewBag.Requirements;
     var categories = (IEnumerable<AssignedCategory>)ViewBag.Categories;
 }
 
@@ -18,30 +18,48 @@
 
     @Html.AntiForgeryToken()
 
-    foreach (var category in categories)
+    for (int i = 0; i < Model.Count(); i += 2)
     {
-        //sa se afiseze numele categoriei
-        //sa se afiseze alta categorie pe alt rand
 
-        foreach (var requirement in category.AssignedRequirements)
+        foreach (var category in categories.Skip(i).Take(2))
         {
+            //sa se afiseze numele categoriei
+            //sa se afiseze alta categorie pe alt rand
 
-        <td>
-            <input type="checkbox"
-                   name="assignedRequirements"
-                   id="projectCheckbox-@requirement.Id"
-                   value="@requirement.Id"
-                   @(Html.Raw(requirement.Assigned ? "checked=\"checked\"" : "")) />
-            <label for="projectCheckbox-@requirement.Id">@requirement.Name</label>
+
+            <div class="col-md-6">
+                @Html.DisplayFor(x => category.Name)
 
 
 
-        </td>
+                @foreach (var requirement in category.AssignedRequirements)
+                {
+                    <div class="row">
+                        <td>
+                            <input type="checkbox"
+                                   name="assignedRequirements"
+                                   id="projectCheckbox-@requirement.Id"
+                                   value="@requirement.Id"
+                                   @(Html.Raw(requirement.Assigned ? "checked=\"checked\"" : "")) />
+                            <label for="projectCheckbox-@requirement.Id">@requirement.Name</label>
+
+
+                            @*<button type="button" class="btn btn-primary">Upload</button>
+                            <button type="button" class="btn btn-warning">Delete</button>*@
+
+                        </td>
+
+                    </div>
+                }
+            </div>
+
         }
     }
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Save" class="btn btn-default" />
         </div>
     </div>
 }
+
