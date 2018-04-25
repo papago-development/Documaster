@@ -41,7 +41,7 @@
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Sterge", "Delete", new { id = item.Id }) |
-                    @Html.ActionLink("Cerinte", "SaveProject", "Requirement", new { projectId = item.Id },"") |
+                    @Html.ActionLink("Cerinte", "ProjectRequirements", "Requirement", new { projectId = item.Id },"") |
                     @Html.ActionLink("Details", "CustomerProject","Requirement",new { projectId = item.Id },"")
                 </td>
             </tr>

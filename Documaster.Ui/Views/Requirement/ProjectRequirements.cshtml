@@ -1,17 +1,11 @@
 ﻿@using Documaster.Ui.Models
 @model IEnumerable<AssignedCategory>
 @{
-    /**/
-
     ViewBag.Title = "SaveProject";
     var projectId = ViewBag.ProjectId;
-    //   var requirements = (IEnumerable<AssignedRequirement>)ViewBag.Requirements;
-    //   var categories = (IEnumerable<AssignedCategory>)ViewBag.Categories;
 }
-
-<h2>SaveProject</h2>
-
-@using (Html.BeginForm())
+<h2>Cerinte proiect</h2>
+@using (Html.BeginForm("SaveProjectRequirements","Requirement"))
 {
     @Html.Hidden("ProjectId", (object)projectId)
 
@@ -19,10 +13,6 @@
 
     foreach (var assignedCategory in Model)
     {
-
-        //sa se afiseze numele categoriei
-        //sa se afiseze alta categorie pe alt rand
-
         <div class="row">
             <div class="row">
                 @Html.DisplayFor(x => assignedCategory.Name)
@@ -30,11 +20,8 @@
             <div class="row">
                 @foreach (var requirement in assignedCategory.AssignedRequirements)
                 {
-
                     <div>
-
                         <div class="col-md-6">
-
                             <input type="checkbox"
                                    name="assignedRequirements"
                                    id="projectCheckbox-@requirement.Id"
@@ -46,11 +33,9 @@
                 }
             </div>
         </div>
-
     }
-
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div>
             <input type="submit" value="Save" class="btn btn-default" />
         </div>
     </div>

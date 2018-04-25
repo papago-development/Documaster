@@ -69,7 +69,7 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Edit(Requirement requirement)
         {
-            _requirementService.Update(requirement, new List<string> { "Name","CategoryId" });
+            _requirementService.Update(requirement, new List<string> { "Name", "CategoryId" });
             return RedirectToAction("Index");
         }
 
@@ -88,54 +88,32 @@ namespace Documaster.Ui.Controllers
         }
 
         [HttpGet]
-        public ActionResult SaveProject(int projectId)
+        public ActionResult ProjectRequirements(int projectId)
         {
             var requirements = _requirementService.GetAll();
 
-            var assisgnedProjectRequirements = _projectRequirementService.GetAll().Where(x => x.ProjectId == projectId);
+            var assisgnedProjectRequirements = _projectRequirementService
+                .GetAll().Where(x => x.ProjectId == projectId);
 
             var categories = _categoryService.GetAll().OrderBy(x => x.Name)
-    .Select(x => new AssignedCategory
-    {
-        Id = x.Id,
-        Name = x.Name,
-        //TODO incerc incarcare totul aici
+                             .Select(x => new AssignedCategory
+                             {
+                                 Id = x.Id,
+                                 Name = x.Name,
+                                 AssignedRequirements = x.Requirements.Select(y => new AssignedRequirement
+                                 {
+                                     Assigned = y.ProjectRequirements.Any(z => z.ProjectId == projectId),
+                                     Name = y.Name,
+                                     Id = y.Id
+                                 }).ToList()
+                             });
 
-        //AssignedRequirements = new List<AssignedRequirement>()
-        //{
-
-        //}
-
-    });
-
-            var assignedCategories = new List<AssignedCategory>();
-            foreach (var category in categories)
-            {
-                var reqs = requirements.Where(x => x.CategoryId == category.Id)
-                          .Select(x => new AssignedRequirement
-                          {
-                              Assigned = x.ProjectRequirements.Any(y => y.ProjectId == projectId),
-                              Name = x.Name,
-                              Id = x.Id,
-
-                          }).ToList();
-
-                var assignedCategory = new AssignedCategory
-                {
-                    Name = category.Name,
-                    Id = category.Id,
-                    AssignedRequirements = reqs
-                };
-                assignedCategories.Add(assignedCategory);
-            }
-
-           // ViewBag.Categories = assignedCategories;
             ViewBag.ProjectId = projectId;
-            return View(assignedCategories);
+            return View("ProjectRequirements", categories);
         }
 
         [HttpPost]
-        public ActionResult SaveProject(int projectId, IEnumerable<int> assignedRequirements)
+        public ActionResult SaveProjectRequirements(int projectId, IEnumerable<int> assignedRequirements)
         {
             var dbProjectRequirements = _projectRequirementService.Get(x => x.ProjectId == projectId).ToList();
             var deletedProjectRequirements = dbProjectRequirements

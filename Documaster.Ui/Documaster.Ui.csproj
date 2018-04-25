@@ -182,10 +182,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\ProjectType\Create.cshtml" />
-    <Content Include="Views\ProjectType\Delete.cshtml" />
-    <Content Include="Views\ProjectType\Edit.cshtml" />
-    <Content Include="Views\ProjectType\Index.cshtml" />
     <Content Include="Views\Requirement\Create.cshtml" />
     <Content Include="Views\Requirement\Delete.cshtml" />
     <Content Include="Views\Requirement\Edit.cshtml" />
@@ -194,7 +190,7 @@
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Delete.cshtml" />
     <Content Include="Views\Project\Create.cshtml" />
-    <Content Include="Views\Requirement\SaveProject.cshtml" />
+    <Content Include="Views\Requirement\ProjectRequirements.cshtml" />
     <Content Include="Views\Requirement\CustomerProject.cshtml" />
     <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Category\Delete.cshtml" />
