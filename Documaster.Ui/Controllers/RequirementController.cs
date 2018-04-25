@@ -90,7 +90,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult SaveProject(int projectId)
         {
-            var model = _requirementService.GetAll();
+            var requirements = _requirementService.GetAll();
 
             var assisgnedProjectRequirements = _projectRequirementService.GetAll().Where(x => x.ProjectId == projectId);
 
@@ -111,7 +111,7 @@ namespace Documaster.Ui.Controllers
             var assignedCategories = new List<AssignedCategory>();
             foreach (var category in categories)
             {
-                var reqs = _requirementService.GetAll().Where(x => x.CategoryId == category.Id)
+                var reqs = requirements.Where(x => x.CategoryId == category.Id)
                           .Select(x => new AssignedRequirement
                           {
                               Assigned = x.ProjectRequirements.Any(y => y.ProjectId == projectId),
@@ -129,9 +129,9 @@ namespace Documaster.Ui.Controllers
                 assignedCategories.Add(assignedCategory);
             }
 
-            ViewBag.Categories = assignedCategories;
+           // ViewBag.Categories = assignedCategories;
             ViewBag.ProjectId = projectId;
-            return View(model);
+            return View(assignedCategories);
         }
 
         [HttpPost]

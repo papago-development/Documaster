@@ -1,13 +1,12 @@
-﻿
-@using Documaster.Ui.Models
-@model IEnumerable<Documaster.Model.Entities.Requirement>
+﻿@using Documaster.Ui.Models
+@model IEnumerable<AssignedCategory>
 @{
     /**/
 
     ViewBag.Title = "SaveProject";
     var projectId = ViewBag.ProjectId;
     //   var requirements = (IEnumerable<AssignedRequirement>)ViewBag.Requirements;
-    var categories = (IEnumerable<AssignedCategory>)ViewBag.Categories;
+    //   var categories = (IEnumerable<AssignedCategory>)ViewBag.Categories;
 }
 
 <h2>SaveProject</h2>
@@ -18,42 +17,36 @@
 
     @Html.AntiForgeryToken()
 
-    for (int i = 0; i < Model.Count(); i += 2)
+    foreach (var assignedCategory in Model)
     {
 
-        foreach (var category in categories.Skip(i).Take(2))
-        {
-            //sa se afiseze numele categoriei
-            //sa se afiseze alta categorie pe alt rand
+        //sa se afiseze numele categoriei
+        //sa se afiseze alta categorie pe alt rand
 
-
-            <div class="col-md-6">
-                @Html.DisplayFor(x => category.Name)
-
-
-
-                @foreach (var requirement in category.AssignedRequirements)
+        <div class="row">
+            <div class="row">
+                @Html.DisplayFor(x => assignedCategory.Name)
+            </div>
+            <div class="row">
+                @foreach (var requirement in assignedCategory.AssignedRequirements)
                 {
-                    <div class="row">
-                        <td>
+
+                    <div>
+
+                        <div class="col-md-6">
+
                             <input type="checkbox"
                                    name="assignedRequirements"
                                    id="projectCheckbox-@requirement.Id"
                                    value="@requirement.Id"
                                    @(Html.Raw(requirement.Assigned ? "checked=\"checked\"" : "")) />
                             <label for="projectCheckbox-@requirement.Id">@requirement.Name</label>
-
-
-                            @*<button type="button" class="btn btn-primary">Upload</button>
-                            <button type="button" class="btn btn-warning">Delete</button>*@
-
-                        </td>
-
+                        </div>
                     </div>
                 }
             </div>
+        </div>
 
-        }
     }
 
     <div class="form-group">
