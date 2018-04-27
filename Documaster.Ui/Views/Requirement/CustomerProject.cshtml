@@ -1,74 +1,27 @@
 ﻿
-@using Documaster.Ui.Models
-@model IEnumerable<Documaster.Ui.Models.FileToUpdate>
 @{
     ViewBag.Title = "CustomerProject";
-
-    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var projectId = (object)ViewBag.ProjectId;
 }
-<link href="~/Content/Site.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/themes/base/tabs.css" rel="stylesheet" />
+
 <h2>CustomerProject</h2>
-@if (!Model.Any())
-{
-    <p>Nu ati selectat niciun aviz!</p>
-}
-else
-{
-    foreach (var req in Model)
-    {
-        <div class="documentLine">
-            @using (Html.BeginForm("Upload", "Requirement", FormMethod.Post, new { enctype = "multipart/form-data", @class = "formInline" }))
-            {
 
-
-                <label>
-                    @Html.DisplayFor(x => req.RequirementName)
-                </label>
-
-                @Html.Hidden("projectId", req.ProjectId)
-                @Html.Hidden("requirementId", req.RequirementId)
-
-
-                    <label>
-                        @Html.DisplayFor(x => req.FileName)
-                    </label>
-               
-
-
-                <button type="button" class="openFile">Open File Dialog</button>
-                <input class="uploadButton" type="file" name="fileUpload" />
-            }
-
-            @if (req.Status)
-            {
-                @Html.ActionLink("Stergere", "DeleteDocument", new { documentId = req.Id, projectId = req.ProjectId })
-
-                @Html.ActionLink("Download", "DownloadDocument", new { documentId = req.Id })
-
-            }
-        </div>
-
-    }
-
-    @section scripts{
-        <script>
-            $(document).ready(function () {
-                $('button.openFile').each(function (index, value) {
-                    $(value).on("click", function (event) {
-                        $(value).parent().find('input[type="file"]').trigger("click");
-
-                    });
-
-                });
-
-                $('input[type="file"]').each(function (index, value) {
-                    $(value).on("change", function () {
-                        $(value).parent().submit();
-                    });
-
-                });
-            });
-
-        </script>
-    }
+<div id="tabs">
+    <ul>
+        <li><a href="">Foto</a></li>
+        <li id="tab-2"><a href="@Url.Action("OutputDocuments","Requirement", new {projectId = projectId })">Avize</a></li>
+        <li><a href="">Documente</a></li>
+    </ul>
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            $("#tabs").tabs();
+            
+        });
+    </script>
 }

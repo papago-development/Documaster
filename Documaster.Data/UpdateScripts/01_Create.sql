@@ -158,6 +158,7 @@ CREATE TABLE dbo.OutputDocument (
 	Id INT IDENTITY(1,1) NOT NULL
 	,ProjectId INT NOT NULL
 	,RequirementId INT NOT NULL
+	,CategoryId INT NOT NULL
 	,ContentType VARCHAR(200) NULL
 	,[Name] NVARCHAR(100) NOT NULL
 	,DocumentData VARBINARY(max) NOT NULL
@@ -185,6 +186,12 @@ ALTER TABLE dbo.OutputDocument WITH CHECK
 	ADD CONSTRAINT FK_OutputDocument_RequirementId_Requirement_Id
 	FOREIGN KEY (RequirementId)
 	REFERENCES dbo.Requirement (Id)
+GO
+
+ALTER TABLE dbo.OutputDocument WITH CHECK
+	ADD CONSTRAINT FK_OutputDocument_CategoryId_Category_Id
+	FOREIGN KEY (CategoryId)
+	REFERENCES dbo.Category (Id)
 GO
 
 ALTER TABLE dbo.OutputDocument

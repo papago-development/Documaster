@@ -15,5 +15,7 @@ namespace Documaster.Model.Entities
         public virtual Project Project { get; set; }
 
         public virtual Requirement Requirement { get; set; }
+
+
     }
 }

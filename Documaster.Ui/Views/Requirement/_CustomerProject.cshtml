@@ -1,0 +1,91 @@
+﻿
+@using Documaster.Ui.Models
+@model IEnumerable<Documaster.Ui.Models.FileToUpdate>
+@{
+    ViewBag.Title = "CustomerProject";
+
+
+}
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/tinytools.toggleswitch.min.css" rel="stylesheet" />
+<script src="~/Scripts/tinytools.toggleswitch.min.js"></script>
+
+<link href="https://cdn.jsdelivr.net/css-toggle-switch/latest/toggle-switch.css" rel="stylesheet" />
+
+@if (!Model.Any())
+{
+    <p>Nu ati selectat niciun aviz!</p>
+}
+else
+{
+    foreach (var req in Model)
+    {
+        @Html.DisplayFor(x => req.CategoryName)
+        <div class="documentLine">
+            @using (Html.BeginForm("Upload", "Requirement", FormMethod.Post, new { enctype = "multipart/form-data", @class = "formInline" }))
+            {
+                if (req.Status)
+                {
+
+                    <label class="switch">
+                        <input type="checkbox" disabled checked="checked">
+                        <span class="slider round"></span>
+                    </label>
+
+                }
+                else
+                {
+                    <label class="switch">
+                        <input type="checkbox" disabled>
+                        <span class="slider round"></span>
+                    </label>
+                }
+
+                <label>
+                    @Html.DisplayFor(x => req.RequirementName)
+                </label>
+
+                @Html.Hidden("projectId", req.ProjectId)
+                @Html.Hidden("requirementId", req.RequirementId)
+
+
+                <label>
+                    @Html.DisplayFor(x => req.FileName)
+                </label>
+
+                <button type="button" class="openFile">Open File Dialog</button>
+                <input class="uploadButton" type="file" name="fileUpload" />
+            }
+
+            @if (req.Status)
+            {
+                @Html.ActionLink("Stergere", "DeleteDocument", new { documentId = req.Id, projectId = req.ProjectId })
+
+                @Html.ActionLink("Download", "DownloadDocument", new { documentId = req.Id })
+
+            }
+        </div>
+
+    }
+}
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('button.openFile').each(function (index, value) {
+                $(value).on("click", function (event) {
+                    $(value).parent().find('input[type="file"]').trigger("click");
+
+                });
+
+            });
+
+            $('input[type="file"]').each(function (index, value) {
+                $(value).on("change", function () {
+                    $(value).parent().submit();
+                });
+
+            });
+        });
+
+    </script>
+}

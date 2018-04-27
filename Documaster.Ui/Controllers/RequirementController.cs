@@ -89,7 +89,7 @@ namespace Documaster.Ui.Controllers
         public ActionResult ProjectRequirements(int projectId)
         {
             var categories = _categoryRepository
-                             .Get(x=>x.Requirements.Any())
+                             .Get(x => x.Requirements.Any())
                              .Select(x => new AssignedCategory
                              {
                                  Id = x.Id,
@@ -136,10 +136,34 @@ namespace Documaster.Ui.Controllers
             return RedirectToAction("Index", "Project");
         }
 
+        public ActionResult ProjectCategory(int projectId)
+        {
+            var categories = _categoryRepository
+                      .Get(x => x.Requirements.Any())
+                      .Select(x => new AssignedCategory
+                      {
+                          Id = x.Id,
+                          Name = x.Name,
+                          AssignedRequirements = x.Requirements.Select(y => new AssignedRequirement
+                          {
+                              Assigned = y.ProjectRequirements.Any(z => z.ProjectId == projectId),
+                              Name = y.Name,
+                              Id = y.Id
+                          }).ToList()
+                      });
+            ViewBag.Categories = categories;
+            return View("CustomerProject", categories);
+        }
         [HttpGet]
         public ActionResult CustomerProject(int projectId)
         {
+            ViewBag.ProjectId = projectId;
+            return View();
+        }
 
+        [HttpGet]
+        public ActionResult OutputDocuments(int projectId)
+        {
             var model2 = _requirementRepository.GetAll().Where(x => x.ProjectRequirements.Any(y => y.ProjectId == projectId));
             var fileToUpdates = new List<FileToUpdate>();
 
@@ -154,7 +178,8 @@ namespace Documaster.Ui.Controllers
                     ProjectId = projectId,
                     RequirementName = item.Name,
                     Status = !string.IsNullOrEmpty(file?.Name),
-                    RequirementId = item.Id
+                    RequirementId = item.Id,
+
                 };
 
                 fileToUpdates.Add(newFileToUpdate);
@@ -162,7 +187,7 @@ namespace Documaster.Ui.Controllers
 
             fileToUpdates = fileToUpdates.OrderByDescending(x => x.Status).ThenBy(x => x.RequirementName).ToList();
 
-            return View(fileToUpdates);
+            return PartialView("_CustomerProject", fileToUpdates);
         }
 
         //Metoda pentru incarcarea fisierelor
@@ -181,11 +206,11 @@ namespace Documaster.Ui.Controllers
             var output = new OutputDocument
             {
 
-                    Name = fileUpload.FileName,
-                    DocumentData = tempImage,
-                    ContentType = fileUpload.ContentType,
-                    ProjectId = projectId,
-                    RequirementId = requirementId
+                Name = fileUpload.FileName,
+                DocumentData = tempImage,
+                ContentType = fileUpload.ContentType,
+                ProjectId = projectId,
+                RequirementId = requirementId
 
             };
             _outputDocumentRepository.Create(output);
@@ -197,7 +222,7 @@ namespace Documaster.Ui.Controllers
             return RedirectToAction("CustomerProject", new { projectId });
         }
 
-        [HttpPost]
+
         public ActionResult DeleteDocument(int documentId, int projectId)
         {
             _outputDocumentRepository.Delete(documentId);
