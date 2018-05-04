@@ -190,18 +190,18 @@ namespace Documaster.Ui.Controllers
                 fileToUpdates.Add(newFileToUpdate);
             }
 
-            fileToUpdates = fileToUpdates.OrderByDescending(x => x.Status).ThenBy(x => x.RequirementName).ToList();
-
+            fileToUpdates = fileToUpdates.OrderByDescending(x => x.RequirementName).ToList();
+            ViewBag.ProjectId = projectId;
             return PartialView("_CustomerProject", fileToUpdates);
         }
 
         //Metoda pentru incarcarea fisierelor
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase fileUpload, int projectId, int requirementId)
+        public void Upload(HttpPostedFileBase fileUpload, int projectId, int requirementId)
         {
             if (fileUpload == null)
             {
-                return null;
+                return;
             }
 
             var length = fileUpload.ContentLength;
@@ -223,16 +223,12 @@ namespace Documaster.Ui.Controllers
 
             var outputDocuments = _outputDocumentRepository.GetAll().Where(x => x.ProjectId == projectId);
             ViewBag.OutputDocuments = outputDocuments;
-
-            return RedirectToAction("OutputDocuments", new { projectId });
         }
 
-        public ActionResult DeleteDocument(int documentId, int projectId)
+        public void DeleteDocument(int documentId)
         {
             _outputDocumentRepository.Delete(documentId);
             _unitOfWork.SaveChanges();
-
-            return RedirectToAction("OutputDocuments", new { projectId });
         }
 
         [HttpGet]

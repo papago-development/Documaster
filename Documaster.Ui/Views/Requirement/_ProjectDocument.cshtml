@@ -1,17 +1,17 @@
-﻿
-@using Documaster.Ui.Models
-@model IEnumerable<Documaster.Ui.Models.PhotoToUpdate>
+﻿@model IEnumerable<Documaster.Ui.Models.PhotoToUpdate>
 @{
     ViewBag.Title = "Photos";
 }
 
 <link href="~/Content/Site.css" rel="stylesheet" />
 <h2>Photos</h2>
+
 @using (Html.BeginForm("UploadPhoto", "Requirement", FormMethod.Post, new { enctype = "multipart/form-data", @class = "formInline" }))
 {
     <button type="button" class="openFile">Open File Dialog</button>
     <input class="uploadButton" type="file" name="fileUpload" />
 }
+
 @foreach (var photo in Model)
 {
     <div class="documentLine">
@@ -19,26 +19,4 @@
             @Html.DisplayFor(x => photo.FileName)
         </label>
     </div>
-}
-
-@section scripts{
-    <script>
-        $(document).ready(function () {
-            $('button.openFile').each(function (index, value) {
-                $(value).on("click", function (event) {
-                    $(value).parent().find('input[type="file"]').trigger("click");
-
-                });
-
-            });
-
-            $('input[type="file"]').each(function (index, value) {
-                $(value).on("change", function () {
-                    $(value).parent().submit();
-                });
-
-            });
-        });
-
-    </script>
 }

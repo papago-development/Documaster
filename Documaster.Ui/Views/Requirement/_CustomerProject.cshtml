@@ -1,7 +1,7 @@
-﻿@using Documaster.Ui.Models
-@model IEnumerable<Documaster.Ui.Models.FileToUpdate>
+﻿@model IEnumerable<Documaster.Ui.Models.FileToUpdate>
 @{
     ViewBag.Title = "CustomerProject";
+    var projectId = ( object ) ViewBag.ProjectId;
 }
 <link href="~/Content/Site.css" rel="stylesheet" />
 @*<link href="~/Content/tinytools.toggleswitch.min.css" rel="stylesheet" />
@@ -9,27 +9,25 @@
     <link href="https://cdn.jsdelivr.net/css-toggle-switch/latest/toggle-switch.css" rel="stylesheet" />*@
 
 
-@if (!Model.Any())
+@if ( !Model.Any() )
 {
     <p>Nu ati selectat niciun aviz!</p>
 }
 else
 {
-    foreach (var req in Model)
+    foreach ( var req in Model )
     {
         var formId = "uploadFileForm" + req.Id;
         var buttonId = "uploadFileButton" + req.Id;
         var openFileButton = "openFile" + req.Id;
 
-        @Html.DisplayFor(x => req.CategoryName)
-        <div class="documentLine">
-            @*@using (Html.BeginForm("Upload", "Requirement", FormMethod.Post, new { enctype = "multipart/form-data", @class = "formInline" }))*@
+        @Html.DisplayFor( x => req.CategoryName )
+        <div class="documentLine row">
+            <input type="file" name="fileToUpload" id="@buttonId" style="display: none" />
+            @Html.Hidden( "requirementId", req.RequirementId, new {@class = "requirementId"} )
+            <button class="openFile pull-right">Suie</button>
 
-            <form id="@formId" method="post" enctype="multipart/form-data" action="@Url.Action("Upload","Requirement")">
-                <input type="file" name="file" id="@buttonId" style="display: none" />
-            </form>
-
-            @if (req.Status)
+            @if ( req.Status )
             {
                 <label class="switch">
                     <input type="checkbox" disabled checked="checked">
@@ -43,38 +41,31 @@ else
                     <span class="slider round"></span>
                 </label>
             }
-
             <label>
-                @Html.DisplayFor(x => req.RequirementName)
+                @Html.DisplayFor( x => req.RequirementName )
             </label>
-
-            @Html.Hidden("projectId", req.ProjectId)
-            @Html.Hidden("requirementId", req.RequirementId)
-
-
             <label>
-                @Html.DisplayFor(x => req.FileName)
+                @Html.DisplayFor( x => req.FileName )
             </label>
-
-            <button type="button" class="openFile" id="@openFileButton">Open</button>
-            <input class="uploadButton" type="file" name="fileUpload" />
-            @*}*@
-
-            @if (req.Status)
+            @if ( req.Status )
             {
-                @Html.ActionLink("Stergere", "DeleteDocument", new { documentId = req.Id, projectId = req.ProjectId })
-
-                @Html.ActionLink("Download", "DownloadDocument", new { documentId = req.Id })
-
+                <button class="deleteButton" onclick="deleteDocument(@req.Id)" data-documentid="@req.Id">Sterge</button>
+                @Html.ActionLink( "Download", "DownloadDocument", new {documentId = req.Id} )
             }
         </div>
-
     }
 }
-@section scripts{
-    <script>
-     
-      
-
-    </script>
-}
+<script type="text/javascript">
+    $ (document).ready (function () {
+        var projectId = @projectId;
+        $("input[type='file']").each (function (index, value) {
+            var requirementId = $(value).parent().find("input[name='requirementId']").val();
+            $(value).change(function (element) {
+                uploadFile(element, projectId, requirementId);
+            });
+        });
+        $(".openFile").each(function (index, value) {
+            applyClickTransfer (value);
+        });
+    });
+</script>

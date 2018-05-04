@@ -1,21 +1,45 @@
-﻿var uploadFile = function (e) {
-    const formData = new FormData();
-    formData.append("file", e.target.files[0]);
+﻿var reloadCurrentTab = function () {
+    const currentIndex = $("#tabs").tabs("option", "active");
+    $("#tabs").tabs('load', currentIndex);
+};
 
-    $.ajax({
-        type: "POST",
-        url: "requirement/upload",
-        contentType: false,
-        processData: false,
-        data: formData
-    }).fail(function (jqXhr) {
+var uploadFile = function (e, projectId, requirementId) {
+    const formData = new FormData();
+    formData.append("fileUpload", e.target.files[0]);
+    formData.append("projectId", projectId);
+    formData.append("requirementId", requirementId);
+    $.ajax ({
+            type: "POST",
+            url: "upload",
+            contentType: false,
+            processData: false,
+            data: formData
+        }).success (function () {
+            reloadCurrentTab();
+        })
+        .fail (function (jqXhr) {
+        });
+};
+
+var applyClickTransfer = function (element) {
+    $(element).click(function () {
+        const hiddenFileInput = $(this).parent().find('input[type="file"]');
+        hiddenFileInput.click();
     });
 };
 
-var applyClickTransfer = function (e) {
-
-    $(e).parent().parent().find('input[type="file"]').trigger("click");
-    $(e).change(function (x) {
-        uploadFile(x);
-    });
+var deleteDocument = function (documentId) {
+    const formData = new FormData();
+    formData.append("documentId", documentId);
+    $.ajax({
+            type: "POST",
+            url: "DeleteDocument",
+            contentType: false,
+            processData: false,
+            data: formData
+        }).success(function () {
+            reloadCurrentTab();
+        })
+        .fail(function (jqXhr) {
+        });
 };
