@@ -12,7 +12,9 @@ namespace Documaster.Ui.Controllers
     {
         private readonly IGenericRepository<Requirement> _requirementRepository;
         private readonly IGenericRepository<ProjectRequirement> _projectRequirementRepository;
+        private readonly IGenericRepository<Project> _projectRepository;
         private readonly IGenericRepository<OutputDocument> _outputDocumentRepository;
+        private readonly IGenericRepository<ProjectDocument> _projectDocumentRepository;
         private readonly IGenericRepository<Category> _categoryRepository;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -23,6 +25,8 @@ namespace Documaster.Ui.Controllers
             _projectRequirementRepository = unitOfWork.Repository<ProjectRequirement>();
             _outputDocumentRepository = unitOfWork.Repository<OutputDocument>();
             _categoryRepository = unitOfWork.Repository<Category>();
+            _projectRepository = unitOfWork.Repository<Project>();
+            _projectDocumentRepository = unitOfWork.Repository<ProjectDocument>();
         }
 
         [HttpGet]
@@ -154,6 +158,7 @@ namespace Documaster.Ui.Controllers
             ViewBag.Categories = categories;
             return View("CustomerProject", categories);
         }
+
         [HttpGet]
         public ActionResult CustomerProject(int projectId)
         {
@@ -219,16 +224,15 @@ namespace Documaster.Ui.Controllers
             var outputDocuments = _outputDocumentRepository.GetAll().Where(x => x.ProjectId == projectId);
             ViewBag.OutputDocuments = outputDocuments;
 
-            return RedirectToAction("CustomerProject", new { projectId });
+            return RedirectToAction("OutputDocuments", new { projectId });
         }
-
 
         public ActionResult DeleteDocument(int documentId, int projectId)
         {
             _outputDocumentRepository.Delete(documentId);
             _unitOfWork.SaveChanges();
 
-            return RedirectToAction("CustomerProject", new { projectId });
+            return RedirectToAction("OutputDocuments", new { projectId });
         }
 
         [HttpGet]
@@ -245,5 +249,62 @@ namespace Documaster.Ui.Controllers
             Response.AppendHeader("Content-Disposition", cd.ToString());
             return File(document.DocumentData, document.ContentType);
         }
+
+
+        // Afisare fotografii
+        [HttpGet]
+        public ActionResult Photos(int projectId)
+        {
+            var projectDocuments = _projectRepository.GetAll().Where(x => x.ProjectDocuments.Any(y => y.ProjectId == projectId));
+            var photos = new List<PhotoToUpdate>();
+
+            foreach (var item in projectDocuments)
+            {
+                var photo = item.ProjectDocuments.FirstOrDefault();
+
+                var newPhoto = new PhotoToUpdate
+                {
+                    Id = photo?.Id ?? 0,
+                    FileName = photo?.Name,
+                    ProjectId = projectId,
+
+                };
+                photos.Add(newPhoto);
+            }
+            photos = photos.ToList();
+            return PartialView("_ProjectDocument", photos);
+        }
+
+        [HttpPost]
+        public ActionResult UploadPhoto(HttpPostedFileBase fileUpload, int projectId)
+        {
+            if (fileUpload == null)
+            {
+                return null;
+            }
+
+            var length = fileUpload.ContentLength;
+            var tempImage = new byte[length];
+            fileUpload.InputStream.Read(tempImage, 0, length);
+
+            var photo = new ProjectDocument
+            {
+
+                Name = fileUpload.FileName,
+                DocumentData = tempImage,
+                //   ContentType = fileUpload.ContentType,
+                ProjectId = projectId,
+
+
+            };
+            _projectDocumentRepository.Create(photo);
+            _unitOfWork.SaveChanges();
+
+            var projectDocuments = _projectDocumentRepository.GetAll().Where(x => x.ProjectId == projectId);
+            ViewBag.ProjectDocuments = projectDocuments;
+
+            return RedirectToAction("_ProjectDocument", new { projectId });
+        }
+
     }
 }

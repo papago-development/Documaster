@@ -3,11 +3,6 @@
 
 @{
     ViewBag.Title = "Create";
-    //var customerId = ViewBag.CustomerId;
-    //var projectTypes = ViewBag.ProjectTypes;
-
-    //var selectProject = new SelectList((IEnumerable<ProjectType>)projectTypes, "Id", "Name");
-
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h2>Create</h2>
@@ -20,27 +15,13 @@
         <h4>Customer</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @*@Html.Hidden("CustomerId", (object)customerId)*@
-        @*@Html.Hidden("ProjectTypeId", 1)*@
 
         <div class="form-group">
 
             @Html.LabelFor(m => m.Name)
             @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-
-            @*@Html.LabelFor(model => model.Project.Name, htmlAttributes: new { @class = "form-control" })
-
-                @Html.EditorFor(model => model.Project.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Project.Name, "", new { @class = "text-danger" })*@
-
         </div>
 
-        @*  <div class="form-group">
-                @Html.LabelFor(m => m.ProjectTypeId)
-
-                @Html.DropDownList("ProjectTypeId", selectProject, "Select Project Type", new { @class = "form-control" })
-            </div>
-        *@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />

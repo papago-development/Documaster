@@ -8,11 +8,12 @@ namespace Documaster.Model.Entities
 {
     public class ProjectDocument : NamedEntity
     {
-        public DateTime? Expire { get; set; }
+    //    public DateTime? Expire { get; set; }
 
         public int ProjectId { get; set; }
 
         public byte[] DocumentData { get; set; }
+        public string ContentType { get; set; }
 
         public virtual Project Project { get; set; }
 

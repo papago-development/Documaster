@@ -1,16 +1,13 @@
-﻿
-@using Documaster.Ui.Models
+﻿@using Documaster.Ui.Models
 @model IEnumerable<Documaster.Ui.Models.FileToUpdate>
 @{
     ViewBag.Title = "CustomerProject";
-
-
 }
 <link href="~/Content/Site.css" rel="stylesheet" />
-<link href="~/Content/tinytools.toggleswitch.min.css" rel="stylesheet" />
-<script src="~/Scripts/tinytools.toggleswitch.min.js"></script>
+@*<link href="~/Content/tinytools.toggleswitch.min.css" rel="stylesheet" />
+    <script src="~/Scripts/tinytools.toggleswitch.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/css-toggle-switch/latest/toggle-switch.css" rel="stylesheet" />*@
 
-<link href="https://cdn.jsdelivr.net/css-toggle-switch/latest/toggle-switch.css" rel="stylesheet" />
 
 @if (!Model.Any())
 {
@@ -20,42 +17,48 @@ else
 {
     foreach (var req in Model)
     {
+        var formId = "uploadFileForm" + req.Id;
+        var buttonId = "uploadFileButton" + req.Id;
+        var openFileButton = "openFile" + req.Id;
+
         @Html.DisplayFor(x => req.CategoryName)
         <div class="documentLine">
-            @using (Html.BeginForm("Upload", "Requirement", FormMethod.Post, new { enctype = "multipart/form-data", @class = "formInline" }))
+            @*@using (Html.BeginForm("Upload", "Requirement", FormMethod.Post, new { enctype = "multipart/form-data", @class = "formInline" }))*@
+
+            <form id="@formId" method="post" enctype="multipart/form-data" action="@Url.Action("Upload","Requirement")">
+                <input type="file" name="file" id="@buttonId" style="display: none" />
+            </form>
+
+            @if (req.Status)
             {
-                if (req.Status)
-                {
-
-                    <label class="switch">
-                        <input type="checkbox" disabled checked="checked">
-                        <span class="slider round"></span>
-                    </label>
-
-                }
-                else
-                {
-                    <label class="switch">
-                        <input type="checkbox" disabled>
-                        <span class="slider round"></span>
-                    </label>
-                }
-
-                <label>
-                    @Html.DisplayFor(x => req.RequirementName)
+                <label class="switch">
+                    <input type="checkbox" disabled checked="checked">
+                    <span class="slider round"></span>
                 </label>
-
-                @Html.Hidden("projectId", req.ProjectId)
-                @Html.Hidden("requirementId", req.RequirementId)
-
-
-                <label>
-                    @Html.DisplayFor(x => req.FileName)
-                </label>
-
-                <button type="button" class="openFile">Open File Dialog</button>
-                <input class="uploadButton" type="file" name="fileUpload" />
             }
+            else
+            {
+                <label class="switch">
+                    <input type="checkbox" disabled>
+                    <span class="slider round"></span>
+                </label>
+            }
+
+            <label>
+                @Html.DisplayFor(x => req.RequirementName)
+            </label>
+
+            @Html.Hidden("projectId", req.ProjectId)
+            @Html.Hidden("requirementId", req.RequirementId)
+
+
+            <label>
+                @Html.DisplayFor(x => req.FileName)
+            </label>
+
+            <button type="button" class="openFile" id="@openFileButton">Open</button>
+            <input class="uploadButton" type="file" name="fileUpload" />
+            @*}*@
 
             @if (req.Status)
             {
@@ -70,22 +73,8 @@ else
 }
 @section scripts{
     <script>
-        $(document).ready(function () {
-            $('button.openFile').each(function (index, value) {
-                $(value).on("click", function (event) {
-                    $(value).parent().find('input[type="file"]').trigger("click");
-
-                });
-
-            });
-
-            $('input[type="file"]').each(function (index, value) {
-                $(value).on("change", function () {
-                    $(value).parent().submit();
-                });
-
-            });
-        });
+     
+      
 
     </script>
 }
