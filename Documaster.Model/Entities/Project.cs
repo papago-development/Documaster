@@ -19,6 +19,5 @@ namespace Documaster.Model.Entities
         [JsonIgnore]
         public virtual ICollection<OutputDocument> OutputDocuments { get; set; } = new List<OutputDocument>();
 
-        public virtual ICollection<ProjectDocument> ProjectDocuments { get; set; } = new List<ProjectDocument>();
     }
 }

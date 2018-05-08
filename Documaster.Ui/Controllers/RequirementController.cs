@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Documaster.Business.Services;
 using Documaster.Model.Entities;
+using Documaster.Model.Enums;
 using Documaster.Ui.Models;
 
 namespace Documaster.Ui.Controllers
@@ -14,7 +16,6 @@ namespace Documaster.Ui.Controllers
         private readonly IGenericRepository<ProjectRequirement> _projectRequirementRepository;
         private readonly IGenericRepository<Project> _projectRepository;
         private readonly IGenericRepository<OutputDocument> _outputDocumentRepository;
-        private readonly IGenericRepository<ProjectDocument> _projectDocumentRepository;
         private readonly IGenericRepository<Category> _categoryRepository;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -26,7 +27,7 @@ namespace Documaster.Ui.Controllers
             _outputDocumentRepository = unitOfWork.Repository<OutputDocument>();
             _categoryRepository = unitOfWork.Repository<Category>();
             _projectRepository = unitOfWork.Repository<Project>();
-            _projectDocumentRepository = unitOfWork.Repository<ProjectDocument>();
+         
         }
 
         [HttpGet]
@@ -197,7 +198,7 @@ namespace Documaster.Ui.Controllers
 
         //Metoda pentru incarcarea fisierelor
         [HttpPost]
-        public void Upload(HttpPostedFileBase fileUpload, int projectId, int requirementId)
+        public void Upload(HttpPostedFileBase fileUpload, int projectId, int? requirementId, string documentType)
         {
             if (fileUpload == null)
             {
@@ -208,22 +209,32 @@ namespace Documaster.Ui.Controllers
             var tempImage = new byte[length];
             fileUpload.InputStream.Read(tempImage, 0, length);
 
+            // TODO: convert string to enum value
+            //  var content = (DocumentType)Enum.Parse(typeof(DocumentType), "OutputDocument", true);
+
+
+            if (!Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType))
+            {
+                return;
+            }
             var output = new OutputDocument
             {
 
                 Name = fileUpload.FileName,
                 DocumentData = tempImage,
                 ContentType = fileUpload.ContentType,
+                DocumentType = parsedDocumentType.ToString(),
                 ProjectId = projectId,
-                RequirementId = requirementId
-
+                RequirementId = requirementId,
             };
+
             _outputDocumentRepository.Create(output);
             _unitOfWork.SaveChanges();
 
             var outputDocuments = _outputDocumentRepository.GetAll().Where(x => x.ProjectId == projectId);
             ViewBag.OutputDocuments = outputDocuments;
         }
+
 
         public void DeleteDocument(int documentId)
         {
@@ -251,55 +262,28 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Photos(int projectId)
         {
-            var projectDocuments = _projectRepository.GetAll().Where(x => x.ProjectDocuments.Any(y => y.ProjectId == projectId));
+            var projectDocuments = _projectRepository.GetAll().Where(x => x.OutputDocuments.Any(y => y.ProjectId == projectId));
             var photos = new List<PhotoToUpdate>();
+
+            var content = (DocumentType)Enum.Parse(typeof(DocumentType), "Picture", true);
 
             foreach (var item in projectDocuments)
             {
-                var photo = item.ProjectDocuments.FirstOrDefault();
+
+                var photo = item.OutputDocuments.FirstOrDefault();
 
                 var newPhoto = new PhotoToUpdate
                 {
-                    Id = photo?.Id ?? 0,
-                    FileName = photo?.Name,
+                    Id = item?.Id ?? 0,
+                    FileName = item?.Name,
                     ProjectId = projectId,
+
 
                 };
                 photos.Add(newPhoto);
             }
             photos = photos.ToList();
             return PartialView("_ProjectDocument", photos);
-        }
-
-        [HttpPost]
-        public ActionResult UploadPhoto(HttpPostedFileBase fileUpload, int projectId)
-        {
-            if (fileUpload == null)
-            {
-                return null;
-            }
-
-            var length = fileUpload.ContentLength;
-            var tempImage = new byte[length];
-            fileUpload.InputStream.Read(tempImage, 0, length);
-
-            var photo = new ProjectDocument
-            {
-
-                Name = fileUpload.FileName,
-                DocumentData = tempImage,
-                //   ContentType = fileUpload.ContentType,
-                ProjectId = projectId,
-
-
-            };
-            _projectDocumentRepository.Create(photo);
-            _unitOfWork.SaveChanges();
-
-            var projectDocuments = _projectDocumentRepository.GetAll().Where(x => x.ProjectId == projectId);
-            ViewBag.ProjectDocuments = projectDocuments;
-
-            return RedirectToAction("_ProjectDocument", new { projectId });
         }
 
     }

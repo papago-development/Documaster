@@ -45,12 +45,12 @@
     <Compile Include="BaseEntities\BaseEntity.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\OutputDocument.cs" />
-    <Compile Include="Entities\ProjectDocument.cs" />
     <Compile Include="Entities\ProjectRequirement.cs" />
     <Compile Include="Entities\Requirement.cs" />
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\Template.cs" />
     <Compile Include="Entities\Customer.cs" />
+    <Compile Include="Enums\DocumentType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

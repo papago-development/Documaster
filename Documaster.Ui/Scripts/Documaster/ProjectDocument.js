@@ -3,21 +3,22 @@
     $("#tabs").tabs('load', currentIndex);
 };
 
-var uploadFile = function (e, projectId, requirementId) {
+var uploadFile = function (e, projectId, requirementId, documentType) {
     const formData = new FormData();
     formData.append("fileUpload", e.target.files[0]);
     formData.append("projectId", projectId);
     formData.append("requirementId", requirementId);
-    $.ajax ({
-            type: "POST",
-            url: "upload",
-            contentType: false,
-            processData: false,
-            data: formData
-        }).success (function () {
-            reloadCurrentTab();
-        })
-        .fail (function (jqXhr) {
+    formData.append("documentType", documentType);
+    $.ajax({
+        type: "POST",
+        url: "upload",
+        contentType: false,
+        processData: false,
+        data: formData
+    }).success(function () {
+        reloadCurrentTab();
+    })
+        .fail(function (jqXhr) {
         });
 };
 
@@ -32,14 +33,14 @@ var deleteDocument = function (documentId) {
     const formData = new FormData();
     formData.append("documentId", documentId);
     $.ajax({
-            type: "POST",
-            url: "DeleteDocument",
-            contentType: false,
-            processData: false,
-            data: formData
-        }).success(function () {
-            reloadCurrentTab();
-        })
+        type: "POST",
+        url: "DeleteDocument",
+        contentType: false,
+        processData: false,
+        data: formData
+    }).success(function () {
+        reloadCurrentTab();
+    })
         .fail(function (jqXhr) {
         });
 };

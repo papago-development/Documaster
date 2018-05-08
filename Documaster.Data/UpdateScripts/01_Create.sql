@@ -157,9 +157,9 @@ GO
 CREATE TABLE dbo.OutputDocument (
 	Id INT IDENTITY(1,1) NOT NULL
 	,ProjectId INT NOT NULL
-	,RequirementId INT NOT NULL
-	,CategoryId INT NOT NULL
+	,RequirementId INT  NULL
 	,ContentType VARCHAR(200) NULL
+	,DocumentType VARCHAR(200) NOT NULL
 	,[Name] NVARCHAR(100) NOT NULL
 	,DocumentData VARBINARY(max) NOT NULL
 	,CreationDate DATETIME NOT NULL
@@ -188,12 +188,6 @@ ALTER TABLE dbo.OutputDocument WITH CHECK
 	REFERENCES dbo.Requirement (Id)
 GO
 
-ALTER TABLE dbo.OutputDocument WITH CHECK
-	ADD CONSTRAINT FK_OutputDocument_CategoryId_Category_Id
-	FOREIGN KEY (CategoryId)
-	REFERENCES dbo.Category (Id)
-GO
-
 ALTER TABLE dbo.OutputDocument
 	CHECK CONSTRAINT FK_OutputDocument_RequirementId_Requirement_Id
 GO
@@ -201,36 +195,5 @@ GO
 CREATE UNIQUE NONCLUSTERED INDEX UX_OutputDocument_ProjectId_RequirementId_Name
 	ON dbo.OutputDocument (ProjectId, RequirementId, [Name])
 GO
-
-CREATE TABLE dbo.ProjectDocument (
-	Id INT IDENTITY(1,1) NOT NULL
-	,ProjectId INT NOT NULL
-	,[Name] NVARCHAR(100) NOT NULL
-	,DocumentData VARBINARY(max) NOT NULL
-	,CreationDate DATETIME NOT NULL
-	,LastUpdate DATETIME NOT NULL
-)
-GO
-
-
-
-ALTER TABLE dbo.ProjectDocument
-	ADD CONSTRAINT PK_ProjectDocument
-	PRIMARY KEY CLUSTERED (Id)
-GO
-
-ALTER TABLE dbo.ProjectDocument WITH CHECK
-	ADD CONSTRAINT FK_ProjectDocument_ProjectId_Project_Id
-	FOREIGN KEY (ProjectId)
-	REFERENCES dbo.Project (Id)
-GO
-
-ALTER TABLE dbo.ProjectDocument
-	CHECK CONSTRAINT FK_ProjectDocument_ProjectId_Project_Id
-GO
-CREATE UNIQUE NONCLUSTERED INDEX UX_ProjectDocument_ProjectId_Name
-	ON dbo.ProjectDocument (ProjectId, [Name])
-GO
-
 
 

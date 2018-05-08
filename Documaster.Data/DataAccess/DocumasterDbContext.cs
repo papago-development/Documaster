@@ -53,7 +53,6 @@ namespace Documaster.Data.DataAccess
         public IDbSet<ProjectRequirement> ProjectRequirements { get; set; }
         public IDbSet<Requirement> Requirements { get; set; }
         public IDbSet<Template> Templates { get; set; }
-        public IDbSet<ProjectDocument> ProjectDocuments { get; set; }
         public IDbSet<Category> Categories { get; set; }
     }
 }
