@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Documaster.Ui.Models.FileToUpdate>
+@{
+    ViewBag.Title = "DrawingList";
+    var projectId = (object)ViewBag.ProjectId;
+}
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<h2>Desene</h2>
+
+<div class="documentLine btn-group-vertical">
+    <input type="file" name="fileToUpload" id="uploadFileButton" style="display: none" />
+    <button class="openFile pull-right btn btn-primary">Upload</button>
+</div>
+
+
+@foreach (var draw in Model)
+{
+
+    <div class="documentLine">
+        <label>
+            @Html.DisplayFor(x => draw.FileName)
+        </label>
+
+        <button class="deleteButton" onclick="deleteDocument(@draw.Id)" data-documentid="@draw.Id">Sterge</button>
+        @Html.ActionLink("Download", "DownloadDocument", new { documentId = draw.Id })
+    </div>
+
+}
+
+<script type="text/javascript">
+         $ (document).ready (function () {
+             var projectId = @projectId;
+             var documentType = "@Documaster.Model.Enums.DocumentType.ProjectDocument.ToString()";
+        $("input[type='file']").each (function (index, value) {
+            var requirementId = $(value).parent().find("input[name='requirementId']").val();
+            $(value).change(function (element) {
+                uploadFile(element, projectId, requirementId, documentType);
+            });
+        });
+        $(".openFile").each(function (index, value) {
+            applyClickTransfer (value);
+        });
+         });
+
+</script>
