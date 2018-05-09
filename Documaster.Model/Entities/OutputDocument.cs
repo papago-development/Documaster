@@ -1,5 +1,4 @@
 ﻿using Documaster.Model.BaseEntities;
-using System.ComponentModel.DataAnnotations;
 
 namespace Documaster.Model.Entities
 {
@@ -11,7 +10,6 @@ namespace Documaster.Model.Entities
 
         public byte[] DocumentData { get; set; }
 
-      
         public string ContentType { get; set; }
 
         public string DocumentType { get; set; }
