@@ -27,7 +27,7 @@ namespace Documaster.Ui.Controllers
             _outputDocumentRepository = unitOfWork.Repository<OutputDocument>();
             _categoryRepository = unitOfWork.Repository<Category>();
             _projectRepository = unitOfWork.Repository<Project>();
-         
+
         }
 
         [HttpGet]
@@ -233,6 +233,7 @@ namespace Documaster.Ui.Controllers
 
             var outputDocuments = _outputDocumentRepository.GetAll().Where(x => x.ProjectId == projectId);
             ViewBag.OutputDocuments = outputDocuments;
+      
         }
 
 
@@ -262,27 +263,28 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Photos(int projectId)
         {
-            var projectDocuments = _projectRepository.GetAll().Where(x => x.OutputDocuments.Any(y => y.ProjectId == projectId));
-            var photos = new List<PhotoToUpdate>();
-
-            var content = (DocumentType)Enum.Parse(typeof(DocumentType), "Picture", true);
+            //  var projectDocuments = _projectRepository.GetAll().Where(x => x.OutputDocuments.Any(y => y.ProjectId == projectId));
+            var projectDocuments = _outputDocumentRepository.GetAll().Where(x=>x.ProjectId == projectId);
+            var photos = new List<FileToUpdate>();
 
             foreach (var item in projectDocuments)
             {
 
-                var photo = item.OutputDocuments.FirstOrDefault();
+        //        var photo = item.;
 
-                var newPhoto = new PhotoToUpdate
+                var newPhoto = new FileToUpdate
                 {
                     Id = item?.Id ?? 0,
                     FileName = item?.Name,
                     ProjectId = projectId,
-
+                    Status = !string.IsNullOrEmpty(item?.Name)
 
                 };
                 photos.Add(newPhoto);
             }
             photos = photos.ToList();
+            ViewBag.ProjectId = projectId;
+       
             return PartialView("_ProjectDocument", photos);
         }
 

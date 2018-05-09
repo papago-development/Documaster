@@ -1,22 +1,47 @@
-﻿@model IEnumerable<Documaster.Ui.Models.PhotoToUpdate>
+﻿@model IEnumerable<Documaster.Ui.Models.FileToUpdate>
 @{
     ViewBag.Title = "Photos";
+    var projectId = (object)ViewBag.ProjectId;
 }
 
 <link href="~/Content/Site.css" rel="stylesheet" />
-<h2>Photos</h2>
+<h2>Fotografii</h2>
 
-@using (Html.BeginForm("UploadPhoto", "Requirement", FormMethod.Post, new { enctype = "multipart/form-data", @class = "formInline" }))
-{
-    <button type="button" class="openFile">Open File Dialog</button>
-    <input class="uploadButton" type="file" name="fileUpload" />
-}
+<div class="documentLine btn-group-vertical">
+    <input type="file" name="fileToUpload" id="uploadFileButton" style="display: none" />
+    <button class="openFile pull-right btn btn-primary">Upload</button>
+</div>
+
 
 @foreach (var photo in Model)
 {
+
     <div class="documentLine">
         <label>
             @Html.DisplayFor(x => photo.FileName)
         </label>
+        @if (photo.Status)
+        {
+            <button class="deleteButton" onclick="deleteDocument(@photo.Id)" data-documentid="@photo.Id">Sterge</button>
+            @Html.ActionLink("Download", "DownloadDocument", new { documentId = photo.Id })
+        }
     </div>
+
 }
+
+<script type="text/javascript">
+         $ (document).ready (function () {
+             var projectId = @projectId;
+             var documentType = "@Documaster.Model.Enums.DocumentType.Picture.ToString()";
+        $("input[type='file']").each (function (index, value) {
+            var requirementId = $(value).parent().find("input[name='requirementId']").val();
+            $(value).change(function (element) {
+                uploadFile(element, projectId, requirementId, documentType);
+            });
+        });
+        $(".openFile").each(function (index, value) {
+            applyClickTransfer (value);
+        });
+         });
+
+</script>
