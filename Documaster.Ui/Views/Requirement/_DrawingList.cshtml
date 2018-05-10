@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Documaster.Ui.Models.FileToUpdate>
 @{
-    ViewBag.Title = "Photos";
+    ViewBag.Title = "DrawingList";
     var projectId = (object)ViewBag.ProjectId;
 }
 
 <link href="~/Content/Site.css" rel="stylesheet" />
-<h2>Fotografii</h2>
+<h2>Desene</h2>
 
 <div class="documentLine btn-group-vertical">
     <input type="file" name="fileToUpload" id="uploadFileButton" style="display: none" />
@@ -13,18 +13,16 @@
 </div>
 
 
-@foreach (var photo in Model)
+@foreach (var draw in Model)
 {
 
     <div class="documentLine">
         <label>
-            @Html.DisplayFor(x => photo.FileName)
+            @Html.DisplayFor(x => draw.FileName)
         </label>
-        @if (photo.Status)
-        {
-            <button class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument(@photo.Id)" data-documentid="@photo.Id">Sterge</button>
-            @Html.ActionLink("Download", "DownloadDocument", new { documentId = photo.Id }, new {@class="btn btn-primary btn-xs" })
-        }
+
+        <button class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument(@draw.Id)" data-documentid="@draw.Id">Sterge</button>
+        @Html.ActionLink("Download", "DownloadDocument", new { documentId = draw.Id }, new { @class = "btn btn-primary btn-xs" })
     </div>
 
 }
@@ -32,7 +30,7 @@
 <script type="text/javascript">
          $ (document).ready (function () {
              var projectId = @projectId;
-             var documentType = "@Documaster.Model.Enums.DocumentType.Picture.ToString()";
+             var documentType = "@Documaster.Model.Enums.DocumentType.ProjectDocument.ToString()";
         $("input[type='file']").each (function (index, value) {
             var requirementId = $(value).parent().find("input[name='requirementId']").val();
             $(value).change(function (element) {

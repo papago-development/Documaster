@@ -233,7 +233,7 @@ namespace Documaster.Ui.Controllers
 
             var outputDocuments = _outputDocumentRepository.GetAll().Where(x => x.ProjectId == projectId);
             ViewBag.OutputDocuments = outputDocuments;
-      
+
         }
 
 
@@ -264,13 +264,13 @@ namespace Documaster.Ui.Controllers
         public ActionResult Photos(int projectId)
         {
             //  var projectDocuments = _projectRepository.GetAll().Where(x => x.OutputDocuments.Any(y => y.ProjectId == projectId));
-            var projectDocuments = _outputDocumentRepository.GetAll().Where(x=>x.ProjectId == projectId);
+            var projectDocuments = _outputDocumentRepository.GetAll().Where(x => x.ProjectId == projectId);
             var photos = new List<FileToUpdate>();
 
             foreach (var item in projectDocuments)
             {
 
-        //        var photo = item.;
+                //        var photo = item.;
 
                 var newPhoto = new FileToUpdate
                 {
@@ -284,9 +284,38 @@ namespace Documaster.Ui.Controllers
             }
             photos = photos.ToList();
             ViewBag.ProjectId = projectId;
-       
+
             return PartialView("_ProjectDocument", photos);
         }
 
+        //Afisare desene/schite
+        [HttpGet]
+        public ActionResult Draws(int projectId)
+        {
+            var projectDocuments = _outputDocumentRepository.GetAll().Where(x => x.ProjectId == projectId);
+            var draws = new List<FileToUpdate>();
+
+            foreach (var item in projectDocuments)
+            {
+                if (item.DocumentType.Equals("ProjectDocument"))
+                {
+                    var newDraw = new FileToUpdate
+                    {
+                        Id = item?.Id ?? 0,
+                        FileName = item?.Name,
+                        ProjectId = projectId,
+                        Status = !string.IsNullOrEmpty(item?.Name)
+
+                    };
+                    draws.Add(newDraw);
+                }
+
+            }
+            draws = draws.ToList();
+            ViewBag.ProjectId = projectId;
+
+            return PartialView("_DrawingList", draws);
+        }
     }
+
 }

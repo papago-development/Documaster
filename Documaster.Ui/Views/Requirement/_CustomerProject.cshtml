@@ -2,13 +2,9 @@
 @{
     ViewBag.Title = "CustomerProject";
     var projectId = (object)ViewBag.ProjectId;
-  
+
 }
 <link href="~/Content/Site.css" rel="stylesheet" />
-@*<link href="~/Content/tinytools.toggleswitch.min.css" rel="stylesheet" />
-    <script src="~/Scripts/tinytools.toggleswitch.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/css-toggle-switch/latest/toggle-switch.css" rel="stylesheet" />*@
-
 
 @if (!Model.Any())
 {
@@ -26,9 +22,9 @@ else
         <div class="documentLine row">
             <input type="file" name="fileToUpload" id="@buttonId" style="display: none" />
             @Html.Hidden("requirementId", req.RequirementId, new { @class = "requirementId" })
-            <button class="openFile pull-right">Upload</button>
+            <button class="openFile pull-right btn btn-info">Upload</button>
 
-
+            <br />
             @if (req.Status)
             {
                 <label class="switch">
@@ -57,8 +53,8 @@ else
 
             @if (req.Status)
             {
-                <button class="deleteButton" onclick="deleteDocument(@req.Id)" data-documentid="@req.Id">Sterge</button>
-                @Html.ActionLink("Download", "DownloadDocument", new { documentId = req.Id })
+                <button class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument(@req.Id)" data-documentid="@req.Id">Sterge</button>
+                @Html.ActionLink("Download", "DownloadDocument", new { documentId = req.Id }, new { @class = "btn btn-primary btn-xs" })
 
             }
         </div>

@@ -2,21 +2,18 @@
     ViewBag.Title = "CustomerProject";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var projectId = (object)ViewBag.ProjectId;
-
-
 }
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/themes/base/tabs.css" rel="stylesheet" />
 <script src="~/Scripts/Documaster/ProjectDocument.js"></script>
-<h2>CustomerProject</h2>
+<br />
 
 <div id="tabs">
     <ul>
-
         <li><a href="@Url.Action("OutputDocuments","Requirement", new {projectId = projectId })">Avize</a></li>
         <li><a href="@Url.Action("Photos","Requirement",new {projectId = projectId})">Foto</a></li>
-        <li><a href="">Desene</a></li>
+        <li><a href="@Url.Action("Draws","Requirement",new {projectId = projectId})">Desene</a></li>
         <li><a href="">Note</a></li>
     </ul>
 </div>

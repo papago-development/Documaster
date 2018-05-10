@@ -4,9 +4,9 @@
     var projectId = ViewBag.ProjectId;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>View</h2>
+<br />
 <p>
-    @Html.ActionLink("Lucrare Noua", "Create", new { customerId = ViewBag.CustomerId }, new { projectId = ViewBag.ProjectId })
+    @Html.ActionLink("Lucrare Noua", "Create", new { customerId = ViewBag.CustomerId }, new { projectId = ViewBag.ProjectId, @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -25,7 +25,7 @@
     </tr>
     @if (Model != null)
     {
-        @Html.Hidden("ProjectId",(object)projectId)
+        @Html.Hidden("ProjectId", (object)projectId)
         foreach (var item in Model)
         {
             <tr>
@@ -41,8 +41,8 @@
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Sterge", "Delete", new { id = item.Id }) |
-                    @Html.ActionLink("Cerinte", "ProjectRequirements", "Requirement", new { projectId = item.Id },"") |
-                    @Html.ActionLink("Details", "CustomerProject","Requirement",new { projectId = item.Id },"")
+                    @Html.ActionLink("Cerinte", "ProjectRequirements", "Requirement", new { projectId = item.Id }, "") |
+                    @Html.ActionLink("Details", "CustomerProject", "Requirement", new { projectId = item.Id }, "")
                 </td>
             </tr>
         }

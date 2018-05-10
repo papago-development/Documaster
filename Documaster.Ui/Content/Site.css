@@ -33,21 +33,12 @@ textarea {
 .uploadButton {
     visibility: hidden;
 }
-
-/*.switch-toggle {
-    width: 15px;
-}
-
-    .switch-toggle label:not(.disabled) {
-        cursor: pointer;
-    }*/
-
 /* The switch - the box around the slider */
 .switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 65px;
+    height: 47px;
 }
 
     /* Hide default HTML checkbox */
@@ -71,8 +62,8 @@ textarea {
     .slider:before {
         position: absolute;
         content: "";
-        height: 26px;
-        width: 26px;
+        height: 16px;
+        width: 16px;
         left: 4px;
         bottom: 4px;
         background-color: white;
@@ -103,3 +94,12 @@ input:checked + .slider:before {
     .slider.round:before {
         border-radius: 50%;
     }
+
+/*View cerinte*/
+.row > p {
+    font-weight: bold;
+}
+
+.row > label {
+    font-weight: 500;
+}

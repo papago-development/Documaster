@@ -1,43 +1,56 @@
 ﻿@using Documaster.Ui.Models
 @model IEnumerable<AssignedCategory>
 @{
+    /**/
+
     ViewBag.Title = "SaveProject";
     var projectId = ViewBag.ProjectId;
 }
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+
 <h2>Cerinte proiect</h2>
-@using (Html.BeginForm("SaveProjectRequirements","Requirement"))
-{
-    @Html.Hidden("ProjectId", (object)projectId)
-
-    @Html.AntiForgeryToken()
-
-    foreach (var assignedCategory in Model)
+<div class="form-horizontal">
+    @using (Html.BeginForm("SaveProjectRequirements", "Requirement"))
     {
-        <div class="row">
+
+        @Html.Hidden("ProjectId", (object)projectId)
+
+        @Html.AntiForgeryToken()
+
+        foreach (var assignedCategory in Model)
+        {
             <div class="row">
-                @Html.DisplayFor(x => assignedCategory.Name)
-            </div>
-            <div class="row">
-                @foreach (var requirement in assignedCategory.AssignedRequirements)
-                {
-                    <div>
-                        <div class="col-md-6">
-                            <input type="checkbox"
-                                   name="assignedRequirements"
-                                   id="projectCheckbox-@requirement.Id"
-                                   value="@requirement.Id"
-                                   @(Html.Raw(requirement.Assigned ? "checked=\"checked\"" : "")) />
-                            <label for="projectCheckbox-@requirement.Id">@requirement.Name</label>
+                <div class="row">
+                    <p>@Html.DisplayFor(x => assignedCategory.Name)</p>
+                </div>
+                <div class="row">
+                    @foreach (var requirement in assignedCategory.AssignedRequirements)
+                    {
+                        <div>
+                            <div class="col-md-6">
+                                <input type="checkbox"
+                                       name="assignedRequirements"
+                                       id="projectCheckbox-@requirement.Id"
+                                       value="@requirement.Id"
+                                       @(Html.Raw(requirement.Assigned ? "checked=\"checked\"" : "")) />
+                                <label for="projectCheckbox-@requirement.Id">@requirement.Name</label>
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
+            </div>
+            <hr />
+        }
+
+        <div class="form-group">
+            <div>
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     }
-    <div class="form-group">
-        <div>
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
-    </div>
-}
 
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index", "Project")
+</div>
