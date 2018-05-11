@@ -70,7 +70,7 @@ namespace Documaster.Ui.Controllers
                 _customerRepository.Update(project.Customer, new List<string> { "Name", "Telephone", "Email", "Address" });
             }
 
-            _projectRepository.Update(project, new List<string> { "Name" });
+            _projectRepository.Update(project, new List<string> { "Name", "Expire" });
             _unitOfWork.SaveChanges();
 
             return RedirectToAction("Index");

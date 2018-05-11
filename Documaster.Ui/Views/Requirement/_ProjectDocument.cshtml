@@ -15,7 +15,6 @@
 
 @foreach (var photo in Model)
 {
-
     <div class="documentLine">
         <label>
             @Html.DisplayFor(x => photo.FileName)
@@ -23,10 +22,9 @@
         @if (photo.Status)
         {
             <button class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument(@photo.Id)" data-documentid="@photo.Id">Sterge</button>
-            @Html.ActionLink("Download", "DownloadDocument", new { documentId = photo.Id }, new {@class="btn btn-primary btn-xs" })
+            @Html.ActionLink("Descarca", "DownloadDocument", new { documentId = photo.Id }, new {@class="btn btn-primary btn-xs" })
         }
     </div>
-
 }
 
 <script type="text/javascript">

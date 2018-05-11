@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Documaster.Ui.Models.FileToUpdate>
 @{
     ViewBag.Title = "DrawingList";
-    var projectId = (object)ViewBag.ProjectId;
+    var projectId = ( object ) ViewBag.ProjectId;
 }
 
 <link href="~/Content/Site.css" rel="stylesheet" />
@@ -13,33 +13,30 @@
 </div>
 
 
-@foreach (var draw in Model)
+@foreach ( var draw in Model )
 {
-
     <div class="documentLine">
         <label>
-            @Html.DisplayFor(x => draw.FileName)
+            @Html.DisplayFor( x => draw.FileName )
         </label>
 
-        <button class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument(@draw.Id)" data-documentid="@draw.Id">Sterge</button>
-        @Html.ActionLink("Download", "DownloadDocument", new { documentId = draw.Id }, new { @class = "btn btn-primary btn-xs" })
+        <button class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument (@draw.Id)" data-documentid="@draw.Id">Sterge</button>
+        @Html.ActionLink( "Descarca", "DownloadDocument", new {documentId = draw.Id}, new {@class = "btn btn-primary btn-xs"} )
     </div>
-
 }
 
 <script type="text/javascript">
-         $ (document).ready (function () {
-             var projectId = @projectId;
-             var documentType = "@Documaster.Model.Enums.DocumentType.ProjectDocument.ToString()";
-        $("input[type='file']").each (function (index, value) {
-            var requirementId = $(value).parent().find("input[name='requirementId']").val();
-            $(value).change(function (element) {
-                uploadFile(element, projectId, requirementId, documentType);
+    $ (document).ready (function () {
+        var projectId = @projectId;
+        var documentType = "@Documaster.Model.Enums.DocumentType.ProjectDocument.ToString()";
+        $ ("input[type='file']").each (function (index, value) {
+            var requirementId = $ (value).parent().find ("input[name='requirementId']").val();
+            $ (value).change (function (element) {
+                uploadFile (element, projectId, requirementId, documentType);
             });
         });
-        $(".openFile").each(function (index, value) {
+        $ (".openFile").each (function (index, value) {
             applyClickTransfer (value);
         });
-         });
-
+    });
 </script>

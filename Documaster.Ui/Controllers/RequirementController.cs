@@ -14,7 +14,6 @@ namespace Documaster.Ui.Controllers
     {
         private readonly IGenericRepository<Requirement> _requirementRepository;
         private readonly IGenericRepository<ProjectRequirement> _projectRequirementRepository;
-        private readonly IGenericRepository<Project> _projectRepository;
         private readonly IGenericRepository<OutputDocument> _outputDocumentRepository;
         private readonly IGenericRepository<Category> _categoryRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -26,8 +25,6 @@ namespace Documaster.Ui.Controllers
             _projectRequirementRepository = unitOfWork.Repository<ProjectRequirement>();
             _outputDocumentRepository = unitOfWork.Repository<OutputDocument>();
             _categoryRepository = unitOfWork.Repository<Category>();
-            _projectRepository = unitOfWork.Repository<Project>();
-
         }
 
         [HttpGet]
@@ -200,7 +197,7 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public void Upload(HttpPostedFileBase fileUpload, int projectId, int? requirementId, string documentType)
         {
-            if (fileUpload == null)
+            if (fileUpload == null || !Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType))
             {
                 return;
             }
@@ -209,17 +206,8 @@ namespace Documaster.Ui.Controllers
             var tempImage = new byte[length];
             fileUpload.InputStream.Read(tempImage, 0, length);
 
-            // TODO: convert string to enum value
-            //  var content = (DocumentType)Enum.Parse(typeof(DocumentType), "OutputDocument", true);
-
-
-            if (!Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType))
-            {
-                return;
-            }
             var output = new OutputDocument
             {
-
                 Name = fileUpload.FileName,
                 DocumentData = tempImage,
                 ContentType = fileUpload.ContentType,
@@ -233,9 +221,7 @@ namespace Documaster.Ui.Controllers
 
             var outputDocuments = _outputDocumentRepository.GetAll().Where(x => x.ProjectId == projectId);
             ViewBag.OutputDocuments = outputDocuments;
-
         }
-
 
         public void DeleteDocument(int documentId)
         {
@@ -258,64 +244,29 @@ namespace Documaster.Ui.Controllers
             return File(document.DocumentData, document.ContentType);
         }
 
-
-        // Afisare fotografii
         [HttpGet]
-        public ActionResult Photos(int projectId)
+        public ActionResult DisplayDocuments(int projectId, string documentType)
         {
-            //  var projectDocuments = _projectRepository.GetAll().Where(x => x.OutputDocuments.Any(y => y.ProjectId == projectId));
-            var projectDocuments = _outputDocumentRepository.GetAll().Where(x => x.ProjectId == projectId);
-            var photos = new List<FileToUpdate>();
-
-            foreach (var item in projectDocuments)
+            if (!Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType))
             {
-
-                //        var photo = item.;
-
-                var newPhoto = new FileToUpdate
-                {
-                    Id = item?.Id ?? 0,
-                    FileName = item?.Name,
-                    ProjectId = projectId,
-                    Status = !string.IsNullOrEmpty(item?.Name)
-
-                };
-                photos.Add(newPhoto);
+                return HttpNotFound();
             }
-            photos = photos.ToList();
+
+            var model = _outputDocumentRepository
+                            .Get(x => x.ProjectId == projectId && x.DocumentType == documentType)
+                            .Select(item => new FileToUpdate
+                                 {
+                                    Id = item?.Id ?? 0,
+                                    FileName = item?.Name,
+                                    ProjectId = projectId,
+                                    Status = !string.IsNullOrEmpty( item?.Name )
+                                 } )
+                            .ToList();
             ViewBag.ProjectId = projectId;
 
-            return PartialView("_ProjectDocument", photos);
-        }
-
-        //Afisare desene/schite
-        [HttpGet]
-        public ActionResult Draws(int projectId)
-        {
-            var projectDocuments = _outputDocumentRepository.GetAll().Where(x => x.ProjectId == projectId);
-            var draws = new List<FileToUpdate>();
-
-            foreach (var item in projectDocuments)
-            {
-                if (item.DocumentType.Equals("ProjectDocument"))
-                {
-                    var newDraw = new FileToUpdate
-                    {
-                        Id = item?.Id ?? 0,
-                        FileName = item?.Name,
-                        ProjectId = projectId,
-                        Status = !string.IsNullOrEmpty(item?.Name)
-
-                    };
-                    draws.Add(newDraw);
-                }
-
-            }
-            draws = draws.ToList();
-            ViewBag.ProjectId = projectId;
-
-            return PartialView("_DrawingList", draws);
+            return parsedDocumentType == DocumentType.Picture
+                ? PartialView("_ProjectDocument", model)
+                : PartialView("_DrawingList", model);
         }
     }
-
 }

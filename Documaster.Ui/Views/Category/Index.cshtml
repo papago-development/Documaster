@@ -1,24 +1,18 @@
 ﻿@model IEnumerable<Documaster.Model.Entities.Category>
 
 @{
-    ViewBag.Title = "View";
+    ViewBag.Title = "Categorii";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>View</h2>
+<h2>Categorii</h2>
 <p>
     @Html.ActionLink("Adauga", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastUpdate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Nume
         </th>
         <th></th>
     </tr>
@@ -26,16 +20,10 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
+                @Html.DisplayFor(x => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastUpdate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Modifica", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Sterge", "Delete", new { id = item.Id })
             </td>
         </tr>

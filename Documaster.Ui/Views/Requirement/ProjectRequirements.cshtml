@@ -1,9 +1,7 @@
 ﻿@using Documaster.Ui.Models
 @model IEnumerable<AssignedCategory>
 @{
-    /**/
-
-    ViewBag.Title = "SaveProject";
+    ViewBag.Title = "Cerinte proiect";
     var projectId = ViewBag.ProjectId;
 }
 
@@ -45,12 +43,12 @@
 
         <div class="form-group">
             <div>
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Salveaza" class="btn btn-default" />
             </div>
         </div>
     }
 
 </div>
 <div>
-    @Html.ActionLink("Back to List", "Index", "Project")
+    @Html.ActionLink("Inapoi", "Index", "Project")
 </div>

@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Documaster.Model.Entities.Project>
 @{
-    ViewBag.Title = "View";
+    ViewBag.Title = "Lista proiecte";
     var projectId = ViewBag.ProjectId;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -11,16 +11,14 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Customer.Name)
+            Nume client
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Nume proiect
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Expire)
+            Expira la
         </th>
-
-
         <th></th>
     </tr>
     @if (Model != null)
@@ -39,10 +37,10 @@
                     @Html.DisplayFor(modelItem => item.Expire)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Modifica", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Sterge", "Delete", new { id = item.Id }) |
                     @Html.ActionLink("Cerinte", "ProjectRequirements", "Requirement", new { projectId = item.Id }, "") |
-                    @Html.ActionLink("Details", "CustomerProject", "Requirement", new { projectId = item.Id }, "")
+                    @Html.ActionLink("Detalii", "CustomerProject", "Requirement", new { projectId = item.Id }, "")
                 </td>
             </tr>
         }
