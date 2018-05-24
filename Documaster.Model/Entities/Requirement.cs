@@ -8,7 +8,7 @@ namespace Documaster.Model.Entities
     {
         public int CategoryId { get; set; }
 
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<ProjectRequirement> ProjectRequirements { get; set; } = new List<ProjectRequirement>();

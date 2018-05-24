@@ -1,7 +1,6 @@
 ﻿using Documaster.Model.BaseEntities;
 using System.Collections.Generic;
 
-
 namespace Documaster.Model.Entities
 {
     public class Category : NamedEntity

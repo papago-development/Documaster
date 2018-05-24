@@ -5,20 +5,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>View</h2>
+<h2>Lista cerinte</h2>
 <p>
-    @Html.ActionLink("Adauga", "Create")
+    @Html.ActionLink("Adauga cerinta noua", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CreationDate)
+            Nume categorie
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Category.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Nume cerinta
         </th>
         <th></th>
     </tr>
@@ -26,16 +23,13 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Category.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Modifica", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Sterge", "Delete", new { id = item.Id })
             </td>
         </tr>
