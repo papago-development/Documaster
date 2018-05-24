@@ -236,7 +236,7 @@ namespace Documaster.Ui.Controllers
             var cd = new System.Net.Mime.ContentDisposition
             {
                 FileName = document.Name,
-                // always prompt the user for downloading, set to true if you want 
+                // always prompt the user for downloading, set to true if you want
                 // the browser to try to show the file inline
                 Inline = false,
             };
@@ -263,10 +263,9 @@ namespace Documaster.Ui.Controllers
                                  } )
                             .ToList();
             ViewBag.ProjectId = projectId;
+            ViewBag.DocumentType = parsedDocumentType.ToString();
 
-            return parsedDocumentType == DocumentType.Picture
-                ? PartialView("_ProjectDocument", model)
-                : PartialView("_DrawingList", model);
+            return PartialView( "_ProjectDocument", model );
         }
     }
 }

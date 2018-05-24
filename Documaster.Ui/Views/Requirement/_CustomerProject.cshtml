@@ -1,80 +1,92 @@
-﻿@model IEnumerable<Documaster.Ui.Models.FileToUpdate>
+﻿@*Avize*@
+@model IEnumerable<Documaster.Ui.Models.FileToUpdate>
 @{
     ViewBag.Title = "CustomerProject";
-    var projectId = (object)ViewBag.ProjectId;
-
+    var projectId = ( object ) ViewBag.ProjectId;
 }
-<link href="~/Content/Site.css" rel="stylesheet" />
+@*<link href="~/Content/Site.css" rel="stylesheet" />*@
+@*<script src="~/Scripts/tinytools.toggleswitch.js"></script>
+<link href="~/Content/tinytools.toggleswitch.css" rel="stylesheet" />*@
 
-@if (!Model.Any())
+@if ( !Model.Any() )
 {
-    <p>Nu ati selectat niciun aviz!</p>
+    <p>Nu ai adaugat nicio cerinta!</p>
 }
 else
 {
-    foreach (var req in Model)
-    {
-        var formId = "uploadFileForm" + req.Id;
-        var buttonId = "uploadFileButton" + req.Id;
-        var openFileButton = "openFile" + req.Id;
-
-        @Html.DisplayFor(x => req.CategoryName)
-        <div class="documentLine row">
-            <input type="file" name="fileToUpload" id="@buttonId" style="display: none" />
-            @Html.Hidden("requirementId", req.RequirementId, new { @class = "requirementId" })
-            <button class="openFile pull-right btn btn-info">Upload</button>
-
-            <br />
-            @if (req.Status)
-            {
-                <label class="switch">
-                    <input type="checkbox" disabled checked="checked">
-                    <span class="slider round"></span>
-                </label>
-            }
-            else
-            {
-                <label class="switch">
-                    <input type="checkbox" disabled>
-                    <span class="slider round"></span>
-                </label>
-            }
-
-            <label>
-                @Html.DisplayFor(x => req.RequirementName)
-            </label>
-
-            @Html.Hidden("projectId", req.ProjectId)
-            @Html.Hidden("requirementId", req.RequirementId)
-
-            <label>
-                @Html.DisplayFor(x => req.FileName)
-            </label>
-
-            @if (req.Status)
-            {
-                <button class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument(@req.Id)" data-documentid="@req.Id">Sterge</button>
-                @Html.ActionLink("Descarca", "DownloadDocument", new { documentId = req.Id }, new { @class = "btn btn-primary btn-xs" })
-
-            }
+    <div class="container" id="fulfilledRequirementsTable">
+        <div class="row" id="header">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-2">
+                <b>Cerinta</b>
+            </div>
+            <div class="col-md-4">
+                <b>Nume fisier</b>
+            </div>
+            <div class="col-md-4">
+                <b>Actiuni</b>
+            </div>
         </div>
-    }
+        @foreach ( var req in Model )
+        {
+            var buttonId = "uploadFileButton" + req.Id;
+            <div class="documentLine row">
+                <div class="col-md-2 switch-column">
+                    <label class="switch">
+                        @if ( req.Status )
+                        {
+                            <input type="checkbox" disabled checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" disabled>
+                        }
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div class="col-md-2">
+                    @Html.DisplayFor( x => req.RequirementName )
+                </div>
+
+                <div class="col-md-4">
+                    @Html.DisplayFor( x => req.FileName )
+                </div>
+
+                <div class="col-md-4">
+                    <input type="file" name="fileToUpload" id="@buttonId" style="display: none" />
+                    @Html.Hidden( "requirementId", req.RequirementId, new {@class = "requirementId"} )
+                    <a class="openFile btn-primary btn btn-xs btn-info">Upload</a>
+
+                    @Html.Hidden( "projectId", req.ProjectId )
+                    @Html.Hidden( "requirementId", req.RequirementId )
+
+                    @if ( req.Status )
+                    {
+                        <a class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument (@req.Id)" data-documentid="@req.Id">Sterge</a>
+                        @Html.ActionLink( "Descarca", "DownloadDocument", new {documentId = req.Id}, new {@class = "button btn btn-primary btn-xs"} )
+                    }
+                </div>
+            </div>
+        }
+    </div>
 }
 
 <script type="text/javascript">
-         $ (document).ready (function () {
-             var projectId = @projectId;
-             var documentType = "@Documaster.Model.Enums.DocumentType.OutputDocument.ToString()";
-        $("input[type='file']").each (function (index, value) {
-            var requirementId = $(value).parent().find("input[name='requirementId']").val();
-            $(value).change(function (element) {
-                uploadFile(element, projectId, requirementId,documentType);
+    $ (document).ready (function () {
+        var projectId = @projectId;
+        var documentType = "@Documaster.Model.Enums.DocumentType.OutputDocument.ToString()";
+        $ ("input[type='file']").each (function (index, value) {
+            var requirementId = $ (value).parent().find ("input[name='requirementId']").val();
+            $ (value).change (function (element) {
+                uploadFile (element, projectId, requirementId, documentType);
             });
         });
-        $(".openFile").each(function (index, value) {
+        $ (".openFile").each (function (index, value) {
             applyClickTransfer (value);
         });
-         });
 
+        //$("input[type='checkbox']").toggleSwitch({onLabel: "", offLabel:"", width: "50px"});
+    });
 </script>
-

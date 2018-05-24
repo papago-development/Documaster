@@ -33,20 +33,18 @@ textarea {
 .uploadButton {
     visibility: hidden;
 }
-/* The switch - the box around the slider */
+
 .switch {
     position: relative;
     display: inline-block;
-    width: 65px;
-    height: 47px;
+    width: 60px;
+    height: 34px;
 }
 
-    /* Hide default HTML checkbox */
     .switch input {
         display: none;
     }
 
-/* The slider */
 .slider {
     position: absolute;
     cursor: pointer;
@@ -62,15 +60,14 @@ textarea {
     .slider:before {
         position: absolute;
         content: "";
-        height: 16px;
-        width: 16px;
+        height: 26px;
+        width: 26px;
         left: 4px;
         bottom: 4px;
         background-color: white;
         -webkit-transition: .4s;
         transition: .4s;
     }
-
 
 input:checked + .slider {
     background-color: green;
@@ -102,4 +99,20 @@ input:checked + .slider:before {
 
 .row > label {
     font-weight: 500;
+}
+
+#fulfilledRequirementsTable #header {
+    margin-bottom: 10px
+}
+
+#fulfilledRequirementsTable div.row div {
+    padding: 6px;
+}
+
+    #fulfilledRequirementsTable div.row div.switch-column {
+        padding: 0px !important;
+    }
+
+#uploadedDocumentsTable .btn-group-vertical {
+    margin-bottom: 10px;
 }

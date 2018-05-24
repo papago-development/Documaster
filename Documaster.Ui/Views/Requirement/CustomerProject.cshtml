@@ -11,9 +11,12 @@
 
 <div id="tabs">
     <ul>
-        <li><a href="@Url.Action("OutputDocuments","Requirement", new {projectId})">Avize</a></li>
-        <li><a href="@Url.Action("DisplayDocuments","Requirement",new {projectId, documentType = Documaster.Model.Enums.DocumentType.Picture})">Foto</a></li>
-        <li><a href="@Url.Action("DisplayDocuments","Requirement",new {projectId, documentType = Documaster.Model.Enums.DocumentType.ProjectDocument})">Desene</a></li>
+        @*Avize*@
+        <li><a href="@Url.Action( "OutputDocuments", "Requirement", new {projectId} )">Avize</a></li>
+        @*Foto*@
+        <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.Picture} )">Foto</a></li>
+        @*Desene*@
+        <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.ProjectDocument} )">Desene</a></li>
         <li><a href="">Note</a></li>
     </ul>
 </div>

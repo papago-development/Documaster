@@ -188,8 +188,6 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
-    <Content Include="Content\tinytools.toggleswitch.css" />
-    <Content Include="Content\tinytools.toggleswitch.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -215,8 +213,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\tinytools.toggleswitch.js" />
-    <Content Include="Scripts\tinytools.toggleswitch.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -244,7 +240,6 @@
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Requirement\CustomerProject.cshtml" />
     <Content Include="Views\Requirement\_ProjectDocument.cshtml" />
-    <Content Include="Views\Requirement\_DrawingList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
