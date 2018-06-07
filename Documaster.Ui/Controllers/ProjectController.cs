@@ -24,7 +24,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _projectRepository.GetAll();
+            var model = _projectRepository.GetAll().OrderBy(x => x.Expire);
             return View(model);
         }
 

@@ -145,6 +145,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-datepicker\css\bootstrap-datepicker.css" />
+    <Content Include="Content\bootstrap-datepicker\css\bootstrap-datepicker.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -192,11 +194,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\bootstrap-datepicker\css\bootstrap-datepicker.css.map" />
+    <Content Include="Content\bootstrap-datepicker\css\bootstrap-datepicker.min.css.map" />
+    <None Include="Properties\PublishProfiles\Documaster - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\Documaster\ProjectDocument.js" />

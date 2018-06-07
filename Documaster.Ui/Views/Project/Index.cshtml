@@ -34,7 +34,10 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Expire)
+                    @if (item.Expire.HasValue)
+                    {
+                        @item.Expire.Value.ToShortDateString()
+                    }
                 </td>
                 <td>
                     @Html.ActionLink("Modifica", "Edit", new { id = item.Id }) |
@@ -45,5 +48,4 @@
             </tr>
         }
     }
-
 </table>
