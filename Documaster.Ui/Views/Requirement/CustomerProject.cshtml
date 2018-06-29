@@ -1,9 +1,10 @@
-﻿@{
+﻿@using System.Configuration
+@{
     ViewBag.Title = "CustomerProject";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var projectId = (object)ViewBag.ProjectId;
+    var specialDocumentTypeText = ConfigurationManager.AppSettings["SpecialDocumentType"];
 }
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/themes/base/tabs.css" rel="stylesheet" />
 <script src="~/Scripts/Documaster/ProjectDocument.js"></script>
@@ -11,19 +12,18 @@
 
 <div id="tabs">
     <ul>
-        @*Avize*@
         <li><a href="@Url.Action( "OutputDocuments", "Requirement", new {projectId} )">Avize</a></li>
-        @*Foto*@
-        <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.Picture} )">Foto</a></li>
-        @*Desene*@
-        <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.ProjectDocument} )">Desene</a></li>
+        <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.Photo} )">Foto 3D</a></li>
+        <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.Drawing} )">Desene</a></li>
+        <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.Document} )">Documente</a></li>
+        <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.SpecialDocumentType} )">@specialDocumentTypeText</a></li>
         <li><a href="">Note</a></li>
     </ul>
 </div>
 @section scripts{
-    <script>
-        $(document).ready(function () {
-            $("#tabs").tabs();
-        });
-    </script>
+<script>
+    $(document).ready(function () {
+        $("#tabs").tabs();
+    });
+</script>
 }

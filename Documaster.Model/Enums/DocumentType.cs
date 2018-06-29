@@ -3,7 +3,9 @@
     public enum DocumentType
     {
         OutputDocument = 0,
-        ProjectDocument = 1,
-        Picture = 2
+        Photo = 1,
+        Drawing = 2,
+        Document = 3,
+        SpecialDocumentType = 4
     }
 }

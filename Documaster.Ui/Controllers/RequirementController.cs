@@ -172,7 +172,7 @@ namespace Documaster.Ui.Controllers
 
             foreach (var item in model2)
             {
-                var file = item.OutputDocuments.FirstOrDefault();
+                var file = item.OutputDocuments.FirstOrDefault(x => x.ProjectId == projectId);
 
                 var newFileToUpdate = new FileToUpdate
                 {
@@ -190,7 +190,7 @@ namespace Documaster.Ui.Controllers
 
             fileToUpdates = fileToUpdates.OrderByDescending(x => x.RequirementName).ToList();
             ViewBag.ProjectId = projectId;
-            return PartialView("_CustomerProject", fileToUpdates);
+            return PartialView("_ProjectDocumentForRequirement", fileToUpdates);
         }
 
         //Metoda pentru incarcarea fisierelor

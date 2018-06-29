@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Documaster.Model.Entities.Project>
+@{
+    ViewBag.Title = "Lista proiecte";
+    var projectId = ViewBag.ProjectId;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var sortDescending = !(bool) ViewBag.SortDescending;
+}
+<br />
+<p>
+    @Html.ActionLink("Lucrare Noua", "Create", new { customerId = ViewBag.CustomerId }, new { projectId = ViewBag.ProjectId, @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Nr.", "List", new { sortProperty = "Id", sortDescending })
+        </th>
+        <th>
+            @Html.ActionLink("Nume client", "List", new { sortProperty = "Customer.Name", sortDescending })
+        </th>
+        <th>
+            @Html.ActionLink("Nume proiect", "List", new { sortProperty = "Name", sortDescending })
+        </th>
+        <th>
+            @Html.ActionLink("Creat pe", "List", new { sortProperty = "CreationDate", sortDescending })
+        </th>
+        <th>
+            @Html.ActionLink("Expira pe", "List", new { sortProperty = "Expire", sortDescending })
+        </th>
+        <th></th>
+    </tr>
+    @if (Model != null)
+    {
+        @Html.Hidden("ProjectId", (object)projectId)
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @item.CreationDate.ToShortDateString()
+                </td>
+                <td>
+                    @if (item.Expire.HasValue)
+                    {
+                        @item.Expire.Value.ToShortDateString()
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Modifica", "Edit", new {id = item.Id}) |
+                    @Html.ActionLink("Sterge", "Delete", new {id = item.Id}) |
+                    @Html.ActionLink("Cerinte", "ProjectRequirements", "Requirement", new {projectId = item.Id}, "") |
+                    @Html.ActionLink("Editeaza", "CustomerProject", "Requirement", new {projectId = item.Id}, "")
+                </td>
+            </tr>
+        }
+    }
+</table>

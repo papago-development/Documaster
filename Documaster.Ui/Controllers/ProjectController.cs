@@ -24,7 +24,28 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _projectRepository.GetAll().OrderBy(x => x.Expire);
+            return RedirectToAction("List", new {sortProperty = "Expire", sortDescending = true});
+        }
+
+        [HttpGet]
+        public ActionResult List(string sortProperty, bool sortDescending)
+        {
+            IOrderedEnumerable<Project> model;
+            if (sortProperty.Contains("."))
+            {
+                model = sortDescending
+                        ? _projectRepository.GetAll().OrderByDescending(x => x.Customer.Name)
+                        : _projectRepository.GetAll().OrderBy(x => x.Customer.Name);
+            }
+            else
+            {
+                var propertyInfo = typeof(Project).GetProperty(sortProperty);
+                model = sortDescending
+                        ? _projectRepository.GetAll().OrderByDescending(x => propertyInfo?.GetValue(x, null) ?? x.Name)
+                        : _projectRepository.GetAll().OrderBy(x => propertyInfo?.GetValue(x, null) ?? x.Name);
+            }
+
+            ViewBag.SortDescending = sortDescending;
             return View(model);
         }
 

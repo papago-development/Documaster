@@ -235,12 +235,12 @@
     <Content Include="Views\Requirement\Delete.cshtml" />
     <Content Include="Views\Requirement\Edit.cshtml" />
     <Content Include="Views\Requirement\Index.cshtml" />
-    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Project\List.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Delete.cshtml" />
     <Content Include="Views\Project\Create.cshtml" />
     <Content Include="Views\Requirement\ProjectRequirements.cshtml" />
-    <Content Include="Views\Requirement\_CustomerProject.cshtml" />
+    <Content Include="Views\Requirement\_ProjectDocumentForRequirement.cshtml" />
     <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Category\Delete.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
