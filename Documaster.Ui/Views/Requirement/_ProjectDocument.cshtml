@@ -21,22 +21,26 @@
             </div>
             <div class="col-md-4">
                 <a class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument (@photo.Id)" data-documentid="@photo.Id">Sterge</a>
-                @Html.ActionLink( "Descarca", "DownloadDocument", new {documentId = photo.Id}, new {@class = "btn btn-primary btn-xs"} )
+                <a class="button btn btn-primary btn-xs" href="/Requirement/DownloadDocument?documentId=@photo.Id">Descarca</a>
+                @Ajax.ActionLink("Vezi", "PreviewDocument", new { documentId = photo.Id }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn btn-info btn-xs" })
             </div>
         </div>
     }
 </div>
 
 <script type="text/javascript">
-    $ (document).ready (function () {
+    var showModalDialog = function () {
+        $("#myModal").modal("show");
+    };
+    $(document).ready(function () {
         var projectId = @projectId;
-        $ ("input[type='file']").each (function (index, value) {
+        $("input[type='file']").each (function (index, value) {
             var requirementId = $ (value).parent().find ("input[name='requirementId']").val();
             $ (value).change (function (element) {
                 uploadFile (element, projectId, requirementId, "@documentType");
             });
         });
-        $ (".openFile").each (function (index, value) {
+        $(".openFile").each (function (index, value) {
             applyClickTransfer (value);
         });
     });

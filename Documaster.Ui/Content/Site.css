@@ -116,3 +116,15 @@ input:checked + .slider:before {
 #uploadedDocumentsTable .btn-group-vertical {
     margin-bottom: 10px;
 }
+
+.modal-body {
+    padding: 15px !important;
+}
+
+button.close {
+    margin-top: 5px !important;
+}
+
+.modal-header {
+    padding: 10px !important;
+}

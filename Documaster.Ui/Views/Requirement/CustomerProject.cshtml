@@ -7,6 +7,8 @@
 }
 <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/themes/base/tabs.css" rel="stylesheet" />
+
+@Scripts.Render("~/bundles/jqueryunobtrusive")
 <script src="~/Scripts/Documaster/ProjectDocument.js"></script>
 <br />
 
@@ -20,10 +22,11 @@
         <li><a href="">Note</a></li>
     </ul>
 </div>
+<div class="modal fade" id="myModal"></div>
 @section scripts{
-<script>
-    $(document).ready(function () {
-        $("#tabs").tabs();
-    });
-</script>
+    <script>
+        $(document).ready(function () {
+            $("#tabs").tabs();
+        });
+    </script>
 }

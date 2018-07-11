@@ -1,14 +1,10 @@
-﻿@*Avize*@
-@model IEnumerable<Documaster.Ui.Models.FileToUpdate>
+﻿@model IEnumerable<Documaster.Ui.Models.FileToUpdate>
 @{
     ViewBag.Title = "CustomerProject";
-    var projectId = ( object ) ViewBag.ProjectId;
+    var projectId = (object)ViewBag.ProjectId;
 }
-@*<link href="~/Content/Site.css" rel="stylesheet" />*@
-@*<script src="~/Scripts/tinytools.toggleswitch.js"></script>
-<link href="~/Content/tinytools.toggleswitch.css" rel="stylesheet" />*@
 
-@if ( !Model.Any() )
+@if (!Model.Any())
 {
     <p>Nu ai adaugat nicio cerinta!</p>
 }
@@ -28,13 +24,13 @@ else
                 <b>Actiuni</b>
             </div>
         </div>
-        @foreach ( var req in Model )
+        @foreach (var req in Model)
         {
             var buttonId = "uploadFileButton" + req.Id;
             <div class="documentLine row">
                 <div class="col-md-2 switch-column">
                     <label class="switch">
-                        @if ( req.Status )
+                        @if (req.Status)
                         {
                             <input type="checkbox" disabled checked>
                         }
@@ -47,25 +43,26 @@ else
                 </div>
 
                 <div class="col-md-2">
-                    @Html.DisplayFor( x => req.RequirementName )
+                    @Html.DisplayFor(x => req.RequirementName)
                 </div>
 
                 <div class="col-md-4">
-                    @Html.DisplayFor( x => req.FileName )
+                    @Html.DisplayFor(x => req.FileName)
                 </div>
 
                 <div class="col-md-4">
                     <input type="file" name="fileToUpload" id="@buttonId" style="display: none" />
-                    @Html.Hidden( "requirementId", req.RequirementId, new {@class = "requirementId"} )
-                    <a class="openFile btn-primary btn btn-xs btn-info">Upload</a>
+                    @Html.Hidden("requirementId", req.RequirementId, new { @class = "requirementId" })
+                    <a class="openFile btn-primary btn btn-xs btn-info">Incarca</a>
 
-                    @Html.Hidden( "projectId", req.ProjectId )
-                    @Html.Hidden( "requirementId", req.RequirementId )
+                    @Html.Hidden("projectId", req.ProjectId)
+                    @Html.Hidden("requirementId", req.RequirementId)
 
-                    @if ( req.Status )
+                    @if (req.Status)
                     {
-                        <a class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument (@req.Id)" data-documentid="@req.Id">Sterge</a>
-                        @Html.ActionLink( "Descarca", "DownloadDocument", new {documentId = req.Id}, new {@class = "button btn btn-primary btn-xs"} )
+                        <a class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument(@req.Id)" data-documentid="@req.Id">Sterge</a>
+                        <a class="button btn btn-primary btn-xs" href="/Requirement/DownloadDocument?documentId=@req.Id">Descarca</a>
+                        @Ajax.ActionLink("Vezi", "PreviewDocument", new { documentId = req.Id }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn btn-info btn-xs" })
                     }
                 </div>
             </div>
@@ -74,7 +71,11 @@ else
 }
 
 <script type="text/javascript">
-    $ (document).ready (function () {
+    var showModalDialog = function () {
+        $("#myModal").modal("show");
+    };
+
+    $(document).ready (function () {
         var projectId = @projectId;
         var documentType = "@Documaster.Model.Enums.DocumentType.OutputDocument.ToString()";
         $ ("input[type='file']").each (function (index, value) {

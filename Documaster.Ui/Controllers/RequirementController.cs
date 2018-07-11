@@ -265,7 +265,14 @@ namespace Documaster.Ui.Controllers
             ViewBag.ProjectId = projectId;
             ViewBag.DocumentType = parsedDocumentType.ToString();
 
-            return PartialView( "_ProjectDocument", model );
+            return PartialView("_ProjectDocument", model);
+        }
+
+        [HttpGet]
+        public PartialViewResult PreviewDocument(int documentId)
+        {
+            var document = _outputDocumentRepository.Get(documentId);
+            return PartialView("_PreviewDocument", document);
         }
     }
 }
