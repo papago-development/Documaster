@@ -17,9 +17,9 @@ namespace Documaster.Business.Services
             _dbContext = dbContext;
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public IQueryable<TEntity> GetAll()
         {
-            return _dbContext.Get<TEntity>().OrderBy( x => x.LastUpdate ).ToList();
+            return _dbContext.Get<TEntity>();
         }
 
         public TEntity Get( int id )

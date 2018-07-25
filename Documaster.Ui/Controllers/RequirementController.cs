@@ -30,14 +30,14 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _requirementRepository.GetAll();
+            var model = _requirementRepository.GetAll().ToList();
             return View(model);
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            var categoryList = _categoryRepository.GetAll();
+            var categoryList = _categoryRepository.GetAll().ToList();
             ViewBag.Categories = categoryList;
 
             return View();
@@ -55,7 +55,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var categoryList = _categoryRepository.GetAll();
+            var categoryList = _categoryRepository.GetAll().ToList();
             ViewBag.Categories = categoryList;
 
             var model = _requirementRepository.Get(id);
@@ -167,7 +167,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult OutputDocuments(int projectId)
         {
-            var model2 = _requirementRepository.GetAll().Where(x => x.ProjectRequirements.Any(y => y.ProjectId == projectId));
+            var model2 = _requirementRepository.GetAll().Where(x => x.ProjectRequirements.Any(y => y.ProjectId == projectId)).ToList();
             var fileToUpdates = new List<FileToUpdate>();
 
             foreach (var item in model2)
@@ -219,7 +219,7 @@ namespace Documaster.Ui.Controllers
             _outputDocumentRepository.Create(output);
             _unitOfWork.SaveChanges();
 
-            var outputDocuments = _outputDocumentRepository.GetAll().Where(x => x.ProjectId == projectId);
+            var outputDocuments = _outputDocumentRepository.GetAll().Where(x => x.ProjectId == projectId).ToList();
             ViewBag.OutputDocuments = outputDocuments;
         }
 

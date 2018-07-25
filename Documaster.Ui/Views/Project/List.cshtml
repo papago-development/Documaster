@@ -41,7 +41,7 @@
                     @Html.DisplayFor(modelItem => item.Customer.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.ActionLink(item.Name, "CustomerProject", "Requirement", new { projectId = item.Id }, "")
                 </td>
                 <td>
                     @item.CreationDate.ToShortDateString()
@@ -55,8 +55,7 @@
                 <td>
                     @Html.ActionLink("Modifica", "Edit", new {id = item.Id}) |
                     @Html.ActionLink("Sterge", "Delete", new {id = item.Id}) |
-                    @Html.ActionLink("Cerinte", "ProjectRequirements", "Requirement", new {projectId = item.Id}, "") |
-                    @Html.ActionLink("Editeaza", "CustomerProject", "Requirement", new {projectId = item.Id}, "")
+                    @Html.ActionLink("Cerinte", "ProjectRequirements", "Requirement", new {projectId = item.Id}, "")
                 </td>
             </tr>
         }

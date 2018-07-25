@@ -1,4 +1,5 @@
 ﻿using Documaster.Business.Services;
+using Documaster.Business.Extensions;
 using Documaster.Model.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,20 +31,9 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult List(string sortProperty, bool sortDescending)
         {
-            IOrderedEnumerable<Project> model;
-            if (sortProperty.Contains("."))
-            {
-                model = sortDescending
-                        ? _projectRepository.GetAll().OrderByDescending(x => x.Customer.Name)
-                        : _projectRepository.GetAll().OrderBy(x => x.Customer.Name);
-            }
-            else
-            {
-                var propertyInfo = typeof(Project).GetProperty(sortProperty);
-                model = sortDescending
-                        ? _projectRepository.GetAll().OrderByDescending(x => propertyInfo?.GetValue(x, null) ?? x.Name)
-                        : _projectRepository.GetAll().OrderBy(x => propertyInfo?.GetValue(x, null) ?? x.Name);
-            }
+            var model = sortDescending
+                    ? _projectRepository.GetAll().OrderByDescending(sortProperty).ToList()
+                    : _projectRepository.GetAll().OrderBy(sortProperty).ToList();
 
             ViewBag.SortDescending = sortDescending;
             return View(model);

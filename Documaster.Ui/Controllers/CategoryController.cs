@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using Documaster.Business.Services;
 using Documaster.Model.Entities;
@@ -19,7 +20,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _categoryRepository.GetAll();
+            var model = _categoryRepository.GetAll().ToList();
             return View(model);
         }
 
