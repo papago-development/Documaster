@@ -6,6 +6,7 @@
         Photo = 1,
         Drawing = 2,
         Document = 3,
-        SpecialDocumentType = 4
+        SpecialDocumentType = 4,
+        GroundDrawing = 5
     }
 }

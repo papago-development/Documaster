@@ -164,6 +164,7 @@ CREATE TABLE dbo.OutputDocument (
 	,DocumentData VARBINARY(max) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
+	,IsReady BIT NOT NULL CONSTRAINT DF_IsReady DEFAULT(0)
 )
 GO
 
@@ -196,4 +197,8 @@ CREATE UNIQUE NONCLUSTERED INDEX UX_OutputDocument_ProjectId_RequirementId_Name
 	ON dbo.OutputDocument (ProjectId, RequirementId, [Name])
 GO
 
+-- Add new row for manually changing of note --
+ALTER TABLE dbo.OutputDocument Add 
+	IsReady BIT NOT NULL CONSTRAINT DF_IsReady DEFAULT(0)
+GO
 

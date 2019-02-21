@@ -69,6 +69,24 @@ textarea {
         transition: .4s;
     }
 
+/* include generated hidden field here */
+input[type="checkbox"]:checked + input[type="hidden"] + .slider,
+input[type="checkbox"]:checked + .slider {
+    background-color: green;
+}
+
+/* include generated hidden field here */
+input[type="checkbox"]:focus + input[type="hidden"] + .slider,
+input[type="checkbox"]:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+/* include generated hidden field here */
+input[type="checkbox"]:checked + input[type="hidden"] + .slider:before,
+input[type="checkbox"]:checked + .slider:before {
+    transform: translateX(26px);
+}
+
 input:checked + .slider {
     background-color: green;
 }
@@ -127,4 +145,9 @@ button.close {
 
 .modal-header {
     padding: 10px !important;
+}
+
+/* Dropdown Settings*/
+.navbar-brand a:hover {
+   color: black;
 }

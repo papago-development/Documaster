@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Documaster.Business.Services;
@@ -167,25 +168,25 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult OutputDocuments(int projectId)
         {
-            var model2 = _requirementRepository.GetAll().Where(x => x.ProjectRequirements.Any(y => y.ProjectId == projectId)).ToList();
+            var requirements = _requirementRepository.GetAll().Where(x => x.ProjectRequirements.Any(y => y.ProjectId == projectId)).ToList();
             var fileToUpdates = new List<FileToUpdate>();
-
-            foreach (var item in model2)
+                            
+            foreach (var requirement in requirements)
             {
-                var file = item.OutputDocuments.FirstOrDefault(x => x.ProjectId == projectId);
+                var outputDocument = requirement.OutputDocuments.FirstOrDefault(x => x.ProjectId == projectId);
 
-                var newFileToUpdate = new FileToUpdate
-                {
-                    Id = file?.Id ?? 0,
-                    FileName = file?.Name,
-                    ProjectId = projectId,
-                    RequirementName = item.Name,
-                    Status = !string.IsNullOrEmpty(file?.Name),
-                    RequirementId = item.Id,
-
-                };
-
-                fileToUpdates.Add(newFileToUpdate);
+                    var newFileToUpdate = new FileToUpdate
+                    {
+                        Id = outputDocument?.Id ?? 0,
+                        FileName = outputDocument?.Name,
+                        ProjectId = projectId,
+                        RequirementName = requirement.Name,
+                        /* Modificare */
+                        IsReady = outputDocument?.IsReady ?? false,
+                        RequirementId = requirement.Id,
+                    };
+               
+                    fileToUpdates.Add(newFileToUpdate);
             }
 
             fileToUpdates = fileToUpdates.OrderByDescending(x => x.RequirementName).ToList();
@@ -193,6 +194,22 @@ namespace Documaster.Ui.Controllers
             return PartialView("_ProjectDocumentForRequirement", fileToUpdates);
         }
 
+        [HttpPost]
+        /*
+         * Modificare
+         */
+        public ActionResult ToggleDocumentState(int documentId, bool state)
+        {
+            var document = _outputDocumentRepository.Get(documentId);
+            if (document == null)
+                return HttpNotFound();
+
+            document.IsReady = state;
+            _outputDocumentRepository.Update(document, new List<string> { "IsReady" });
+            _unitOfWork.SaveChanges();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
         //Metoda pentru incarcarea fisierelor
         [HttpPost]
         public void Upload(HttpPostedFileBase fileUpload, int projectId, int? requirementId, string documentType)
@@ -214,6 +231,10 @@ namespace Documaster.Ui.Controllers
                 DocumentType = parsedDocumentType.ToString(),
                 ProjectId = projectId,
                 RequirementId = requirementId,
+                /*
+                 * Modificare
+                 *
+                IsReady = true*/
             };
 
             _outputDocumentRepository.Create(output);
@@ -259,7 +280,7 @@ namespace Documaster.Ui.Controllers
                                     Id = item?.Id ?? 0,
                                     FileName = item?.Name,
                                     ProjectId = projectId,
-                                    Status = !string.IsNullOrEmpty( item?.Name )
+                                    IsReady = item?.IsReady ?? false
                                  } )
                             .ToList();
             ViewBag.ProjectId = projectId;

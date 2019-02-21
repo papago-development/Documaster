@@ -11,9 +11,18 @@ namespace Documaster.Model.Entities
 
         public byte[] ProjectData { get; set; }
 
+        //Field for notes tab
+        //  public string Notes { get; set; }
+        //IsReady 
+       // public bool IsReady { get; set; }
+
         public virtual Customer Customer { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<OutputDocument> OutputDocuments { get; set; } = new List<OutputDocument>();
+
+
+        
+
     }
 }
