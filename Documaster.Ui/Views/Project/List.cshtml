@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<Documaster.Model.Entities.Project>
 @{
     ViewBag.Title = "Lista proiecte";
-    var projectId = ViewBag.ProjectId;
+    var projectId = (object)ViewBag.ProjectId;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var sortDescending = !(bool) ViewBag.SortDescending;
+    var sortDescending = !(bool)ViewBag.SortDescending;
 }
 <br />
 <p>
@@ -13,6 +13,9 @@
     <tr>
         <th>
             @Html.ActionLink("Nr.", "List", new { sortProperty = "Id", sortDescending })
+        </th>
+        <th>
+            @Html.ActionLink("Finalizat", "List", new { sortProperty = "IsReady", sortDescending })
         </th>
         <th>
             @Html.ActionLink("Nume client", "List", new { sortProperty = "Customer.Name", sortDescending })
@@ -35,7 +38,11 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Id)
+                    @Html.DisplayFor(modelItem => item.Id, new { id = @item.Id })
+                </td>
+                <td>
+                  
+                    @Html.CheckBoxFor(modelItem => item.IsReady, new { @class = "projectIsReady" })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Customer.Name)
@@ -53,11 +60,35 @@
                     }
                 </td>
                 <td>
-                    @Html.ActionLink("Modifica", "Edit", new {id = item.Id}) |
-                    @Html.ActionLink("Sterge", "Delete", new {id = item.Id}) |
-                    @Html.ActionLink("Cerinte", "ProjectRequirements", "Requirement", new {projectId = item.Id}, "")
+                    @Html.ActionLink("Modifica", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Sterge", "Delete", new { id = item.Id }) |
+                    @Html.ActionLink("Cerinte", "ProjectRequirements", "Requirement", new { projectId = item.Id }, "")
                 </td>
             </tr>
         }
     }
 </table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var projectId = 2;
+
+        $('.projectIsReady:checked').click(function () {
+            var state = true;
+
+            $.post("ProjectIsReady", { projectId, state }, function () {
+                console.log('success');
+            });
+
+        });
+      
+        $('.projectIsReady').click(function () {
+            var state = false;
+
+            $.post("ProjectIsReady", { projectId, state }, function () {
+                console.log('success');
+            });
+
+        });
+
+    });
+</script>

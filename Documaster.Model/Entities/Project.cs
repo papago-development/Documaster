@@ -14,7 +14,9 @@ namespace Documaster.Model.Entities
         //Field for notes tab
         //  public string Notes { get; set; }
         //IsReady 
-       // public bool IsReady { get; set; }
+
+        //Properties for column Finalizat in projects page
+        public bool IsReady { get; set; }
 
         public virtual Customer Customer { get; set; }
 

@@ -4,6 +4,7 @@ using Documaster.Model.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Net;
 
 namespace Documaster.Ui.Controllers
 {
@@ -37,6 +38,20 @@ namespace Documaster.Ui.Controllers
 
             ViewBag.SortDescending = sortDescending;
             return View(model);
+        }
+
+        /*
+         * 
+         */
+         [HttpPost]
+         public ActionResult ProjectIsReady(int projectId, bool state)
+        {
+            var project = _projectRepository.Get(projectId);
+            project.IsReady = state;
+            _projectRepository.Update(project, new List<string> { "IsReady" });
+            _unitOfWork.SaveChanges();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         [HttpGet]

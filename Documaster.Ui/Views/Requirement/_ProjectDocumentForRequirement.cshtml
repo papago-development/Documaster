@@ -27,12 +27,13 @@ else
         @foreach (var req in Model)
         {
             var buttonId = "uploadFileButton" + req.Id;
+           
             <div class="documentLine row">
-                <div class="col-md-2 switch-column">
+                <div class="col-md-2 switch-column" id="isChecked" data-documentid="@req.Id">
                     <label class="switch">
 
                         @Html.CheckBoxFor(x => req.IsReady)
-
+                       
 
                         @*javascript (ajax) care salveaza automat bifa, primeste 2 param true/false + id
                             pe onchange *@
@@ -55,6 +56,7 @@ else
 
                     @Html.Hidden("projectId", req.ProjectId)
                     @Html.Hidden("requirementId", req.RequirementId)
+                    @Html.Hidden("documentId", req.Id)
 
                     @if (req.IsReady)
                     {
@@ -73,28 +75,36 @@ else
                 $("#myModal").modal("show");
             };
 
-            $(document).ready (function () {
-                var projectId = @projectId;
-                var documentType = "@Documaster.Model.Enums.DocumentType.OutputDocument.ToString()";
-                $ ("input[type='file']").each (function (index, value) {
-                    var requirementId = $ (value).parent().find ("input[name='requirementId']").val();
-                    $ (value).change (function (element) {
-                        uploadFile (element, projectId, requirementId, documentType);
-                    });
-                });
-                $ (".openFile").each (function (index, value) {
-                    applyClickTransfer (value);
-                });
+    $(document).ready(function () {
 
-                //$("input[type='checkbox']").toggleSwitch({onLabel: "", offLabel:"", width: "50px"});
-                //Save toggle button status
-                $(".switch-column input[type='checkbox']").change(function () {
-                    var documentId = 8;
-                    var state = $(this).val(); // ??
-                    $.post("ToggleDocumentState", { documentId, state }, function () {
-                       
-                        console.log('success');
-                    });
-                });
+        var projectId = @projectId;
+        var documentType = "@Documaster.Model.Enums.DocumentType.OutputDocument.ToString()";
+
+
+        $("input[type='file']").each(function (index, value) {
+            var requirementId = $(value).parent().find("input[name='requirementId']").val();
+            $(value).change(function (element) {
+                uploadFile(element, projectId, requirementId, documentType);
             });
-    </script>
+        });
+        $(".openFile").each(function (index, value) {
+            applyClickTransfer(value);
+        });
+
+        //$("input[type='checkbox']").toggleSwitch({onLabel: "", offLabel:"", width: "50px"});
+        //Save toggle button status
+        $(".switch-column input[type='checkbox']").change(function () {
+            var documentId = 8;
+
+            var state = $(this).val(); // ??
+            if ($("input[type='checkbox']").focus().before()) {
+                state = false;
+            }
+                $.post("ToggleDocumentState", { documentId, state }, function () {
+                    console.log('success');
+                });
+            
+            });
+
+            });
+</script>

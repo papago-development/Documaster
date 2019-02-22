@@ -9,12 +9,18 @@ CREATE TABLE dbo.Project (
 	,[Name] NVARCHAR(50) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
+	,IsReady BIT NOT NULL CONSTRAINT DF_IsReady DEFAULT(0)
 )
 GO
 
 ALTER TABLE dbo.Project
 	ADD CONSTRAINT PK_Project 
 	PRIMARY KEY CLUSTERED (Id)
+GO
+
+-- Add new row for manually changing of note --
+ALTER TABLE dbo.Project Add 
+	IsReady BIT NOT NULL CONSTRAINT DF_ProjectIsReady DEFAULT(0)
 GO
 
 CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Name
@@ -34,7 +40,6 @@ CREATE TABLE dbo.Customer (
 )
 GO
 
-
 ALTER TABLE dbo.Customer WITH CHECK
 	ADD CONSTRAINT FK_Customer_Id_Project_Id
 	FOREIGN KEY (Id)
@@ -45,9 +50,6 @@ ALTER TABLE dbo.Customer
 	CHECK CONSTRAINT FK_Customer_Id_Project_Id
 GO
 
-
-
-
 ALTER TABLE dbo.Customer
 	ADD CONSTRAINT PK_Customer PRIMARY KEY CLUSTERED (Id)
 GO
@@ -55,7 +57,6 @@ GO
 --CREATE UNIQUE NONCLUSTERED INDEX UX_Customer_Name
 --	ON dbo.Customer ([Name])
 --GO
-
 
 CREATE TABLE dbo.Template (
 	Id INT IDENTITY(1,1) NOT NULL
@@ -86,10 +87,6 @@ ALTER TABLE dbo.Category
 	ADD CONSTRAINT PK_Category
 	PRIMARY KEY CLUSTERED (Id)
 GO
-
-
-
-
 
 CREATE TABLE dbo.Requirement (
 	Id INT IDENTITY(1,1) NOT NULL
@@ -152,7 +149,6 @@ GO
 CREATE UNIQUE NONCLUSTERED INDEX UX_ProjectRequirement_ProjectId_RequirementId
 	ON dbo.ProjectRequirement (ProjectId, RequirementId)
 GO
-
 
 CREATE TABLE dbo.OutputDocument (
 	Id INT IDENTITY(1,1) NOT NULL
