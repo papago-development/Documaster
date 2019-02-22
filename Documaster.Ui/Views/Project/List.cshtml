@@ -36,7 +36,8 @@
         @Html.Hidden("ProjectId", (object)projectId)
         foreach (var item in Model)
         {
-            <tr>
+            var willExpire = item.Expire.HasValue && (item.Expire - DateTime.Now).Value.TotalDays < 30 ? "willExpire" : "";
+            <tr class="@willExpire">
                 <td>
                     @Html.DisplayFor(modelItem => item.Id)
                 </td>
