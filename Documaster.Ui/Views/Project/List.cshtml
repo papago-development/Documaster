@@ -15,6 +15,9 @@
             @Html.ActionLink("Nr.", "List", new { sortProperty = "Id", sortDescending })
         </th>
         <th>
+            @Html.ActionLink("Gata", "List", new { sortProperty = "IsReady", sortDescending })
+        </th>
+        <th>
             @Html.ActionLink("Nume client", "List", new { sortProperty = "Customer.Name", sortDescending })
         </th>
         <th>
@@ -36,6 +39,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.CheckBoxFor(modelItem => item.IsReady, new { @class = "project-state" })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Customer.Name)
@@ -61,3 +67,15 @@
         }
     }
 </table>
+
+<script>
+    $(document).ready(function () {
+        $(".project-state").change(function () {
+            var projectId = $(this).parent().siblings()[0].innerText;
+            var state = $(this).prop("checked");
+            $.post("ToggleProjectState", { projectId, state }, function () {
+                console.log('success');
+            });
+        });
+    });
+</script>

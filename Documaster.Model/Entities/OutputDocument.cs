@@ -14,7 +14,6 @@ namespace Documaster.Model.Entities
 
         public string DocumentType { get; set; }
 
-        public bool IsReady { get; set; }
 
         public virtual Project Project { get; set; }
 

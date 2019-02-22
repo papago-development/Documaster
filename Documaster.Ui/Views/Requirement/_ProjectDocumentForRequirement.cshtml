@@ -29,13 +29,9 @@ else
             var buttonId = "uploadFileButton" + req.Id;
             <div class="documentLine row">
                 <div class="col-md-2 switch-column">
+                    @Html.Hidden("projectRequirementId", req.ProjectRequirementId, new { @class = "projectRequirementId" })
                     <label class="switch">
-
                         @Html.CheckBoxFor(x => req.IsReady)
-
-
-                        @*javascript (ajax) care salveaza automat bifa, primeste 2 param true/false + id
-                            pe onchange *@
                         <div class="slider round"></div>
                     </label>
                 </div>
@@ -56,7 +52,7 @@ else
                     @Html.Hidden("projectId", req.ProjectId)
                     @Html.Hidden("requirementId", req.RequirementId)
 
-                    @if (req.IsReady)
+                    @if (!string.IsNullOrEmpty(req.FileName))
                     {
                         <a class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument(@req.Id)" data-documentid="@req.Id">Sterge</a>
                         <a class="button btn btn-primary btn-xs" href="/Requirement/DownloadDocument?documentId=@req.Id">Descarca</a>
@@ -69,32 +65,32 @@ else
 }
 
 <script type="text/javascript">
-            var showModalDialog = function () {
-                $("#myModal").modal("show");
-            };
+    var showModalDialog = function () {
+        $("#myModal").modal("show");
+    };
 
-            $(document).ready (function () {
-                var projectId = @projectId;
-                var documentType = "@Documaster.Model.Enums.DocumentType.OutputDocument.ToString()";
-                $ ("input[type='file']").each (function (index, value) {
-                    var requirementId = $ (value).parent().find ("input[name='requirementId']").val();
-                    $ (value).change (function (element) {
-                        uploadFile (element, projectId, requirementId, documentType);
-                    });
-                });
-                $ (".openFile").each (function (index, value) {
-                    applyClickTransfer (value);
-                });
-
-                //$("input[type='checkbox']").toggleSwitch({onLabel: "", offLabel:"", width: "50px"});
-                //Save toggle button status
-                $(".switch-column input[type='checkbox']").change(function () {
-                    var documentId = 8;
-                    var state = $(this).val(); // ??
-                    $.post("ToggleDocumentState", { documentId, state }, function () {
-                       
-                        console.log('success');
-                    });
-                });
+    $(document).ready (function () {
+        var projectId = @projectId;
+        var documentType = "@Documaster.Model.Enums.DocumentType.OutputDocument.ToString()";
+        $ ("input[type='file']").each (function (index, value) {
+            var requirementId = $ (value).parent().find ("input[name='requirementId']").val();
+            $ (value).change (function (element) {
+                uploadFile (element, projectId, requirementId, documentType);
             });
-    </script>
+        });
+        $ (".openFile").each (function (index, value) {
+            applyClickTransfer (value);
+        });
+
+        //$("input[type='checkbox']").toggleSwitch({onLabel: "", offLabel:"", width: "50px"});
+        //Save toggle button status
+        $(".switch-column input[type='checkbox']").change(function () {
+            var projectRequirementId = $(this).parent().parent().find("input[type='hidden']").val();
+            var state = $(this).prop("checked");
+            $.post("ToggleDocumentState", { projectRequirementId, state }, function () {
+                       
+                console.log('success');
+            });
+        });
+    });
+ </script>

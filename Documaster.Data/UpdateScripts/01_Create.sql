@@ -1,14 +1,12 @@
-/*********************************************************/
--- v2
-
-
 CREATE TABLE dbo.Project (
 	Id INT IDENTITY(1,1) NOT NULL
 	,Expire DATETIME  
-	,ProjectData VARBINARY(max)
+	,ProjectData VARBINARY(MAX)
 	,[Name] NVARCHAR(50) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
+	,IsReady BIT NOT NULL CONSTRAINT DF_Project_IsReady DEFAULT(0)
+	,Notes NVARCHAR(MAX)
 )
 GO
 
@@ -21,10 +19,9 @@ CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Name
 	ON dbo.Project ( [Name])
 GO
 
---v3
+
 CREATE TABLE dbo.Customer (
 	Id INT  NOT NULL
-
 	,[Name] NVARCHAR(50) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
@@ -33,7 +30,6 @@ CREATE TABLE dbo.Customer (
 	,[Address] NVARCHAR(100)
 )
 GO
-
 
 ALTER TABLE dbo.Customer WITH CHECK
 	ADD CONSTRAINT FK_Customer_Id_Project_Id
@@ -44,9 +40,6 @@ GO
 ALTER TABLE dbo.Customer
 	CHECK CONSTRAINT FK_Customer_Id_Project_Id
 GO
-
-
-
 
 ALTER TABLE dbo.Customer
 	ADD CONSTRAINT PK_Customer PRIMARY KEY CLUSTERED (Id)
@@ -74,6 +67,7 @@ CREATE UNIQUE NONCLUSTERED INDEX UX_Template_Name
 	ON dbo.Template ([Name])
 GO
 
+
 CREATE TABLE dbo.Category (
 	Id INT IDENTITY(1,1) NOT NULL
 	,[Name] NVARCHAR(50) NOT NULL
@@ -86,9 +80,6 @@ ALTER TABLE dbo.Category
 	ADD CONSTRAINT PK_Category
 	PRIMARY KEY CLUSTERED (Id)
 GO
-
-
-
 
 
 CREATE TABLE dbo.Requirement (
@@ -116,10 +107,12 @@ ALTER TABLE dbo.Requirement
 	CHECK CONSTRAINT FK_Requirement_CategoryId_Category_Id
 GO
 
+
 CREATE TABLE dbo.ProjectRequirement (
 	Id INT IDENTITY(1,1) NOT NULL
 	,ProjectId INT NOT NULL
 	,RequirementId INT NOT NULL
+	,IsReady BIT NOT NULL CONSTRAINT DF_ProjectRequirement_IsReady DEFAULT(0)
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
 )
@@ -133,6 +126,7 @@ ALTER TABLE dbo.ProjectRequirement WITH CHECK
 	ADD CONSTRAINT FK_ProjectRequirement_ProjectId_Project_Id
 	FOREIGN KEY (ProjectId)
 	REFERENCES dbo.Project (Id)
+	ON DELETE CASCADE
 GO
 
 ALTER TABLE dbo.ProjectRequirement
@@ -164,7 +158,6 @@ CREATE TABLE dbo.OutputDocument (
 	,DocumentData VARBINARY(max) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
-	,IsReady BIT NOT NULL CONSTRAINT DF_IsReady DEFAULT(0)
 )
 GO
 
@@ -177,6 +170,7 @@ ALTER TABLE dbo.OutputDocument WITH CHECK
 	ADD CONSTRAINT FK_OutputDocument_ProjectId_Project_Id
 	FOREIGN KEY (ProjectId)
 	REFERENCES dbo.Project (Id)
+	ON DELETE CASCADE
 GO
 
 ALTER TABLE dbo.OutputDocument
@@ -196,9 +190,3 @@ GO
 CREATE UNIQUE NONCLUSTERED INDEX UX_OutputDocument_ProjectId_RequirementId_Name
 	ON dbo.OutputDocument (ProjectId, RequirementId, [Name])
 GO
-
--- Add new row for manually changing of note --
-ALTER TABLE dbo.OutputDocument Add 
-	IsReady BIT NOT NULL CONSTRAINT DF_IsReady DEFAULT(0)
-GO
-

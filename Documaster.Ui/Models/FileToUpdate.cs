@@ -1,5 +1,4 @@
 ﻿using Documaster.Model.Entities;
-using System;
 using System.Collections.Generic;
 
 namespace Documaster.Ui.Models
@@ -12,8 +11,8 @@ namespace Documaster.Ui.Models
         public string RequirementName { get; set; }
         public int ProjectId { get; set; }
         public int RequirementId { get; set; }
+        public int ProjectRequirementId { get; set; }
         public string CategoryName { get; set; }
         public virtual List<OutputDocument> OutputDocuments { get; set; }
-
     }
 }

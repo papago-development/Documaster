@@ -15,6 +15,7 @@ namespace Documaster.Ui.Controllers
     {
         private readonly IGenericRepository<Requirement> _requirementRepository;
         private readonly IGenericRepository<ProjectRequirement> _projectRequirementRepository;
+        private readonly IGenericRepository<Project> _projectRepository;
         private readonly IGenericRepository<OutputDocument> _outputDocumentRepository;
         private readonly IGenericRepository<Category> _categoryRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -24,6 +25,7 @@ namespace Documaster.Ui.Controllers
             _unitOfWork = unitOfWork;
             _requirementRepository = unitOfWork.Repository<Requirement>();
             _projectRequirementRepository = unitOfWork.Repository<ProjectRequirement>();
+            _projectRepository = unitOfWork.Repository<Project>();
             _outputDocumentRepository = unitOfWork.Repository<OutputDocument>();
             _categoryRepository = unitOfWork.Repository<Category>();
         }
@@ -168,48 +170,70 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult OutputDocuments(int projectId)
         {
-            var requirements = _requirementRepository.GetAll().Where(x => x.ProjectRequirements.Any(y => y.ProjectId == projectId)).ToList();
             var fileToUpdates = new List<FileToUpdate>();
-                            
-            foreach (var requirement in requirements)
+            var projectRequirements = _projectRequirementRepository.Get(x => x.ProjectId == projectId);
+            foreach (var projectRequirement in projectRequirements)
             {
-                var outputDocument = requirement.OutputDocuments.FirstOrDefault(x => x.ProjectId == projectId);
+                var outputDocument = _outputDocumentRepository.Get(x => x.ProjectId == projectId && x.RequirementId == projectRequirement.RequirementId).FirstOrDefault();
+                var newFileToUpdate = new FileToUpdate
+                {
+                    Id = outputDocument?.Id ?? 0,
+                    FileName = outputDocument?.Name,
+                    ProjectId = projectId,
+                    RequirementName = projectRequirement.Requirement.Name,
+                    IsReady = projectRequirement.IsReady,
+                    RequirementId = projectRequirement.RequirementId,
+                    ProjectRequirementId = projectRequirement.Id
+                };
 
-                    var newFileToUpdate = new FileToUpdate
-                    {
-                        Id = outputDocument?.Id ?? 0,
-                        FileName = outputDocument?.Name,
-                        ProjectId = projectId,
-                        RequirementName = requirement.Name,
-                        /* Modificare */
-                        IsReady = outputDocument?.IsReady ?? false,
-                        RequirementId = requirement.Id,
-                    };
-               
-                    fileToUpdates.Add(newFileToUpdate);
+                fileToUpdates.Add(newFileToUpdate);
             }
-
             fileToUpdates = fileToUpdates.OrderByDescending(x => x.RequirementName).ToList();
             ViewBag.ProjectId = projectId;
             return PartialView("_ProjectDocumentForRequirement", fileToUpdates);
         }
 
-        [HttpPost]
-        /*
-         * Modificare
-         */
-        public ActionResult ToggleDocumentState(int documentId, bool state)
+        [HttpGet]
+        public ActionResult Notes(int projectId)
         {
-            var document = _outputDocumentRepository.Get(documentId);
-            if (document == null)
+            var project = _projectRepository.Get(x => x.Id == projectId).FirstOrDefault();
+            if (project == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView("_ProjectNotes", project);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Notes(int id, string notes)
+        {
+            var project = _projectRepository.Get(x => x.Id == id).FirstOrDefault();
+            if (project == null)
+            {
+                return HttpNotFound();
+            }
+
+            project.Notes = notes;
+            _projectRepository.Update(project, new List<string>{"Notes"});
+            _unitOfWork.SaveChanges();
+            return RedirectToAction("CustomerProject", new {projectId = id});
+        }
+
+        [HttpPost]
+        public ActionResult ToggleDocumentState(int projectRequirementId, bool state)
+        {
+            var projectRequirement = _projectRequirementRepository.Get(projectRequirementId);
+            if (projectRequirement == null)
                 return HttpNotFound();
 
-            document.IsReady = state;
-            _outputDocumentRepository.Update(document, new List<string> { "IsReady" });
+            projectRequirement.IsReady = state;
+            _projectRequirementRepository.Update(projectRequirement, new List<string> { "IsReady" });
             _unitOfWork.SaveChanges();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+
         //Metoda pentru incarcarea fisierelor
         [HttpPost]
         public void Upload(HttpPostedFileBase fileUpload, int projectId, int? requirementId, string documentType)
@@ -231,10 +255,6 @@ namespace Documaster.Ui.Controllers
                 DocumentType = parsedDocumentType.ToString(),
                 ProjectId = projectId,
                 RequirementId = requirementId,
-                /*
-                 * Modificare
-                 *
-                IsReady = true*/
             };
 
             _outputDocumentRepository.Create(output);
@@ -279,8 +299,7 @@ namespace Documaster.Ui.Controllers
                                  {
                                     Id = item?.Id ?? 0,
                                     FileName = item?.Name,
-                                    ProjectId = projectId,
-                                    IsReady = item?.IsReady ?? false
+                                    ProjectId = projectId
                                  } )
                             .ToList();
             ViewBag.ProjectId = projectId;

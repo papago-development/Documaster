@@ -3,6 +3,7 @@ using Documaster.Business.Extensions;
 using Documaster.Model.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace Documaster.Ui.Controllers
@@ -115,6 +116,21 @@ namespace Documaster.Ui.Controllers
             _unitOfWork.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ToggleProjectState(int projectId, bool state)
+        {
+            var project = _projectRepository.Get(projectId);
+            if (project == null)
+            {
+                return HttpNotFound();
+            }
+
+            project.IsReady = state;
+            _projectRepository.Update(project, new List<string> {"IsReady"});
+            _unitOfWork.SaveChanges();
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }

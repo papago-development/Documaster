@@ -1,0 +1,35 @@
+﻿@model Documaster.Model.Entities.Project
+
+<link href="~/Content/summernote/summernote.css" rel="stylesheet" />
+
+<script src="~/Scripts/summernote/summernote.min.js"></script>
+
+@using (Html.BeginForm("Notes", "Requirement", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        @Html.TextAreaFor(x => x.Notes, new { id = "project-notes" })
+    </div>
+    @Html.HiddenFor(x => x.Id)
+    <div class="form-horizontal">
+        <input type="submit" value="Salveaza" class="btn btn-default" />
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $("#project-notes").summernote({
+            height: 500,
+            toolbar: [
+                // [groupName, [list of button]]
+                ["style", ["style"]],
+                ["fontstyle", ["bold", "italic", "clear"]],
+                ["fonttype", ["fontsize", "fontname"]],
+                ["color", ["color"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["table", ["table"]],
+                ["inserts", ["link", "picture", "video"]],
+                ["misc", ["fullscreen", "codeview", "help"]]
+            ]
+        });
+    });
+</script>
