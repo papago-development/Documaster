@@ -190,7 +190,6 @@ namespace Documaster.Ui.Controllers
             }
             fileToUpdates = fileToUpdates.OrderByDescending(x => x.RequirementName).ToList();
             ViewBag.ProjectId = projectId;
-   
             return PartialView("_ProjectDocumentForRequirement", fileToUpdates);
         }
 

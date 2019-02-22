@@ -41,20 +41,6 @@ namespace Documaster.Ui.Controllers
             return View(model);
         }
 
-        /*
-         * 
-         */
-         [HttpPost]
-         public ActionResult ProjectIsReady(int projectId, bool state)
-        {
-            var project = _projectRepository.Get(projectId);
-            project.IsReady = state;
-            _projectRepository.Update(project, new List<string> { "IsReady" });
-            _unitOfWork.SaveChanges();
-
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
-        }
-
         [HttpGet]
         public ActionResult Create()
         {
