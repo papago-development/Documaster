@@ -15,6 +15,8 @@ namespace Documaster.Model.Entities
 
         public bool IsReady { get; set; }
 
+        public string Number { get; set; }
+
         public virtual Customer Customer { get; set; }
 
         [JsonIgnore]

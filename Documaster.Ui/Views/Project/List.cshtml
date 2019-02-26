@@ -12,7 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Nr.", "List", new { sortProperty = "Id", sortDescending })
+            @Html.ActionLink("Nr.", "List", new { sortProperty = "Number", sortDescending })
         </th>
         <th>
             @Html.ActionLink("Finalizat", "List", new { sortProperty = "IsReady", sortDescending })
@@ -39,7 +39,7 @@
             var willExpire = item.Expire.HasValue && (item.Expire - DateTime.Now).Value.TotalDays < 30 ? "willExpire" : "";
             <tr class="@willExpire">
                 <td>
-                    @Html.DisplayFor(modelItem => item.Id)
+                    @Html.DisplayFor(modelItem => item.Number)
                 </td>
                 <td>
                     @Html.CheckBoxFor(modelItem => item.IsReady, new { @class = "project-state", id = "checkbox" })

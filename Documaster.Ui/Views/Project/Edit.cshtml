@@ -22,6 +22,13 @@
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.Customer.Id)
         <div class="form-group">
+            @Html.LabelFor(model => model.Number, "Number", new { @class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
             @Html.LabelFor(model => model.Customer.Name, "Nume client", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Customer.Name, new { htmlAttributes = new { @class = "form-control" } })
