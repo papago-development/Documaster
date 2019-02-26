@@ -152,33 +152,30 @@ button.close {
     color: black;
 }
 
-.willExpire{
+.willExpire {
     background-color: pink;
 }
 
-input[type='checkbox'] {
-    width: 15px !important;
-    height: 15px !important;
-    margin: 5px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -o-appearance: none;
-    appearance: none;
-    outline: 2px solid lightblue;
-    box-shadow: none;
-    font-size: 2em;
-
+input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 5px;
+ 
 }
 
-input[type='checkbox']:checked {
-    width: 15px !important;
-    height: 15px !important;
-    margin: 5px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -o-appearance: none;
-    appearance: none;
-    outline: 2px solid lightblue;
-    box-shadow: none;
-    font-size: 2em;
-}
+    input[type="checkbox"]:after {
+        content: " ";
+        background-color: green;
+        display: inline-block;
+        visibility: visible;
+        border-radius: 5px;
+
+    }
+
+    input[type="checkbox"]:checked:after {
+        width: 15px;
+        height: 15px;
+        border-radius: 5px;
+    }

@@ -42,7 +42,8 @@
                     @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
-                    @Html.CheckBoxFor(modelItem => item.IsReady, new { @class = "project-state" })
+                    @Html.CheckBoxFor(modelItem => item.IsReady, new { @class = "project-state", id = "checkbox" })
+                    <label for="checkbox"></label>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Customer.Name)
@@ -77,14 +78,6 @@
             $.post("ToggleProjectState", { projectId, state }, function () {
                 console.log('success');
             });
-        });
-
-        $(".project-state").change(function () {
-            var $this = $(this);
-            if ($this.prop("checked")) {
-                $this.css('background-color', 'green');
-            }
-            
         });
     });
 </script>
