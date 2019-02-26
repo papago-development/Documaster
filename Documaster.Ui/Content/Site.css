@@ -155,3 +155,30 @@ button.close {
 .willExpire{
     background-color: pink;
 }
+
+input[type='checkbox'] {
+    width: 15px !important;
+    height: 15px !important;
+    margin: 5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    outline: 2px solid lightblue;
+    box-shadow: none;
+    font-size: 2em;
+
+}
+
+input[type='checkbox']:checked {
+    width: 15px !important;
+    height: 15px !important;
+    margin: 5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    outline: 2px solid lightblue;
+    box-shadow: none;
+    font-size: 2em;
+}

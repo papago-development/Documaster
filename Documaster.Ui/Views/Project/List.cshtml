@@ -3,7 +3,7 @@
     ViewBag.Title = "Lista proiecte";
     var projectId = ViewBag.ProjectId;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var sortDescending = !(bool) ViewBag.SortDescending;
+    var sortDescending = !(bool)ViewBag.SortDescending;
 }
 <br />
 <p>
@@ -60,9 +60,9 @@
                     }
                 </td>
                 <td>
-                    @Html.ActionLink("Modifica", "Edit", new {id = item.Id}) |
-                    @Html.ActionLink("Sterge", "Delete", new {id = item.Id}) |
-                    @Html.ActionLink("Cerinte", "ProjectRequirements", "Requirement", new {projectId = item.Id}, "")
+                    @Html.ActionLink("Modifica", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Sterge", "Delete", new { id = item.Id }) |
+                    @Html.ActionLink("Cerinte", "ProjectRequirements", "Requirement", new { projectId = item.Id }, "")
                 </td>
             </tr>
         }
@@ -77,6 +77,14 @@
             $.post("ToggleProjectState", { projectId, state }, function () {
                 console.log('success');
             });
+        });
+
+        $(".project-state").change(function () {
+            var $this = $(this);
+            if ($this.prop("checked")) {
+                $this.css('background-color', 'green');
+            }
+            
         });
     });
 </script>
