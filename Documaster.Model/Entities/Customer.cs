@@ -18,7 +18,8 @@ namespace Documaster.Model.Entities
         public string Address { get; set; }
         public string Telephone { get; set; }
         public string Email { get; set; }
-
+        public string AdditionalInfo1 { get; set; }
+        public string AdditionalInfo2 { get; set; }
         public Project Project { get; set; }
     }
 }

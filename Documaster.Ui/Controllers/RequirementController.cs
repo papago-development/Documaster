@@ -33,7 +33,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _requirementRepository.GetAll().ToList();
+            var model = _requirementRepository.GetAll().OrderBy(x => x.Category.Name).ThenBy(x=>x.Name).ToList();
             return View(model);
         }
 
@@ -105,8 +105,8 @@ namespace Documaster.Ui.Controllers
                                      Assigned = y.ProjectRequirements.Any(z => z.ProjectId == projectId),
                                      Name = y.Name,
                                      Id = y.Id
-                                 }).ToList()
-                             }).OrderBy(m => m.Name);
+                                 }).OrderBy(m=>m.Name).ToList()
+                             }).OrderBy(x => x.Name);
 
             ViewBag.ProjectId = projectId;
             return View("ProjectRequirements", categories);
@@ -189,7 +189,7 @@ namespace Documaster.Ui.Controllers
 
                 fileToUpdates.Add(newFileToUpdate);
             }
-            fileToUpdates = fileToUpdates.OrderByDescending(x => x.RequirementName).ToList();
+            fileToUpdates = fileToUpdates.OrderBy(x => x.RequirementName).ToList();
             ViewBag.ProjectId = projectId;
             return PartialView("_ProjectDocumentForRequirement", fileToUpdates);
         }

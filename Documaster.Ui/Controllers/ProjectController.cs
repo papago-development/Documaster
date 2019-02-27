@@ -74,6 +74,8 @@ namespace Documaster.Ui.Controllers
                     Id = project.Id,
                     Name = project.Customer.Name,
                     Telephone = project.Customer.Telephone,
+                    AdditionalInfo1 = project.Customer.AdditionalInfo1,
+                    AdditionalInfo2 = project.Customer.AdditionalInfo2,
                     Email = project.Customer.Email,
                     Address = project.Customer.Address
                 };

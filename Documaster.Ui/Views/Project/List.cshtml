@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Documaster.Model.Entities.Project>
 @{
     ViewBag.Title = "Lista proiecte";
-    var projectId = ViewBag.ProjectId;
+    
     Layout = "~/Views/Shared/_Layout.cshtml";
     var sortDescending = !(bool)ViewBag.SortDescending;
 }
@@ -21,6 +21,12 @@
             @Html.ActionLink("Nume client", "List", new { sortProperty = "Customer.Name", sortDescending })
         </th>
         <th>
+            @Html.ActionLink("CNP/CUI", "List", new { sortProperty = "Customer.AdditionalInfo1", sortDescending })
+        </th>
+        <th>
+            @Html.ActionLink("Date firma", "List", new { sortProperty = "Customer.AdditionalInfo2", sortDescending })
+        </th>
+        <th>
             @Html.ActionLink("Nume proiect", "List", new { sortProperty = "Name", sortDescending })
         </th>
         <th>
@@ -33,39 +39,48 @@
     </tr>
     @if (Model != null)
     {
-        @Html.Hidden("ProjectId", (object)projectId)
-        foreach (var item in Model)
+         foreach (var item in Model)
         {
+
             var willExpire = item.Expire.HasValue && (item.Expire - DateTime.Now).Value.TotalDays < 30 ? "willExpire" : "";
-            <tr class="@willExpire">
-                <td>
-                    @Html.DisplayFor(modelItem => item.Number)
-                </td>
-                <td>
-                    @Html.CheckBoxFor(modelItem => item.IsReady, new { @class = "project-state" })
-                    <label for="checkbox"></label>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Customer.Name)
-                </td>
-                <td>
-                    @Html.ActionLink(item.Name, "CustomerProject", "Requirement", new { projectId = item.Id }, "")
-                </td>
-                <td>
-                    @item.CreationDate.ToShortDateString()
-                </td>
-                <td>
-                    @if (item.Expire.HasValue)
-                    {
-                        @item.Expire.Value.ToShortDateString()
-                    }
-                </td>
-                <td>
-                    @Html.ActionLink("Modifica", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Sterge", "Delete", new { id = item.Id }) |
-                    @Html.ActionLink("Cerinte", "ProjectRequirements", "Requirement", new { projectId = item.Id }, "")
-                </td>
-            </tr>
+    <tr class="@willExpire">
+        @Html.HiddenFor(modelItem => item.Id)
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Number)
+        </td>
+        <td>
+
+            @Html.CheckBoxFor(modelItem => item.IsReady, new { @class = "project-state" })
+
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.AdditionalInfo1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.AdditionalInfo2)
+        </td>
+        <td>
+            @Html.ActionLink(item.Name, "CustomerProject", "Requirement", new { projectId = item.Id }, "")
+        </td>
+        <td>
+            @item.CreationDate.ToShortDateString()
+        </td>
+        <td>
+            @if (item.Expire.HasValue)
+            {
+                @item.Expire.Value.ToShortDateString()
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Modifica", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Sterge", "Delete", new { id = item.Id }) |
+            @Html.ActionLink("Cerinte", "ProjectRequirements", "Requirement", new { projectId = item.Id }, "")
+        </td>
+    </tr>
         }
     }
 </table>
@@ -73,7 +88,7 @@
 <script>
     $(document).ready(function () {
         $(".project-state").change(function () {
-            var projectId = $(this).parent().siblings()[0].innerText;
+            var projectId = $(this).parent().siblings()[0].value;     
             var state = $(this).prop("checked");
             $.post("ToggleProjectState", { projectId, state }, function () {
                 console.log('success');

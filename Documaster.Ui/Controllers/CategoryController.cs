@@ -20,7 +20,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _categoryRepository.GetAll().ToList();
+            var model = _categoryRepository.GetAll().OrderBy(x => x.Name).ToList();
             return View(model);
         }
 

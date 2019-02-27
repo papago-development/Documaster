@@ -156,15 +156,16 @@ button.close {
     background-color: pink;
 }
 
-input[type="checkbox"] {
+.project-state {
     width: 15px;
     height: 15px;
     cursor: pointer;
     font-size: 15px;
     border-radius: 5px;
+    margin: 2px 0 0 !important;
 }
 
-    input[type="checkbox"]:after {
+.project-state:after {
         content: " ";
         background-color: green;
         display: inline-block;
@@ -172,7 +173,7 @@ input[type="checkbox"] {
         border-radius: 5px;
     }
 
-    input[type="checkbox"]:checked:after {
+    .project-state:checked:after {
         width: 15px;
         height: 15px;
         border-radius: 5px;

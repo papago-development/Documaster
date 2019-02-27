@@ -28,6 +28,8 @@ CREATE TABLE dbo.Customer (
 	,Telephone NVARCHAR(10)
 	,Email NVARCHAR(50)
 	,[Address] NVARCHAR(100)
+	,AdditionalInfo1 NVARCHAR(100) NULL
+	,AdditionalInfo2 NVARCHAR(100) NULL
 )
 GO
 
@@ -81,6 +83,9 @@ ALTER TABLE dbo.Category
 	PRIMARY KEY CLUSTERED (Id)
 GO
 
+CREATE UNIQUE NONCLUSTERED INDEX UX_Category_Name
+	ON dbo.Category ([Name])
+GO
 
 CREATE TABLE dbo.Requirement (
 	Id INT IDENTITY(1,1) NOT NULL
@@ -107,6 +112,9 @@ ALTER TABLE dbo.Requirement
 	CHECK CONSTRAINT FK_Requirement_CategoryId_Category_Id
 GO
 
+CREATE UNIQUE NONCLUSTERED INDEX UX_Requirement_Name
+	ON dbo.Requirement ([Name])
+GO
 
 CREATE TABLE dbo.ProjectRequirement (
 	Id INT IDENTITY(1,1) NOT NULL
