@@ -162,7 +162,6 @@ input[type="checkbox"] {
     cursor: pointer;
     font-size: 15px;
     border-radius: 5px;
- 
 }
 
     input[type="checkbox"]:after {
@@ -171,7 +170,6 @@ input[type="checkbox"] {
         display: inline-block;
         visibility: visible;
         border-radius: 5px;
-
     }
 
     input[type="checkbox"]:checked:after {

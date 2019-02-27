@@ -93,6 +93,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult ProjectRequirements(int projectId)
         {
+            //Ordonare dupa categorii
             var categories = _categoryRepository
                              .Get(x => x.Requirements.Any())
                              .Select(x => new AssignedCategory
@@ -105,7 +106,7 @@ namespace Documaster.Ui.Controllers
                                      Name = y.Name,
                                      Id = y.Id
                                  }).ToList()
-                             });
+                             }).OrderBy(m => m.Name);
 
             ViewBag.ProjectId = projectId;
             return View("ProjectRequirements", categories);
