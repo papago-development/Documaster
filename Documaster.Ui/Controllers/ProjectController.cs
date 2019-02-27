@@ -66,7 +66,6 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Edit(Project project)
         {
-            
             if (project.Customer.Id == 0)
             {
                 var customer = new Customer
@@ -83,7 +82,7 @@ namespace Documaster.Ui.Controllers
             }
             else
             {
-                _customerRepository.Update(project.Customer, new List<string> { "Name", "Telephone", "Email", "Address" });
+                _customerRepository.Update(project.Customer, new List<string> { "Name", "Telephone", "Email", "Address", "AdditionalInfo1", "AdditionalInfo2" });
                 _projectRepository.Update(project, new List<string> { "Number" });
             }
 
