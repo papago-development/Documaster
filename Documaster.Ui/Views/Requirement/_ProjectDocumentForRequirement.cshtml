@@ -82,14 +82,12 @@ else
             applyClickTransfer (value);
         });
 
-        //$("input[type='checkbox']").toggleSwitch({onLabel: "", offLabel:"", width: "50px"});
-        //Save toggle button status
+       //Save toggle button status
         $(".switch-column input[type='checkbox']").change(function () {
             var projectRequirementId = $(this).parent().parent().find("input[type='hidden']").val();
             var state = $(this).prop("checked");
             $.post("ToggleDocumentState", { projectRequirementId, state }, function () {
-                       
-                console.log('success');
+
             });
         });
     });

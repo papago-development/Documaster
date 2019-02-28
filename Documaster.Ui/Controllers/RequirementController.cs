@@ -14,7 +14,7 @@ namespace Documaster.Ui.Controllers
     public class RequirementController : Controller
     {
         private readonly IGenericRepository<Requirement> _requirementRepository;
-        private readonly IGenericRepository<ProjectRequirement> _projectRequirementRepository;
+        private readonly IGenericRepository<Model.Entities.ProjectRequirement> _projectRequirementRepository;
         private readonly IGenericRepository<Project> _projectRepository;
         private readonly IGenericRepository<OutputDocument> _outputDocumentRepository;
         private readonly IGenericRepository<Category> _categoryRepository;
@@ -24,7 +24,7 @@ namespace Documaster.Ui.Controllers
         {
             _unitOfWork = unitOfWork;
             _requirementRepository = unitOfWork.Repository<Requirement>();
-            _projectRequirementRepository = unitOfWork.Repository<ProjectRequirement>();
+            _projectRequirementRepository = unitOfWork.Repository<Model.Entities.ProjectRequirement>();
             _projectRepository = unitOfWork.Repository<Project>();
             _outputDocumentRepository = unitOfWork.Repository<OutputDocument>();
             _categoryRepository = unitOfWork.Repository<Category>();
@@ -129,7 +129,7 @@ namespace Documaster.Ui.Controllers
 
             foreach (var requirementId in newRequirementIds)
             {
-                var projectRequirement = new ProjectRequirement
+                var projectRequirement = new Model.Entities.ProjectRequirement
                 {
                     RequirementId = requirementId,
                     ProjectId = projectId

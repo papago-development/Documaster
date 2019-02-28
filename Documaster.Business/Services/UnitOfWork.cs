@@ -10,7 +10,7 @@ namespace Documaster.Business.Services
         private readonly IDbContext _dbContext;
         private readonly IDependencyContainerWrapper _dependencyContainerWrapper;
         private Dictionary<string, object> _repositories;
-
+       
         public UnitOfWork( IDbContext dbContext, IDependencyContainerWrapper dependencyContainerWrapper )
         {
             _dbContext = dbContext;
@@ -42,5 +42,7 @@ namespace Documaster.Business.Services
 
             return (IGenericRepository<TEntity>)_repositories[entityType.Name];
         }
+
+       
     }
 }

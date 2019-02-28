@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using System.Net;
+
 
 namespace Documaster.Ui.Controllers
 {
@@ -15,13 +15,17 @@ namespace Documaster.Ui.Controllers
         private readonly IGenericRepository<Project> _projectRepository;
         private readonly IGenericRepository<Customer> _customerRepository;
         private readonly IGenericRepository<ProjectRequirement> _projectRequirementRepository;
-
-        public ProjectController(IUnitOfWork unitOfWork)
+        private readonly IProjectService _projectService;
+        private readonly IProjectRequirementService _projectRequirementService;
+        public ProjectController(IUnitOfWork unitOfWork, IProjectService projectService, IProjectRequirementService projectRequirementService)
         {
             _unitOfWork = unitOfWork;
             _projectRepository = unitOfWork.Repository<Project>();
             _customerRepository = unitOfWork.Repository<Customer>();
             _projectRequirementRepository = unitOfWork.Repository<ProjectRequirement>();
+
+            _projectService = projectService;
+            _projectRequirementService = projectRequirementService;
         }
 
         [HttpGet]
@@ -50,16 +54,14 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Create(Project project)
         {
-            _projectRepository.Create(project);
-            _unitOfWork.SaveChanges();
-
+            _projectService.CreateProject(project);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var model = _projectRepository.Get(id);
+            var model = _projectService.GetProjectById(id);
             return View(model);
         }
 
@@ -83,7 +85,7 @@ namespace Documaster.Ui.Controllers
             }
             else
             {
-                _customerRepository.Update(project.Customer, new List<string> { "Name", "Telephone", "Email", "Address" });
+                _customerRepository.Update(project.Customer, new List<string> { "Name", "Telephone", "Email", "Address", "AdditionalInfo1", "AdditionalInfo2" });
                 _projectRepository.Update(project, new List<string> { "Number" });
             }
 
@@ -96,8 +98,8 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var model = _projectRepository.Get(id);
-            var pR = _projectRequirementRepository.Get(x => x.ProjectId == id);
+            var model =_projectService.GetProjectById()
+            var pR = 
             ViewBag.ProjectId = pR;
             return View(model);
         }
