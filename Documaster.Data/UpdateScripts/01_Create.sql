@@ -7,7 +7,7 @@ CREATE TABLE dbo.Project (
 	,LastUpdate DATETIME NOT NULL
 	,IsReady BIT NOT NULL CONSTRAINT DF_Project_IsReady DEFAULT(0)
 	,Notes NVARCHAR(MAX)
-	,[Number] NVARCHAR(50) UNIQUE
+	,[Number] NVARCHAR(50) NOT NULL
 )
 GO
 
@@ -17,11 +17,16 @@ ALTER TABLE dbo.Project
 GO
 
 CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Name
-	ON dbo.Project ( [Name])
+	ON dbo.Project ([Name])
 GO
 
+CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Number
+	ON dbo.Project ([Number])
+GO
+
+
 CREATE TABLE dbo.Customer (
-	Id INT  NOT NULL
+	Id INT NOT NULL
 	,[Name] NVARCHAR(50) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
@@ -87,6 +92,7 @@ CREATE UNIQUE NONCLUSTERED INDEX UX_Category_Name
 	ON dbo.Category ([Name])
 GO
 
+
 CREATE TABLE dbo.Requirement (
 	Id INT IDENTITY(1,1) NOT NULL
 	,CategoryId INT NOT NULL
@@ -115,6 +121,7 @@ GO
 CREATE UNIQUE NONCLUSTERED INDEX UX_Requirement_Name
 	ON dbo.Requirement ([Name])
 GO
+
 
 CREATE TABLE dbo.ProjectRequirement (
 	Id INT IDENTITY(1,1) NOT NULL

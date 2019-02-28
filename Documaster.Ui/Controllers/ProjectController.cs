@@ -68,7 +68,6 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Edit(Project project)
         {
-            
             if (project.Customer.Id == 0)
             {
                 var customer = new Customer
