@@ -15,9 +15,15 @@ namespace Documaster.Ui.Controllers
         private readonly IGenericRepository<Project> _projectRepository;
         private readonly IGenericRepository<Customer> _customerRepository;
         private readonly IGenericRepository<ProjectRequirement> _projectRequirementRepository;
+
         private readonly IProjectService _projectService;
         private readonly IProjectRequirementService _projectRequirementService;
-        public ProjectController(IUnitOfWork unitOfWork, IProjectService projectService, IProjectRequirementService projectRequirementService)
+        private readonly ICustomerService _customerService;
+
+        public ProjectController(IUnitOfWork unitOfWork, 
+                                 IProjectService projectService, 
+                                 IProjectRequirementService projectRequirementService,
+                                 ICustomerService customerService)
         {
             _unitOfWork = unitOfWork;
             _projectRepository = unitOfWork.Repository<Project>();
@@ -26,6 +32,7 @@ namespace Documaster.Ui.Controllers
 
             _projectService = projectService;
             _projectRequirementService = projectRequirementService;
+            _customerService = customerService;
         }
 
         [HttpGet]
@@ -80,7 +87,7 @@ namespace Documaster.Ui.Controllers
                     Email = project.Customer.Email,
                     Address = project.Customer.Address
                 };
-                _customerRepository.Create(customer);
+                _customerService.CreateCustomer(customer);
             }
             else
             {
@@ -97,37 +104,36 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var model =_projectService.GetProjectById()
-            var pR = 
-            ViewBag.ProjectId = pR;
+            var model = _projectService.GetProjectById(id);
+            var pR = _projectRequirementService.GetRequirementsById(id);
+             ViewBag.ProjectId = pR;
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Delete(Project project)
         {
-            var dbProjectRequirements = _projectRequirementRepository.Get( x => x.ProjectId == project.Id );
+            var dbProjectRequirements = _projectRequirementService.GetProjectRequirementByProjectId(project.Id);
             foreach (var item in dbProjectRequirements)
             {
-                _projectRequirementRepository.Delete(item.Id);
+                _projectRequirementService.DeleteProjectRequirement(item);
             }
 
-            var customers = _customerRepository.Get(x => x.Id == project.Id);
+            var customers = _customerService.GetCustomersByProject(project);
             foreach (var item in customers)
             {
-                _customerRepository.Delete(item.Id);
+                _customerService.Delete(item);
             }
 
-            _projectRepository.Delete(project.Id);
-            _unitOfWork.SaveChanges();
-
+            _projectService.DeleteProject(project);
+   
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult ToggleProjectState(int projectId, bool state)
         {
-            var project = _projectRepository.Get(projectId);
+            var project = _projectService.GetProjectById(projectId);
             if (project == null)
             {
                 return HttpNotFound();

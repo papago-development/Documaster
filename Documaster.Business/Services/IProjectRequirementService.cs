@@ -9,6 +9,14 @@ namespace Documaster.Business.Services
 {
     public interface IProjectRequirementService
     {
-        IEnumerable<ProjectRequirement> GetRequirementById(int id);
+        IEnumerable<ProjectRequirement> GetRequirementsById(int id);
+        IEnumerable<ProjectRequirement> GetProjectRequirementByProjectId(int id);
+        bool DeleteProjectRequirement(ProjectRequirement projectRequirement);
+        IEnumerable<ProjectRequirement> GetListOfProjectRequirements(int id);
+
+        ProjectRequirement CreateProjectRequirement(ProjectRequirement projectRequirement);
+        ProjectRequirement GetProjectRequirementById(int id);
+        bool UpdateProjectRequirement(ProjectRequirement projectRequirement);
+        bool Save();
     }
 }

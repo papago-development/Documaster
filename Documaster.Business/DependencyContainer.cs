@@ -33,14 +33,23 @@ namespace Documaster.Business
             unityContainer.RegisterType(typeof(IDependencyContainerWrapper), typeof(DependencyContainerWrapper), new PerRequestLifetimeManager());
             unityContainer.RegisterType(typeof(IUnitOfWork), typeof(UnitOfWork), new PerRequestLifetimeManager());
 
-            //
+            //Category
             unityContainer.RegisterType(typeof(ICategoryService), typeof(CategoryService), new PerRequestLifetimeManager());
 
-            //
+            //Project
             unityContainer.RegisterType(typeof(IProjectService), typeof(ProjectService), new PerRequestLifetimeManager());
 
-            //
+            //ProjectRequirement
             unityContainer.RegisterType(typeof(IProjectRequirementService), typeof(ProjectRequirementService), new PerRequestLifetimeManager());
+
+            //Customer
+            unityContainer.RegisterType(typeof(ICustomerService), typeof(CustomerService), new PerRequestLifetimeManager());
+
+            //Requireemnt
+            unityContainer.RegisterType(typeof(IRequirementService), typeof(RequirementService), new PerRequestLifetimeManager());
+
+            //OutputDocument
+            unityContainer.RegisterType(typeof(IOutputDocumentService), typeof(OutputDocumentService), new PerRequestLifetimeManager());
         }
     }
 }

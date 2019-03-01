@@ -1,4 +1,4 @@
-﻿namespace Documaster.Ui.Models
+﻿namespace Documaster.Business.Models
 {
     public class AssignedRequirement
     {

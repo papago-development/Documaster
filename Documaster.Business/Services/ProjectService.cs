@@ -25,9 +25,33 @@ namespace Documaster.Business.Services
             return newProject;
         }
 
+        public bool DeleteProject(Project project)
+        {
+            var deleteProject = _projectRepository.Delete(project.Id);
+            _unitOfWork.SaveChanges();
+            return deleteProject;
+        }
+
         public Project GetProjectById(int id)
         {
             return _projectRepository.Get(id);
+        }
+
+        public Project GetProjectByProjectId(int id)
+        {
+            return _projectRepository.Get(x => x.Id == id).FirstOrDefault();
+        }
+        
+        public Project GetProjectByNoteId(int id)
+        {
+          return  _projectRepository.Get(x => x.Id == id).FirstOrDefault();
+        }
+
+        public bool UpdateProject(Project project)
+        {
+            var updatedProject = _projectRepository.Update(project, new List<string> { "Notes" });
+            _unitOfWork.SaveChanges();
+            return updatedProject;
         }
     }
 }

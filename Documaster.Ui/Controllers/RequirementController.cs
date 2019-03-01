@@ -7,86 +7,88 @@ using System.Web.Mvc;
 using Documaster.Business.Services;
 using Documaster.Model.Entities;
 using Documaster.Model.Enums;
-using Documaster.Ui.Models;
+using Documaster.Business.Models;
 
 namespace Documaster.Ui.Controllers
 {
     public class RequirementController : Controller
     {
-        private readonly IGenericRepository<Requirement> _requirementRepository;
-        private readonly IGenericRepository<Model.Entities.ProjectRequirement> _projectRequirementRepository;
-        private readonly IGenericRepository<Project> _projectRepository;
-        private readonly IGenericRepository<OutputDocument> _outputDocumentRepository;
-        private readonly IGenericRepository<Category> _categoryRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IGenericRepository<OutputDocument> _outputDocumentRepository;
+        private readonly IRequirementService _requirementService;
+        private readonly ICategoryService _categoryService;
+        private readonly IProjectRequirementService _projectRequirementService;
+        private readonly IOutputDocumentService _outputDocumentService;
+        private readonly IProjectService _projectService;
 
-        public RequirementController(IUnitOfWork unitOfWork)
+        public RequirementController(IRequirementService requirementService,
+                                     ICategoryService categoryService,
+                                     IProjectRequirementService projectRequirementService,
+                                     IOutputDocumentService outputDocumentService,
+                                     IProjectService projectService,
+                                     IUnitOfWork unitOfWork,
+                                     IGenericRepository<OutputDocument> outputDocumentRepository)
         {
             _unitOfWork = unitOfWork;
-            _requirementRepository = unitOfWork.Repository<Requirement>();
-            _projectRequirementRepository = unitOfWork.Repository<Model.Entities.ProjectRequirement>();
-            _projectRepository = unitOfWork.Repository<Project>();
-            _outputDocumentRepository = unitOfWork.Repository<OutputDocument>();
-            _categoryRepository = unitOfWork.Repository<Category>();
+            _outputDocumentRepository = outputDocumentRepository;
+
+            _requirementService = requirementService;
+            _categoryService = categoryService;
+            _projectRequirementService = projectRequirementService;
+            _outputDocumentService = outputDocumentService;
+            _projectService = projectService;
         }
 
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _requirementRepository.GetAll().OrderBy(x => x.Category.Name).ThenBy(x=>x.Name).ToList();
+            var model = _requirementService.GetRequirements();
             return View(model);
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            var categoryList = _categoryRepository.GetAll().ToList();
+            var categoryList = _categoryService.GetListOfCategories();
             ViewBag.Categories = categoryList;
-
             return View();
         }
 
         [HttpPost]
         public ActionResult Create(Requirement requirement)
         {
-            _requirementRepository.Create(requirement);
-            _unitOfWork.SaveChanges();
-
+            _requirementService.CreateRequirement(requirement);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var categoryList = _categoryRepository.GetAll().ToList();
+            var categoryList = _categoryService.GetListOfCategories();
             ViewBag.Categories = categoryList;
 
-            var model = _requirementRepository.Get(id);
+            var model = _requirementService.GetRequirementById(id);
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Edit(Requirement requirement)
         {
-            _requirementRepository.Update(requirement, new List<string> { "Name", "CategoryId" });
-            _unitOfWork.SaveChanges();
-
+            _requirementService.UpdateRequirement(requirement);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var model = _requirementRepository.Get(id);
+            var model = _requirementService.GetRequirementById(id);
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Delete(Requirement requirement)
         {
-            _requirementRepository.Delete(requirement.Id);
-            _unitOfWork.SaveChanges();
-
+            _requirementService.DeleteRequirement(requirement);
             return RedirectToAction("Index");
         }
 
@@ -94,20 +96,8 @@ namespace Documaster.Ui.Controllers
         public ActionResult ProjectRequirements(int projectId)
         {
             //Ordonare dupa categorii
-            var categories = _categoryRepository
-                             .Get(x => x.Requirements.Any())
-                             .Select(x => new AssignedCategory
-                             {
-                                 Id = x.Id,
-                                 Name = x.Name,
-                                 AssignedRequirements = x.Requirements.Select(y => new AssignedRequirement
-                                 {
-                                     Assigned = y.ProjectRequirements.Any(z => z.ProjectId == projectId),
-                                     Name = y.Name,
-                                     Id = y.Id
-                                 }).OrderBy(m=>m.Name).ToList()
-                             }).OrderBy(x => x.Name);
-
+            // ???
+            var categories = _categoryService.GetCategoriesByAssignedCategory(projectId);
             ViewBag.ProjectId = projectId;
             return View("ProjectRequirements", categories);
         }
@@ -115,13 +105,13 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult SaveProjectRequirements(int projectId, IEnumerable<int> assignedRequirements)
         {
-            var dbProjectRequirements = _projectRequirementRepository.Get(x => x.ProjectId == projectId).ToList();
+            var dbProjectRequirements = _projectRequirementService.GetListOfProjectRequirements(projectId);
             var deletedProjectRequirements = dbProjectRequirements
                 .Where(x => assignedRequirements == null || assignedRequirements.All(y => y != x.RequirementId)).ToList();
 
             foreach (var item in deletedProjectRequirements)
             {
-                _projectRequirementRepository.Delete(item.Id);
+                _projectRequirementService.DeleteProjectRequirement(item);
             }
 
             var newRequirementIds = assignedRequirements?.Where(x => dbProjectRequirements.All(y => y.RequirementId != x))
@@ -134,29 +124,31 @@ namespace Documaster.Ui.Controllers
                     RequirementId = requirementId,
                     ProjectId = projectId
                 };
-                _projectRequirementRepository.Create(projectRequirement);
+                _projectRequirementService.CreateProjectRequirement(projectRequirement);
 
             }
-            _unitOfWork.SaveChanges();
+            _projectRequirementService.Save();
 
             return RedirectToAction("Index", "Project");
         }
 
         public ActionResult ProjectCategory(int projectId)
         {
-            var categories = _categoryRepository
-                      .Get(x => x.Requirements.Any())
-                      .Select(x => new AssignedCategory
-                      {
-                          Id = x.Id,
-                          Name = x.Name,
-                          AssignedRequirements = x.Requirements.Select(y => new AssignedRequirement
-                          {
-                              Assigned = y.ProjectRequirements.Any(z => z.ProjectId == projectId),
-                              Name = y.Name,
-                              Id = y.Id
-                          }).ToList()
-                      });
+            //var categories = _categoryRepository
+            //          .Get(x => x.Requirements.Any())
+            //          .Select(x => new AssignedCategory
+            //          {
+            //              Id = x.Id,
+            //              Name = x.Name,
+            //              AssignedRequirements = x.Requirements.Select(y => new AssignedRequirement
+            //              {
+            //                  Assigned = y.ProjectRequirements.Any(z => z.ProjectId == projectId),
+            //                  Name = y.Name,
+            //                  Id = y.Id
+            //              }).ToList()
+            //          });
+
+            var categories = _categoryService.GetCategoriesByAssignedCategory(projectId);
             ViewBag.Categories = categories;
             return View("CustomerProject", categories);
         }
@@ -172,10 +164,12 @@ namespace Documaster.Ui.Controllers
         public ActionResult OutputDocuments(int projectId)
         {
             var fileToUpdates = new List<FileToUpdate>();
-            var projectRequirements = _projectRequirementRepository.Get(x => x.ProjectId == projectId);
+
+            // ???
+            var projectRequirements = _projectRequirementService.GetProjectRequirementByProjectId(projectId);
             foreach (var projectRequirement in projectRequirements)
             {
-                var outputDocument = _outputDocumentRepository.Get(x => x.ProjectId == projectId && x.RequirementId == projectRequirement.RequirementId).FirstOrDefault();
+                var outputDocument = _outputDocumentService.GetOutputDocuments(projectId, projectRequirement.Id);
                 var newFileToUpdate = new FileToUpdate
                 {
                     Id = outputDocument?.Id ?? 0,
@@ -197,7 +191,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Notes(int projectId)
         {
-            var project = _projectRepository.Get(x => x.Id == projectId).FirstOrDefault();
+            var project = _projectService.GetProjectByProjectId(projectId);
             if (project == null)
             {
                 return HttpNotFound();
@@ -209,29 +203,26 @@ namespace Documaster.Ui.Controllers
         [ValidateInput(false)]
         public ActionResult Notes(int id, string notes)
         {
-            var project = _projectRepository.Get(x => x.Id == id).FirstOrDefault();
+            var project = _projectService.GetProjectByNoteId(id);
             if (project == null)
             {
                 return HttpNotFound();
             }
 
             project.Notes = notes;
-            _projectRepository.Update(project, new List<string>{"Notes"});
-            _unitOfWork.SaveChanges();
-            return RedirectToAction("CustomerProject", new {projectId = id});
+            _projectService.UpdateProject(project);
+              return RedirectToAction("CustomerProject", new {projectId = id});
         }
 
         [HttpPost]
         public ActionResult ToggleDocumentState(int projectRequirementId, bool state)
         {
-            var projectRequirement = _projectRequirementRepository.Get(projectRequirementId);
+            var projectRequirement = _projectRequirementService.GetProjectRequirementById(projectRequirementId);
             if (projectRequirement == null)
                 return HttpNotFound();
 
             projectRequirement.IsReady = state;
-            _projectRequirementRepository.Update(projectRequirement, new List<string> { "IsReady" });
-            _unitOfWork.SaveChanges();
-
+            _projectRequirementService.UpdateProjectRequirement(projectRequirement);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
@@ -243,7 +234,6 @@ namespace Documaster.Ui.Controllers
             {
                 return;
             }
-
             var length = fileUpload.ContentLength;
             var tempImage = new byte[length];
             fileUpload.InputStream.Read(tempImage, 0, length);
@@ -257,24 +247,21 @@ namespace Documaster.Ui.Controllers
                 ProjectId = projectId,
                 RequirementId = requirementId,
             };
-
             _outputDocumentRepository.Create(output);
             _unitOfWork.SaveChanges();
-
-            var outputDocuments = _outputDocumentRepository.GetAll().Where(x => x.ProjectId == projectId).ToList();
+            var outputDocuments = _outputDocumentService.GetOutputDocumentByProjectId(projectId);
             ViewBag.OutputDocuments = outputDocuments;
         }
 
         public void DeleteDocument(int documentId)
         {
-            _outputDocumentRepository.Delete(documentId);
-            _unitOfWork.SaveChanges();
+            _outputDocumentService.DeleteOutputDocument(documentId);
         }
 
         [HttpGet]
         public ActionResult DownloadDocument(int documentId)
         {
-            var document = _outputDocumentRepository.Get(documentId);
+            var document = _outputDocumentService.GetOutputDocumentById(documentId);
             var cd = new System.Net.Mime.ContentDisposition
             {
                 FileName = document.Name,
@@ -294,15 +281,7 @@ namespace Documaster.Ui.Controllers
                 return HttpNotFound();
             }
 
-            var model = _outputDocumentRepository
-                            .Get(x => x.ProjectId == projectId && x.DocumentType == documentType)
-                            .Select(item => new FileToUpdate
-                                 {
-                                    Id = item?.Id ?? 0,
-                                    FileName = item?.Name,
-                                    ProjectId = projectId
-                                 } )
-                            .ToList();
+            var model = _outputDocumentService.GetOutputDocumentByIdAndDocType(projectId, documentType);
             ViewBag.ProjectId = projectId;
             ViewBag.DocumentType = parsedDocumentType.ToString();
 
@@ -312,7 +291,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public PartialViewResult PreviewDocument(int documentId)
         {
-            var document = _outputDocumentRepository.Get(documentId);
+            var document = _outputDocumentService.GetOutputDocumentById(documentId);
             return PartialView("_PreviewDocument", document);
         }
     }

@@ -1,7 +1,7 @@
 ﻿using Documaster.Model.Entities;
 using System.Collections.Generic;
 
-namespace Documaster.Ui.Models
+namespace Documaster.Business.Models
 {
     public class FileToUpdate
     {

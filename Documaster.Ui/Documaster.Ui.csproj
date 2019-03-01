@@ -137,9 +137,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AssignedCategory.cs" />
-    <Compile Include="Models\AssignedRequirement.cs" />
-    <Compile Include="Models\FileToUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

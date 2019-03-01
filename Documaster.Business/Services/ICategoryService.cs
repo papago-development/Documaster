@@ -1,4 +1,5 @@
-﻿using Documaster.Model.Entities;
+﻿using Documaster.Business.Models;
+using Documaster.Model.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,9 @@ namespace Documaster.Business.Services
         Category DeleteById(int id);
         bool DeleteCategory(Category category);
 
+        IEnumerable<Category> GetListOfCategories();
 
+        // ???
+        IEnumerable<AssignedCategory> GetCategoriesByAssignedCategory(int id);
     }
 }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Documaster.Business.Models;
 using Documaster.Model.Entities;
 
 namespace Documaster.Business.Services
@@ -61,6 +59,27 @@ namespace Documaster.Business.Services
             return edit;
         }
 
-    
+        public IEnumerable<Category> GetListOfCategories()
+        {
+            return _categoryRepository.GetAll().ToList();
+        }
+
+        // ???
+        public IEnumerable<AssignedCategory> GetCategoriesByAssignedCategory(int id)
+        {
+            return _categoryRepository
+                     .Get(x => x.Requirements.Any())
+                     .Select(x => new AssignedCategory
+                     {
+                         Id = x.Id,
+                         Name = x.Name,
+                         AssignedRequirements = x.Requirements.Select(y => new AssignedRequirement
+                         {
+                            Assigned = y.ProjectRequirements.Any(z => z.ProjectId == id),
+                            Name = y.Name,
+                            Id = y.Id
+                         }).OrderBy(m => m.Name).ToList()
+                     }).OrderBy(x => x.Name);
+        }
     }
 }

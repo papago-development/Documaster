@@ -11,5 +11,9 @@ namespace Documaster.Business.Services
     {
         Project CreateProject(Project project);
         Project GetProjectById(int id);
+        bool DeleteProject(Project project);
+        Project GetProjectByProjectId(int id);
+        Project GetProjectByNoteId(int id);
+        bool UpdateProject(Project project);
     }
 }
