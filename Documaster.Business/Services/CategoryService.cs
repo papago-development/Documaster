@@ -67,8 +67,10 @@ namespace Documaster.Business.Services
         // ???
         public IEnumerable<AssignedCategory> GetCategoriesByAssignedCategory(int id)
         {
-            return _categoryRepository
-                     .Get(x => x.Requirements.Any())
+            var allCategories = _categoryRepository.GetAll();
+            var categoriesWithAssignments =  allCategories.Where(x => x.Requirements.Any());
+
+            var assignedCategories = categoriesWithAssignments
                      .Select(x => new AssignedCategory
                      {
                          Id = x.Id,
@@ -80,6 +82,8 @@ namespace Documaster.Business.Services
                             Id = y.Id
                          }).OrderBy(m => m.Name).ToList()
                      }).OrderBy(x => x.Name);
+
+            return assignedCategories;
         }
     }
 }

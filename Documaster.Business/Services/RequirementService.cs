@@ -33,7 +33,9 @@ namespace Documaster.Business.Services
 
         public IEnumerable<Requirement> GetRequirements()
         {
-            return _requirementRepository.GetAll().OrderBy(x => x.Category.Name).ThenBy(x => x.Name).ToList();
+            return _requirementRepository.GetAll()
+                                         .OrderBy(x => x.Category.Name)
+                                         .ThenBy(x => x.Name).ToList();
         }
 
         public bool UpdateRequirement(Requirement requirement)

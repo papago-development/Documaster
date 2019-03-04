@@ -18,6 +18,11 @@ namespace Documaster.Business.Services
             _unitOfWork = unitOfWork;
         }
 
+        public IQueryable<Project> GetAllProjects()
+        {
+            return _projectRepository.GetAll();
+        }
+
         public Project CreateProject(Project project)
         {
             var newProject = _projectRepository.Create(project);
@@ -49,9 +54,11 @@ namespace Documaster.Business.Services
 
         public bool UpdateProject(Project project)
         {
-            var updatedProject = _projectRepository.Update(project, new List<string> { "Notes" });
+            // var updatedProject = _projectRepository.Update(project, new List<string> { "Notes" });
+            var updatedProject = _projectRepository.Update(project, new List<string> { });
             _unitOfWork.SaveChanges();
             return updatedProject;
         }
+
     }
 }

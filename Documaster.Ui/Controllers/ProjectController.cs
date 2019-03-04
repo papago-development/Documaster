@@ -45,8 +45,8 @@ namespace Documaster.Ui.Controllers
         public ActionResult List(string sortProperty, bool sortDescending)
         {
             var model = sortDescending
-                    ? _projectRepository.GetAll().OrderByDescending(sortProperty).ToList()
-                    : _projectRepository.GetAll().OrderBy(sortProperty).ToList();
+                    ? _projectService.GetAllProjects().OrderByDescending(sortProperty).ToList()
+                    : _projectService.GetAllProjects().OrderBy(sortProperty).ToList();
 
             ViewBag.SortDescending = sortDescending;
             return View(model);
@@ -95,8 +95,9 @@ namespace Documaster.Ui.Controllers
                 _projectRepository.Update(project, new List<string> { "Number" });
             }
 
-            _projectRepository.Update(project, new List<string> { "Name", "Expire" });
-            _unitOfWork.SaveChanges();
+            //_projectRepository.Update(project, new List<string> { "Name", "Expire" });
+            //_unitOfWork.SaveChanges();
+            _projectService.UpdateProject(project);
 
             return RedirectToAction("Index");
         }
@@ -140,8 +141,9 @@ namespace Documaster.Ui.Controllers
             }
 
             project.IsReady = state;
-            _projectRepository.Update(project, new List<string> {"IsReady"});
-            _unitOfWork.SaveChanges();
+            //_projectRepository.Update(project, new List<string> {"IsReady"});
+            //_unitOfWork.SaveChanges();
+            _projectService.UpdateProject(project);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }

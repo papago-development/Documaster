@@ -9,6 +9,7 @@ namespace Documaster.Business.Services
 {
     public interface IProjectService
     {
+        IQueryable<Project> GetAllProjects();
         Project CreateProject(Project project);
         Project GetProjectById(int id);
         bool DeleteProject(Project project);
