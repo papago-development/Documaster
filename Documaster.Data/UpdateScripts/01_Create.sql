@@ -7,7 +7,7 @@ CREATE TABLE dbo.Project (
 	,LastUpdate DATETIME NOT NULL
 	,IsReady BIT NOT NULL CONSTRAINT DF_Project_IsReady DEFAULT(0)
 	,Notes NVARCHAR(MAX)
-	,[Number] NVARCHAR(50) NOT NULL
+	,[Number] NVARCHAR(50) NULL
 )
 GO
 
@@ -80,6 +80,7 @@ CREATE TABLE dbo.Category (
 	,[Name] NVARCHAR(200) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
+	,Number INT NOT NULL
 )
 GO
 
@@ -99,6 +100,7 @@ CREATE TABLE dbo.Requirement (
 	,[Name] NVARCHAR(50) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
+	,Number INT NOT NULL
 
 )
 GO

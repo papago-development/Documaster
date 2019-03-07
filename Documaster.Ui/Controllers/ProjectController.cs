@@ -97,7 +97,7 @@ namespace Documaster.Ui.Controllers
 
             //_projectRepository.Update(project, new List<string> { "Name", "Expire" });
             //_unitOfWork.SaveChanges();
-            _projectService.UpdateProject(project);
+           _projectService.UpdateProject(project);
 
             return RedirectToAction("Index");
         }
