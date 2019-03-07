@@ -67,15 +67,16 @@ namespace Documaster.Business.Services
         // ???
         public IEnumerable<AssignedCategory> GetCategoriesByAssignedCategory(int id)
         {
-            var allCategories = _categoryRepository.GetAll().OrderBy(x => x.Number);
-            var categoriesWithAssignments =  allCategories.Where(x => x.Requirements.Any()).OrderBy(x=>x.Number);
+            var allCategories = _categoryRepository.GetAll();
+            var categoriesWithAssignments =  allCategories.Where(x => x.Requirements.Any());
 
             var assignedCategories = categoriesWithAssignments
+                     .OrderBy(x => x.Number).ThenBy(x => x.Name)
                      .Select(x => new AssignedCategory
                      {
                          Id = x.Id,
                          Name = x.Name,
-                         AssignedRequirements = x.Requirements.Select(y => new AssignedRequirement
+                         AssignedRequirements = x.Requirements.OrderBy(m => m.Number).ThenBy(m => m.Name).Select(y => new AssignedRequirement
                          {
                             Assigned = y.ProjectRequirements.Any(z => z.ProjectId == id),
                             Name = y.Name,
