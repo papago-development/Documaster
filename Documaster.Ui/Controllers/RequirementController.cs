@@ -42,7 +42,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _requirementService.GetRequirements();
+            var model = _requirementService.GetRequirements().OrderBy(x=>x.Category.Number).ThenBy(x =>x.Number);
             return View(model);
         }
 

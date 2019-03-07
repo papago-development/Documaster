@@ -54,7 +54,7 @@ namespace Documaster.Business.Services
         //Edit category
         public bool EditCategory(Category category)
         {
-            var edit = _categoryRepository.Update(category, new List<string> { "Name" });
+            var edit = _categoryRepository.Update(category, new List<string> { "Name", "Number" });
             _unitOfWork.SaveChanges();
             return edit;
         }
@@ -67,8 +67,8 @@ namespace Documaster.Business.Services
         // ???
         public IEnumerable<AssignedCategory> GetCategoriesByAssignedCategory(int id)
         {
-            var allCategories = _categoryRepository.GetAll();
-            var categoriesWithAssignments =  allCategories.Where(x => x.Requirements.Any());
+            var allCategories = _categoryRepository.GetAll().OrderBy(x => x.Number);
+            var categoriesWithAssignments =  allCategories.Where(x => x.Requirements.Any()).OrderBy(x=>x.Number);
 
             var assignedCategories = categoriesWithAssignments
                      .Select(x => new AssignedCategory
@@ -80,8 +80,8 @@ namespace Documaster.Business.Services
                             Assigned = y.ProjectRequirements.Any(z => z.ProjectId == id),
                             Name = y.Name,
                             Id = y.Id
-                         }).OrderBy(m => m.Name).ToList()
-                     }).OrderBy(x => x.Name);
+                         }).ToList()
+                     });
 
             return assignedCategories;
         }
