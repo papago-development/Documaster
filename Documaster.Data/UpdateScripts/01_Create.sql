@@ -1,3 +1,16 @@
+CREATE TABLE dbo.ProjectStatus (
+	Id INT IDENTITY(1,1) NOT NULL
+	,[Name] NVARCHAR(200) NOT NULL
+	,CreationDate DATETIME NOT NULL
+	,LastUpdate DATETIME NOT NULL
+)
+GO
+
+ALTER TABLE dbo.ProjectStatus
+	ADD CONSTRAINT PK_ProjectStatus 
+	PRIMARY KEY CLUSTERED (Id)
+GO
+
 CREATE TABLE dbo.Project (
 	Id INT IDENTITY(1,1) NOT NULL
 	,Expire DATETIME  
@@ -5,7 +18,7 @@ CREATE TABLE dbo.Project (
 	,[Name] NVARCHAR(200) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
-	,IsReady BIT NOT NULL CONSTRAINT DF_Project_IsReady DEFAULT(0)
+	,ProjectStatusId INT NOT NULL
 	,Notes NVARCHAR(MAX)
 	,[Number] NVARCHAR(50) NULL
 )
@@ -14,6 +27,16 @@ GO
 ALTER TABLE dbo.Project
 	ADD CONSTRAINT PK_Project 
 	PRIMARY KEY CLUSTERED (Id)
+GO
+
+ALTER TABLE dbo.Project WITH CHECK
+	ADD CONSTRAINT FK_Project_Id_ProjectStatus_Id
+	FOREIGN KEY (Id)
+	REFERENCES dbo.ProjectStatus (Id)
+GO
+
+ALTER TABLE dbo.Project
+	CHECK CONSTRAINT FK_Project_Id_ProjectStatus_Id
 GO
 
 CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Name
