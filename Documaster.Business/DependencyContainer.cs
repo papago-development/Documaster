@@ -50,6 +50,9 @@ namespace Documaster.Business
 
             //OutputDocument
             unityContainer.RegisterType(typeof(IOutputDocumentService), typeof(OutputDocumentService), new PerRequestLifetimeManager());
+
+            //ProjectStatus
+            unityContainer.RegisterType(typeof(IProjectStatusService), typeof(ProjectStatusService), new PerRequestLifetimeManager());
         }
     }
 }

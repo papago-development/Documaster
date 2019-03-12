@@ -1,4 +1,5 @@
-﻿using Documaster.Model.BaseEntities;
+﻿using System;
+using Documaster.Model.BaseEntities;
 
 namespace Documaster.Model.Entities
 {

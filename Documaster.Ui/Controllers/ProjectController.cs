@@ -6,33 +6,37 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 
-
 namespace Documaster.Ui.Controllers
 {
     public class ProjectController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IGenericRepository<Project> _projectRepository;
-        private readonly IGenericRepository<Customer> _customerRepository;
         private readonly IGenericRepository<ProjectRequirement> _projectRequirementRepository;
 
         private readonly IProjectService _projectService;
         private readonly IProjectRequirementService _projectRequirementService;
         private readonly ICustomerService _customerService;
+        private readonly IProjectStatusService _projectStatusService;
 
         public ProjectController(IUnitOfWork unitOfWork, 
                                  IProjectService projectService, 
                                  IProjectRequirementService projectRequirementService,
-                                 ICustomerService customerService)
+                                 ICustomerService customerService,
+                                 IProjectStatusService projectStatusService)
         {
             _unitOfWork = unitOfWork;
-            _projectRepository = unitOfWork.Repository<Project>();
-            _customerRepository = unitOfWork.Repository<Customer>();
             _projectRequirementRepository = unitOfWork.Repository<ProjectRequirement>();
 
             _projectService = projectService;
             _projectRequirementService = projectRequirementService;
             _customerService = customerService;
+            _projectStatusService = projectStatusService;
+        }
+
+        [HttpGet]
+        public ActionResult Welcome()
+        {
+            return View();
         }
 
         [HttpGet]
@@ -48,6 +52,8 @@ namespace Documaster.Ui.Controllers
                     ? _projectService.GetAllProjects().OrderByDescending(sortProperty).ToList()
                     : _projectService.GetAllProjects().OrderBy(sortProperty).ToList();
 
+            var projectStatusList = _projectStatusService.GetAll();
+            ViewBag.ProjectStatuses = projectStatusList;
             ViewBag.SortDescending = sortDescending;
             return View(model);
         }
@@ -55,6 +61,9 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            //Populate dropdownlist with project status 
+            var projectStatusList = _projectStatusService.GetAll();
+            ViewBag.ProjectStatuses = projectStatusList;
             return View();
         }
 
@@ -68,6 +77,9 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            var projectStatusesList = _projectStatusService.GetAll();
+            ViewBag.ProjectStatuses = projectStatusesList;
+
             var model = _projectService.GetProjectById(id);
             return View(model);
         }
@@ -91,12 +103,10 @@ namespace Documaster.Ui.Controllers
             }
             else
             {
-                _customerRepository.Update(project.Customer, new List<string> { "Name", "Telephone", "Email", "Address", "AdditionalInfo1", "AdditionalInfo2" });
-                _projectRepository.Update(project, new List<string> { "Number" });
+                _customerService.UpdateCustomer(project.Customer);
+                _projectService.UpdateProject(project);
             }
 
-            //_projectRepository.Update(project, new List<string> { "Name", "Expire" });
-            //_unitOfWork.SaveChanges();
            _projectService.UpdateProject(project);
 
             return RedirectToAction("Index");
@@ -140,9 +150,23 @@ namespace Documaster.Ui.Controllers
                 return HttpNotFound();
             }
 
-            project.IsReady = state;
+            //project.IsReady = state;
             //_projectRepository.Update(project, new List<string> {"IsReady"});
             //_unitOfWork.SaveChanges();
+            _projectService.UpdateProject(project);
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        [HttpPost]
+        public ActionResult ChangeProjectStatus(int projectId, int projectStateId)
+        {
+            var project = _projectService.GetProjectById(projectId);
+            if(project == null)
+            {
+                return HttpNotFound();
+            }
+
+            project.ProjectStatusId = projectStateId;
             _projectService.UpdateProject(project);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

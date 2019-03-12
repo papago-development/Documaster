@@ -36,5 +36,9 @@ namespace Documaster.Business.Services
             return _customerRepository.Get(x => x.Id == project.Id);
         }
 
+        public bool UpdateCustomer(Customer customer)
+        {
+            return _customerRepository.Update(customer, new List<string> { "Name", "Telephone", "Email", "Address", "AdditionalInfo1", "AdditionalInfo2" });
+        }
     }
 }

@@ -19,26 +19,36 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+<div class="form-horizontal">
 
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.Customer.Name, "Nume client")
-            @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Name, "Nume proiect")
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-        </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.Name, "Nume client")
+        @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, "Nume proiect")
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+    </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Adauga" class="btn btn-default" />
-            </div>
+    @*insert dropdown *@
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProjectStatus.Name, "Stare")
+        <br/>
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.ProjectStatusId, new SelectList(ViewBag.ProjectStatuses, "Id", "Name")
+         , new { @class = "form-control projectStatus" })
         </div>
     </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Adauga" class="btn btn-default" />
+        </div>
+    </div>
+</div>
 }
 
 <div>

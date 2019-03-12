@@ -12,6 +12,7 @@ namespace Documaster.Business.Services
         IEnumerable<Customer> GetCustomersByProject(Project project);
         Customer CreateCustomer(Customer customer);
         bool Delete(Customer customer);
+        bool UpdateCustomer(Customer customer);
 
     }
 }

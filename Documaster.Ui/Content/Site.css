@@ -182,3 +182,8 @@ button.close {
 input[type='number'] {
     width: 70px !important;
 }
+
+.form-control {
+    margin-left: -20px;
+    padding: 0px 4px;
+}

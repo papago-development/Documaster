@@ -1,0 +1,35 @@
+﻿@model  IEnumerable<Documaster.Model.Entities.ProjectStatus>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Stari</h2>
+<p>
+    @Html.ActionLink("Adauga", "Create")
+</p>
+    <br >
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Name", "Index")
+        </th>
+        <th></th>
+    </tr>
+    @if(Model != null)
+    {
+        foreach(var item in Model)
+        {
+            @Html.HiddenFor(modelItem => item.Id)
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Modifica", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Sterge", "Delete", new { id = item.Id })
+        </td>
+    </tr>
+        }
+    }
+</table>

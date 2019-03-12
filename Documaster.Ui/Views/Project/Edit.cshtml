@@ -35,6 +35,16 @@
             @Html.ValidationMessageFor(model => model.Customer.Name, "", new { @class = "text-danger" })
         </div>
     </div>
+    @*insert dropdown*@
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProjectStatus.Name, "Stare",
+                new { @class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.DropDownList("ProjectStatusId",
+            new SelectList(ViewBag.ProjectStatuses, "Id", "Name", "Select status for project"),
+            new { @class = "form-control" })
+        </div>
+    </div>
     <div class="form-group">
         @Html.LabelFor(model => model.Customer.Telephone, "Nr. telefon", new { @class = "control-label col-md-2" })
         <div class="col-md-10">
