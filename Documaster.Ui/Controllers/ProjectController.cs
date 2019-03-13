@@ -1,7 +1,6 @@
 ﻿using Documaster.Business.Services;
 using Documaster.Business.Extensions;
 using Documaster.Model.Entities;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -10,23 +9,16 @@ namespace Documaster.Ui.Controllers
 {
     public class ProjectController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IGenericRepository<ProjectRequirement> _projectRequirementRepository;
-
         private readonly IProjectService _projectService;
         private readonly IProjectRequirementService _projectRequirementService;
         private readonly ICustomerService _customerService;
         private readonly IProjectStatusService _projectStatusService;
 
-        public ProjectController(IUnitOfWork unitOfWork, 
-                                 IProjectService projectService, 
+        public ProjectController(IProjectService projectService, 
                                  IProjectRequirementService projectRequirementService,
                                  ICustomerService customerService,
                                  IProjectStatusService projectStatusService)
         {
-            _unitOfWork = unitOfWork;
-            _projectRequirementRepository = unitOfWork.Repository<ProjectRequirement>();
-
             _projectService = projectService;
             _projectRequirementService = projectRequirementService;
             _customerService = customerService;
@@ -158,7 +150,7 @@ namespace Documaster.Ui.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangeProjectStatus(int projectId, int projectStateId)
+        public ActionResult ChangeProjectStatus(int projectId, int projectStatusId)
         {
             var project = _projectService.GetProjectById(projectId);
             if(project == null)
@@ -166,7 +158,7 @@ namespace Documaster.Ui.Controllers
                 return HttpNotFound();
             }
 
-            project.ProjectStatusId = projectStateId;
+            project.ProjectStatusId = projectStatusId;
             _projectService.UpdateProject(project);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

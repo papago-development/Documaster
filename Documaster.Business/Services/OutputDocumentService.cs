@@ -22,35 +22,31 @@ namespace Documaster.Business.Services
             _unitOfWork = unitOfWork;
         }
 
-        //public OutputDocument CreateOutputDocument(HttpPostedFileBase fileUpload,
-        //                                           int projectId,
-        //                                           int? requirementId,
-        //                                           string documentType)
-        //{
-        //    if(fileUpload == null || !Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType))
-        //    {
-               
-        //    }
-        //    var length = fileUpload.ContentLength;
-        //    var tempImage = new byte[length];
-        //    fileUpload.InputStream.Read(tempImage, 0, length);
+        public OutputDocument CreateOutputDocument(HttpPostedFileBase fileUpload, int projectId, int? requirementId, string documentType)
+        {
+            if(fileUpload == null || !Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType))
+            {
+                return null;
+            }
 
-        //    var output = new OutputDocument
-        //    {
-        //        Name = fileUpload.FileName,
-        //        DocumentData = tempImage,
-        //        ContentType = fileUpload.ContentType,
-        //        DocumentType = parsedDocumentType.ToString(),
-        //        ProjectId = projectId,
-        //        RequirementId = requirementId,
-        //    };
+            var length = fileUpload.ContentLength;
+            var tempImage = new byte[length];
+            fileUpload.InputStream.Read(tempImage, 0, length);
 
-        //    var documentCreated = _outputDocumentRepository.Create(output);
-        //    _unitOfWork.SaveChanges();
-        //    return documentCreated;
+            var output = new OutputDocument
+            {
+                Name = fileUpload.FileName,
+                DocumentData = tempImage,
+                ContentType = fileUpload.ContentType,
+                DocumentType = parsedDocumentType.ToString(),
+                ProjectId = projectId,
+                RequirementId = requirementId,
+            };
 
-
-        //}
+            var documentCreated = _outputDocumentRepository.Create(output);
+            _unitOfWork.SaveChanges();
+            return documentCreated;
+        }
         
         public OutputDocument GetOutputDocuments(int projectId, int requirementId)
         {

@@ -18,7 +18,7 @@
             @Html.ActionLink("Creat pe", "List", new { sortProperty = "CreationDate", sortDescending })
         </th>
         <th>
-            @Html.ActionLink("Stare", "List", new { sortProperty = "ProjectStatus.Name", sortDescending })
+            @Html.ActionLink("Stare", "List", new { sortProperty = "ProjectStatus", sortDescending })
         </th>
         <th>
             @Html.ActionLink("Nume client", "List", new { sortProperty = "Customer.Name", sortDescending })
@@ -50,8 +50,8 @@
             <div class="form-group">
                 @Html.DisplayFor(modelItem => item.ProjectStatus.Name)
                 <div class="col-md-10">
-                    @Html.DropDownListFor(modelItem => item.ProjectStatusId, new SelectList(ViewBag.ProjectStatuses, "Id", "Name"), 
-                    new { @class = "form-control projectStatus" })
+                    @Html.DropDownListFor(modelItem => item.ProjectStatusId, new SelectList(ViewBag.ProjectStatuses, "Id", "Name"),
+         new { @class = "form-control" })
                 </div>
         </div>
         </td>
@@ -79,22 +79,20 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-        @*$(".project-state").change(function () {
-            var projectId = $(this).parent().siblings()[0].value;
-            var state = $(this).prop("checked");
-            $.post("ToggleProjectState", { projectId, state }, function () {
-                console.log('success');
-            });
-        });*@
-         $(".projectStatus").change(function () {
-             var selectedValue = $(this).val();
-             console.log(selectedValue);
-             var projectId = $("input[type='hidden']").val();
-             console.log(projectId);
+         $('.form-control').change(function () {
+             var projectStatusId = $(this).val();
+             console.log("Dropdownlist value: " + projectStatusId);
+             var projectId = $(this).parent().parent().parent().siblings()[0].value;
+             console.log("Project id: " + projectId);
 
-            $.post("ChangeProjectStatus", { projectId, selectedValue}, function () {
+            $.post("ChangeProjectStatus", { projectId, projectStatusId}, function () {
+                console.log(projectId);
+                console.log(projectStatusId);
                 console.log('success');
             });
 
         });
-    });</script>
+
+
+    });
+</script>

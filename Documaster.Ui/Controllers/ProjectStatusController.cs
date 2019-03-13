@@ -10,14 +10,12 @@ namespace Documaster.Ui.Controllers
 {
     public class ProjectStatusController : Controller
     {
-
         private readonly IProjectStatusService _projectStatusService;
 
         public ProjectStatusController(IProjectStatusService projectStatusService)
         {
             _projectStatusService = projectStatusService;
         }
-
 
         [HttpGet]
         public ActionResult Index()

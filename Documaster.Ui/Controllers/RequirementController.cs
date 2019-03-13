@@ -13,8 +13,6 @@ namespace Documaster.Ui.Controllers
 {
     public class RequirementController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IGenericRepository<OutputDocument> _outputDocumentRepository;
         private readonly IRequirementService _requirementService;
         private readonly ICategoryService _categoryService;
         private readonly IProjectRequirementService _projectRequirementService;
@@ -25,13 +23,8 @@ namespace Documaster.Ui.Controllers
                                      ICategoryService categoryService,
                                      IProjectRequirementService projectRequirementService,
                                      IOutputDocumentService outputDocumentService,
-                                     IProjectService projectService,
-                                     IUnitOfWork unitOfWork,
-                                     IGenericRepository<OutputDocument> outputDocumentRepository)
+                                     IProjectService projectService)
         {
-            _unitOfWork = unitOfWork;
-            _outputDocumentRepository = outputDocumentRepository;
-
             _requirementService = requirementService;
             _categoryService = categoryService;
             _projectRequirementService = projectRequirementService;
@@ -96,7 +89,6 @@ namespace Documaster.Ui.Controllers
         public ActionResult ProjectRequirements(int projectId)
         {
             //Ordonare dupa categorii
-            // ???
             var categories = _categoryService.GetCategoriesByAssignedCategory(projectId);
             ViewBag.ProjectId = projectId;
             return View("ProjectRequirements", categories);
@@ -134,20 +126,6 @@ namespace Documaster.Ui.Controllers
 
         public ActionResult ProjectCategory(int projectId)
         {
-            //var categories = _categoryRepository
-            //          .Get(x => x.Requirements.Any())
-            //          .Select(x => new AssignedCategory
-            //          {
-            //              Id = x.Id,
-            //              Name = x.Name,
-            //              AssignedRequirements = x.Requirements.Select(y => new AssignedRequirement
-            //              {
-            //                  Assigned = y.ProjectRequirements.Any(z => z.ProjectId == projectId),
-            //                  Name = y.Name,
-            //                  Id = y.Id
-            //              }).ToList()
-            //          });
-
             var categories = _categoryService.GetCategoriesByAssignedCategory(projectId);
             ViewBag.Categories = categories;
             return View("CustomerProject", categories);
@@ -165,7 +143,6 @@ namespace Documaster.Ui.Controllers
         {
             var fileToUpdates = new List<FileToUpdate>();
 
-            // ???
             var projectRequirements = _projectRequirementService.GetProjectRequirementByProjectId(projectId);
             foreach (var projectRequirement in projectRequirements)
             {
@@ -230,25 +207,7 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public void Upload(HttpPostedFileBase fileUpload, int projectId, int? requirementId, string documentType)
         {
-            if (fileUpload == null || !Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType))
-            {
-                return;
-            }
-            var length = fileUpload.ContentLength;
-            var tempImage = new byte[length];
-            fileUpload.InputStream.Read(tempImage, 0, length);
-
-            var output = new OutputDocument
-            {
-                Name = fileUpload.FileName,
-                DocumentData = tempImage,
-                ContentType = fileUpload.ContentType,
-                DocumentType = parsedDocumentType.ToString(),
-                ProjectId = projectId,
-                RequirementId = requirementId,
-            };
-            _outputDocumentRepository.Create(output);
-            _unitOfWork.SaveChanges();
+            _outputDocumentService.CreateOutputDocument(fileUpload, projectId, requirementId, documentType);
             var outputDocuments = _outputDocumentService.GetOutputDocumentByProjectId(projectId);
             ViewBag.OutputDocuments = outputDocuments;
         }
