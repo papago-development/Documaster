@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Documaster.Model.Entities.Project>
 @{
     ViewBag.Title = "Lista proiecte";
-    
+
     Layout = "~/Views/Shared/_Layout.cshtml";
     var sortDescending = !(bool)ViewBag.SortDescending;
 }
@@ -48,10 +48,8 @@
         </td>
         <td>
             <div class="form-group">
-                @Html.DisplayFor(modelItem => item.ProjectStatus.Name)
                 <div class="col-md-10">
-                    @Html.DropDownListFor(modelItem => item.ProjectStatusId, new SelectList(ViewBag.ProjectStatuses, "Id", "Name"),
-         new { @class = "form-control" })
+                    @Html.DropDownListFor(modelItem => item.ProjectStatusId, new SelectList(ViewBag.ProjectStatuses, "Id", "Name", item.ProjectStatusId), new { @class = "form-control" })
                 </div>
         </div>
         </td>
@@ -78,7 +76,7 @@
 </table>
 
 <script type="text/javascript">
-$(document).ready(function () {
+    $(document).ready(function () {
          $('.form-control').change(function () {
              var projectStatusId = $(this).val();
              console.log("Dropdownlist value: " + projectStatusId);
@@ -90,9 +88,6 @@ $(document).ready(function () {
                 console.log(projectStatusId);
                 console.log('success');
             });
-
         });
-
-
     });
 </script>

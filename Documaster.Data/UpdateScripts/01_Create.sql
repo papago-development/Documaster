@@ -11,6 +11,11 @@ ALTER TABLE dbo.ProjectStatus
 	PRIMARY KEY CLUSTERED (Id)
 GO
 
+CREATE UNIQUE NONCLUSTERED INDEX UX_ProjectStatus_Name
+	ON dbo.ProjectStatus ([Name])
+GO
+
+
 CREATE TABLE dbo.Project (
 	Id INT IDENTITY(1,1) NOT NULL
 	,Expire DATETIME  
