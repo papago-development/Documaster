@@ -183,7 +183,12 @@ input[type='number'] {
     width: 70px !important;
 }
 
-.form-control {
+.projectStatus {
+    height: 20px;
+    padding: 0px !important;
     margin-left: -20px;
-    padding: 0px 4px;
 }
+
+/*input[type='submit'] {
+    margin-left: -5px;
+}*/

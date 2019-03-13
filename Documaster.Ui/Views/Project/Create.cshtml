@@ -25,26 +25,15 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Customer.Name, "Nume client")
+        @Html.LabelFor(m => m.Customer.Name, "Nume client", htmlAttributes: new { @class = "control-label col-md-2" })
         @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Name, "Nume proiect")
+        @Html.LabelFor(m => m.Name, "Nume proiect", htmlAttributes: new { @class = "control-label col-md-2" })
         @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
     </div>
-
-    @*insert dropdown *@
-
     <div class="form-group">
-        @Html.LabelFor(m => m.ProjectStatus.Name, "Stare")
-        <br/>
-        <div class="col-md-10">
-            @Html.DropDownListFor(m => m.ProjectStatusId, new SelectList(ViewBag.ProjectStatuses, "Id", "Name")
-         , new { @class = "form-control projectStatus" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div class="col-md-offset-2 col-md-5">
             <input type="submit" value="Adauga" class="btn btn-default" />
         </div>
     </div>
@@ -55,7 +44,7 @@
     @Html.ActionLink("Inapoi la lista", "Index")
 </div>
 
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
         var dateInput = $("#expire-textbox");
         dateInput.datepicker({
