@@ -35,13 +35,13 @@ ALTER TABLE dbo.Project
 GO
 
 ALTER TABLE dbo.Project WITH CHECK
-	ADD CONSTRAINT FK_Project_Id_ProjectStatus_Id
-	FOREIGN KEY (Id)
+	ADD CONSTRAINT FK_Project_ProjectStatusId_ProjectStatus_Id
+	FOREIGN KEY (ProjectStatusId)
 	REFERENCES dbo.ProjectStatus (Id)
 GO
 
 ALTER TABLE dbo.Project
-	CHECK CONSTRAINT FK_Project_Id_ProjectStatus_Id
+	CHECK CONSTRAINT FK_Project_ProjectStatusId_ProjectStatus_Id
 GO
 
 CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Name
