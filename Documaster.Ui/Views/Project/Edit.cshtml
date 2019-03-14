@@ -8,6 +8,7 @@
 }
 <script src="~/Scripts/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 <link href="~/Content/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+<script src="~/Scripts/jscolor.js"></script> 
 
 <h2>Modifica proiect</h2>
 
@@ -39,10 +40,10 @@
     <div class="form-group">
         @Html.LabelFor(model => model.ProjectStatus.Name, "Stare",
                 new { @class = "control-label col-md-2"})
-        <div class="col-md-10">
+        <div class="col-md-10" id="color">
             @Html.DropDownList("ProjectStatusId",
-            new SelectList(ViewBag.ProjectStatuses, "Id", "Name", "Select status for project"),
-            new { @class = "form-control" })
+            new SelectList(ViewBag.ProjectStatuses, "Id", "Color"),
+            new { @class = "form-control jscolor", @onchange="update(this.jscolor)"})
         </div>
     </div>
     <div class="form-group">
@@ -105,8 +106,7 @@
     @Html.ActionLink("Inapoi la lista", "Index")
 </div>
 
-<script>
-    $(document).ready(function () {
+<script>$(document).ready(function () {
         var dateInput = $("#expire-textbox");
         dateInput.datepicker({
             todayHighlight: true,
@@ -117,5 +117,11 @@
             var date = new Date(value);
             dateInput.attr("value", date.toLocaleDateString());
         }
-    });
-</script>
+
+        function update(jscolor)
+        {
+            document.getElementById('#color').style.backgroundColor = '#' + jscolor
+        }
+});
+
+    });</script>

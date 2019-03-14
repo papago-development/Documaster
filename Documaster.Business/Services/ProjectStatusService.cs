@@ -32,7 +32,7 @@ namespace Documaster.Business.Services
 
         public bool EditProjectStatus(ProjectStatus projectStatus)
         {
-            var editProjectStatus = _projectStatusRepository.Update(projectStatus, new List<string> { "Name" });
+            var editProjectStatus = _projectStatusRepository.Update(projectStatus, new List<string> { "Name", "Color" });
             _unitOfWork.SaveChanges();
             return editProjectStatus;
         }

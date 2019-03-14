@@ -39,7 +39,7 @@
             var willExpire = item.Expire.HasValue && (item.Expire - DateTime.Now).Value.TotalDays < 30 ? "willExpire" : "";
     <tr class="@willExpire">
         @Html.HiddenFor(modelItem => item.Id)
-
+        @Html.HiddenFor(modelItem => item.ProjectStatus.Color, new { @id = "color"})
         <td>
             @Html.DisplayFor(modelItem => item.Number)
         </td>
@@ -77,18 +77,34 @@
 </table>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-         $('.projectStatus').change(function () {
+$(document).ready(function () {
+
+          $('.projectStatus').each(function(index, value) {
+
+
+           });
+
+          $('.projectStatus').change(function () {
+
              var projectStatusId = $(this).val();
              console.log("Dropdownlist value: " + projectStatusId);
              var projectId = $(this).parent().parent().parent().siblings()[0].value;
              console.log("Project id: " + projectId);
+
+
+            var color = $('#color').val();
+            console.log(color);
+            if($('.projectStatus').text() == "In lucru")
+            {
+                  $(this).css('background-color', color);
+            }
 
             $.post("ChangeProjectStatus", { projectId, projectStatusId}, function () {
                 console.log(projectId);
                 console.log(projectStatusId);
                 console.log('success');
             });
+
         });
     });
 </script>

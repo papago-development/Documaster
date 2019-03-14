@@ -3,6 +3,7 @@ CREATE TABLE dbo.ProjectStatus (
 	,[Name] NVARCHAR(200) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
+    ,Color NVARCHAR(50) NOT NULL
 )
 GO
 

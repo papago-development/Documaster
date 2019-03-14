@@ -42,16 +42,6 @@ namespace Documaster.Business.Services
             return _projectRepository.Get(id);
         }
 
-        public Project GetProjectByProjectId(int id)
-        {
-            return _projectRepository.Get(x => x.Id == id).FirstOrDefault();
-        }
-        
-        public Project GetProjectByNoteId(int id)
-        {
-          return  _projectRepository.Get(x => x.Id == id).FirstOrDefault();
-        }
-
         public bool UpdateProject(Project project)
         {
             var updatedProject = _projectRepository.Update(project, new List<string> { "Name", "Expire", "Number", "ProjectStatusId" });

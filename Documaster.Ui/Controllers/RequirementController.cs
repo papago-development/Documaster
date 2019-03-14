@@ -168,7 +168,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Notes(int projectId)
         {
-            var project = _projectService.GetProjectByProjectId(projectId);
+            var project = _projectService.GetProjectById(projectId);
             if (project == null)
             {
                 return HttpNotFound();
@@ -180,7 +180,7 @@ namespace Documaster.Ui.Controllers
         [ValidateInput(false)]
         public ActionResult Notes(int id, string notes)
         {
-            var project = _projectService.GetProjectByNoteId(id);
+            var project = _projectService.GetProjectById(id);
             if (project == null)
             {
                 return HttpNotFound();

@@ -32,6 +32,16 @@
         @Html.LabelFor(m => m.Name, "Nume proiect", htmlAttributes: new { @class = "control-label col-md-2" })
         @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
     </div>
+    @*insert dropdown*@
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProjectStatus.Name, "Stare",
+                     new { @class = "control-label col-md-2" })
+        <div class="col-md-10" id="color">
+            @Html.DropDownList("ProjectStatusId",
+                 new SelectList(ViewBag.ProjectStatuses, "Id", "Color"),
+                 new { @class = "form-control jscolor", @onchange = "update(this.jscolor)" })
+        </div>
+    </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-5">
             <input type="submit" value="Adauga" class="btn btn-default" />
