@@ -44,7 +44,7 @@ namespace Documaster.Ui.Controllers
                     ? _projectService.GetAllProjects().OrderByDescending(sortProperty).ToList()
                     : _projectService.GetAllProjects().OrderBy(sortProperty).ToList();
 
-            var projectStatusList = _projectStatusService.GetAll();
+            var projectStatusList = _projectStatusService.GetAll().ToList();
             ViewBag.ProjectStatuses = projectStatusList;
             ViewBag.SortDescending = sortDescending;
             return View(model);
