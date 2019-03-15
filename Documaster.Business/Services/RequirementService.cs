@@ -51,5 +51,10 @@ namespace Documaster.Business.Services
             _unitOfWork.SaveChanges();
             return deletedRequirement;
         }
+
+        public Requirement GetRequirementByNumber(int number)
+        {
+            return _requirementRepository.Get(number);
+        }
     }
 }

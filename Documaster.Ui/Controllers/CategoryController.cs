@@ -7,10 +7,13 @@ namespace Documaster.Ui.Controllers
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
+        private readonly INamedEntityService<Category> _namedEntityService;
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService,
+                                  INamedEntityService<Category> namedEntityService)
         {
             _categoryService = categoryService;
+            _namedEntityService = namedEntityService;
         }
 
         [HttpGet]
@@ -29,8 +32,12 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Create(Category category)
         {
-            _categoryService.CreateCategory(category);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _categoryService.CreateCategory(category);
+                return RedirectToAction("Index");
+            }
+            return View(category);
         }
 
         [HttpGet]
@@ -59,6 +66,25 @@ namespace Documaster.Ui.Controllers
         {
             _categoryService.DeleteCategory(category);
             return RedirectToAction("Index");
+        }
+
+        public JsonResult DoesNumberExist(int number)
+        {
+            var doesNumberExist = _categoryService.GetCategoryByNumber(number);
+             if(doesNumberExist != null)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult DoesNameExist(string name)
+        {
+            var doesNameExist = _namedEntityService.DoesNameExist(name);
+            return Json(!doesNameExist, JsonRequestBehavior.AllowGet);
         }
     }
 }

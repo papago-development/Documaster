@@ -12,5 +12,6 @@ namespace Documaster.Business.Services
         bool DeleteProjectStatus(ProjectStatus projectStatus);
         ProjectStatus GetProjectStatusById(int id);
         bool EditProjectStatus(ProjectStatus projectStatus);
+
     }
 }

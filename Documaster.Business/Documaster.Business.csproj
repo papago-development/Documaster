@@ -123,6 +123,8 @@
     <Compile Include="Wrappers\IDependencyContainerWrapper.cs" />
     <Compile Include="Services\IProjectStatusService.cs" />
     <Compile Include="Services\ProjectStatusService.cs" />
+    <Compile Include="Services\NamedEntityService.cs" />
+    <Compile Include="Services\INamedEntityService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

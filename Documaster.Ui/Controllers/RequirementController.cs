@@ -18,18 +18,21 @@ namespace Documaster.Ui.Controllers
         private readonly IProjectRequirementService _projectRequirementService;
         private readonly IOutputDocumentService _outputDocumentService;
         private readonly IProjectService _projectService;
+        private readonly INamedEntityService<Requirement> _namedEntityService;
 
         public RequirementController(IRequirementService requirementService,
                                      ICategoryService categoryService,
                                      IProjectRequirementService projectRequirementService,
                                      IOutputDocumentService outputDocumentService,
-                                     IProjectService projectService)
+                                     IProjectService projectService,
+                                     INamedEntityService<Requirement> namedEntityService)
         {
             _requirementService = requirementService;
             _categoryService = categoryService;
             _projectRequirementService = projectRequirementService;
             _outputDocumentService = outputDocumentService;
             _projectService = projectService;
+            _namedEntityService = namedEntityService;
         }
 
         [HttpGet]
@@ -50,8 +53,12 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Create(Requirement requirement)
         {
-            _requirementService.CreateRequirement(requirement);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _requirementService.CreateRequirement(requirement);
+                return RedirectToAction("Index");
+            }
+            return View(requirement);
         }
 
         [HttpGet]
@@ -252,6 +259,25 @@ namespace Documaster.Ui.Controllers
         {
             var document = _outputDocumentService.GetOutputDocumentById(documentId);
             return PartialView("_PreviewDocument", document);
+        }
+
+        public JsonResult DoesNumberExist(int number)
+        {
+            var doesNumberExist = _requirementService.GetRequirementByNumber(number);
+            if (doesNumberExist != null)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult DoesNameExist(string name)
+        {
+            var doesNameExist = _namedEntityService.DoesNameExist(name);
+            return Json(!doesNameExist, JsonRequestBehavior.AllowGet);
         }
     }
 }

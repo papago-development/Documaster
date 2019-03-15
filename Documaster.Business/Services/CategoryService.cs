@@ -86,5 +86,10 @@ namespace Documaster.Business.Services
 
             return assignedCategories;
         }
+
+        public Category GetCategoryByNumber(int number)
+        {
+           return _categoryRepository.Get(number);
+        }
     }
 }

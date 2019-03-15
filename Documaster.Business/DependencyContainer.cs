@@ -53,6 +53,9 @@ namespace Documaster.Business
 
             //ProjectStatus
             unityContainer.RegisterType(typeof(IProjectStatusService), typeof(ProjectStatusService), new PerRequestLifetimeManager());
+
+            //NameEntity
+            unityContainer.RegisterType(typeof(INamedEntityService<>), typeof(NamedEntityService<>), new PerRequestLifetimeManager());
         }
     }
 }

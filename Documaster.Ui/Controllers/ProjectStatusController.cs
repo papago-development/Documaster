@@ -11,10 +11,13 @@ namespace Documaster.Ui.Controllers
     public class ProjectStatusController : Controller
     {
         private readonly IProjectStatusService _projectStatusService;
+        private readonly INamedEntityService<ProjectStatus> _namedEntityService;
 
-        public ProjectStatusController(IProjectStatusService projectStatusService)
+        public ProjectStatusController(IProjectStatusService projectStatusService,
+                                       INamedEntityService<ProjectStatus> namedEntityService)
         {
             _projectStatusService = projectStatusService;
+            _namedEntityService = namedEntityService;
         }
 
         [HttpGet]
@@ -33,8 +36,12 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Create(ProjectStatus projectStatus)
         {
-            _projectStatusService.CreateProjectStatus(projectStatus);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _projectStatusService.CreateProjectStatus(projectStatus);
+                return RedirectToAction("Index");
+            }
+            return View(projectStatus);
         }
 
         [HttpGet]
@@ -63,6 +70,12 @@ namespace Documaster.Ui.Controllers
         {
             _projectStatusService.EditProjectStatus(projectStatus);
             return RedirectToAction("Index");
+        }
+
+        public JsonResult DoesNameExist(string name)
+        {
+            var doesNameExist = _namedEntityService.DoesNameExist(name);
+            return Json(!doesNameExist, JsonRequestBehavior.AllowGet);
         }
     }
 }

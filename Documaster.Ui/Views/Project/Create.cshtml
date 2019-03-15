@@ -1,4 +1,4 @@
-﻿@using Documaster.Model.Entities
+@using Documaster.Model.Entities
 @model Project
 
 @{
@@ -42,7 +42,9 @@
     <div class="form-group">
         @Html.LabelFor(model => model.ProjectStatus.Name, "Stare", new { @class = "control-label col-md-2" })
         <div class="col-md-10" id="color">
-            @Html.DropDownList("ProjectStatusId", new SelectList(ViewBag.ProjectStatuses, "Id", "Name"), new { @class = "form-control jscolor" })
+            @Html.DropDownList("ProjectStatusId",
+                 new SelectList(ViewBag.ProjectStatuses, "Id", "Name"),
+                 new { @class = "form-control jscolor"})
         </div>
     </div>
     <div class="form-group">

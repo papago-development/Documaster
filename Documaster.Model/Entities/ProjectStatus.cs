@@ -1,10 +1,14 @@
 ﻿using System;
 using Documaster.Model.BaseEntities;
+using System.Web.Mvc;
 
 namespace Documaster.Model.Entities
 {
     public class ProjectStatus: NamedEntity
     {
-        public string Color { get; set; }
+       [Remote("DoesNameExist", "ProjectStatus", ErrorMessage = "Numele exista deja")]
+       public override string Name { get; set; }
+
+       public string Color { get; set; }
     }
 }
