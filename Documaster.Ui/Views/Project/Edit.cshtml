@@ -42,7 +42,7 @@
                 new { @class = "control-label col-md-2"})
         <div class="col-md-10" id="color">
             @Html.DropDownList("ProjectStatusId",
-            new SelectList(ViewBag.ProjectStatuses, "Id", "Color"),
+            new SelectList(ViewBag.ProjectStatuses, "Id", "Name"),
             new { @class = "form-control jscolor", @onchange="update(this.jscolor)"})
         </div>
     </div>
