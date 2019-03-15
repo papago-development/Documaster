@@ -11,6 +11,7 @@ namespace Documaster.Model.Entities
 
         [Remote("DoesNameExist", "Category", ErrorMessage = "Numele exista deja")]
         public override string Name { get; set; }
+
         public virtual ICollection<Requirement> Requirements { get; set; } = new List<Requirement>();
     }
 }
