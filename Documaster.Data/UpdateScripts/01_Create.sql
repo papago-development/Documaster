@@ -46,7 +46,7 @@ ALTER TABLE dbo.Project
 GO
 
 CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Name
-	ON dbo.Project ([Name])
+	ON dbo.Project ([Name], Number)
 GO
 
 CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Number
@@ -153,6 +153,9 @@ CREATE UNIQUE NONCLUSTERED INDEX UX_Requirement_Name
 	ON dbo.Requirement ([Name])
 GO
 
+CREATE UNIQUE NONCLUSTERED INDEX UX_Requirement_Number
+    ON dbo.Requirement (Number, CategoryId)
+GO
 
 CREATE TABLE dbo.ProjectRequirement (
 	Id INT IDENTITY(1,1) NOT NULL

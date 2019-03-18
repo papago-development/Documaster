@@ -56,5 +56,10 @@ namespace Documaster.Business.Services
         {
             return _requirementRepository.Get(number);
         }
+
+        public IQueryable<Requirement> GetAll()
+        {
+            return _requirementRepository.GetAll();
+        }
     }
 }

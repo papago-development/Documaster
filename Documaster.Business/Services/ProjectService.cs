@@ -26,6 +26,7 @@ namespace Documaster.Business.Services
         public Project CreateProject(Project project)
         {
             var newProject = _projectRepository.Create(project);
+
             _unitOfWork.SaveChanges();
             return newProject;
         }
@@ -48,6 +49,5 @@ namespace Documaster.Business.Services
             _unitOfWork.SaveChanges();
             return updatedProject;
         }
-
     }
 }

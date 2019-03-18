@@ -6,5 +6,6 @@ namespace Documaster.Business.Services
         where TEntity: NamedEntity
     {
         bool DoesNameExist(string name);
+
     }
 }

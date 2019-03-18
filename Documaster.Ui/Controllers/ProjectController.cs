@@ -4,6 +4,8 @@ using Documaster.Model.Entities;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Web.WebPages;
+using Microsoft.Ajax.Utilities;
 
 namespace Documaster.Ui.Controllers
 {
@@ -13,16 +15,19 @@ namespace Documaster.Ui.Controllers
         private readonly IProjectRequirementService _projectRequirementService;
         private readonly ICustomerService _customerService;
         private readonly IProjectStatusService _projectStatusService;
+        private readonly INamedEntityService<Project> _namedEntityService;
 
         public ProjectController(IProjectService projectService, 
                                  IProjectRequirementService projectRequirementService,
                                  ICustomerService customerService,
-                                 IProjectStatusService projectStatusService)
+                                 IProjectStatusService projectStatusService,
+                                 INamedEntityService<Project> namedEntityService)
         {
             _projectService = projectService;
             _projectRequirementService = projectRequirementService;
             _customerService = customerService;
             _projectStatusService = projectStatusService;
+            _namedEntityService = namedEntityService;
         }
 
         [HttpGet]
@@ -161,6 +166,32 @@ namespace Documaster.Ui.Controllers
             project.ProjectStatusId = projectStatusId;
             _projectService.UpdateProject(project);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        //public JsonResult DoesNameExist(string name)
+        //{
+        //    var doesNameExist = _namedEntityService.DoesNameExist(name);
+        //    return Json(!doesNameExist, JsonRequestBehavior.AllowGet);
+        //}
+
+        public JsonResult DoesNameExistWithNumber(Project project)
+        {
+            return DoesExist(project.Name, project.Number) ? Json(true, JsonRequestBehavior.AllowGet) : Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        public bool DoesExist(string name, string number)
+        {
+            var doesNameExist = _projectService.GetAllProjects().Where(x => x.Number == number).SingleOrDefault();
+            if (doesNameExist == null)
+            {
+                return true;
+            }
+            else
+            {
+                //Nu exista un proiect cu acelasi numar in BD
+                return false;
+               
+            }
         }
     }
 }

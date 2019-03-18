@@ -38,7 +38,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _requirementService.GetRequirements().OrderBy(x=>x.Category.Number).ThenBy(x =>x.Number);
+            var model = _requirementService.GetRequirements().OrderBy(x => x.Category.Number).ThenBy(x => x.Number);
             return View(model);
         }
 
@@ -195,7 +195,7 @@ namespace Documaster.Ui.Controllers
 
             project.Notes = notes;
             _projectService.UpdateProject(project);
-              return RedirectToAction("CustomerProject", new {projectId = id});
+            return RedirectToAction("CustomerProject", new { projectId = id });
         }
 
         [HttpPost]
@@ -261,16 +261,21 @@ namespace Documaster.Ui.Controllers
             return PartialView("_PreviewDocument", document);
         }
 
-        public JsonResult DoesNumberExist(int number)
+        public JsonResult DoesNumberExistWithName(Requirement requirement)
         {
-            var doesNumberExist = _requirementService.GetRequirementByNumber(number);
-            if (doesNumberExist != null)
+            return DoesExist(requirement.Number, requirement.CategoryId) ? Json(true, JsonRequestBehavior.AllowGet) : Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        public bool DoesExist(int number, int categoryId)
+        {
+            var doesNameExist = _requirementService.GetAll().Where(x => (x.Number == number && x.CategoryId == categoryId)).SingleOrDefault();
+            if (doesNameExist == null)
             {
-                return Json(false, JsonRequestBehavior.AllowGet);
+                return true;
             }
             else
             {
-                return Json(true, JsonRequestBehavior.AllowGet);
+                return false;
             }
         }
 

@@ -6,12 +6,13 @@ using System.Web.Mvc;
 namespace Documaster.Model.Entities
 {
     public class Requirement : NamedEntity
-    {
+    { 
+        [Remote("DoesNumberExistWithName", "Requirement", AdditionalFields = "Number", ErrorMessage = "Categorie exista deja")]
         public int CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
 
-        [Remote("DoesNumberExist", "Requirement", ErrorMessage = "Numarul exista deja")]
+        [Remote("DoesNumberExistWithName", "Requirement", AdditionalFields = "CategoryId", ErrorMessage = "Numarul este deja asignat unei categorii")]
         public int Number { get; set; }
 
         [Remote("DoesNameExist", "Requirement", ErrorMessage = "Numele exista deja")]

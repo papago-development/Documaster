@@ -12,6 +12,7 @@ namespace Documaster.Business.Services
         IQueryable<Project> GetAllProjects();
         Project CreateProject(Project project);
         Project GetProjectById(int id);
+        //Project GetProjectByNumber(string number);
         bool DeleteProject(Project project);
         bool UpdateProject(Project project);
     }

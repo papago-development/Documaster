@@ -23,7 +23,6 @@
 
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.Name, "Nume client", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -50,8 +49,8 @@
         @Html.LabelFor(model => model.ProjectStatus.Name, "Stare", new { @class = "control-label col-md-2" })
         <div class="col-md-10" id="color">
             @Html.DropDownList("ProjectStatusId",
-                 new SelectList(ViewBag.ProjectStatuses, "Id", "Name"),
-                 new { @class = "form-control jscolor"})
+                           new SelectList(ViewBag.ProjectStatuses, "Id", "Name"),
+                           new { @class = "form-control jscolor" })
         </div>
     </div>
     <div class="form-group">
