@@ -45,12 +45,8 @@ ALTER TABLE dbo.Project
 	CHECK CONSTRAINT FK_Project_ProjectStatusId_ProjectStatus_Id
 GO
 
-CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Number
-	ON dbo.Project (Number)
-GO
-
-CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Number
-	ON dbo.Project ([Number])
+CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Name_Number
+	ON dbo.Project ([Name], Number)
 GO
 
 
@@ -156,8 +152,8 @@ CREATE UNIQUE NONCLUSTERED INDEX UX_Requirement_Name
 	ON dbo.Requirement ([Name])
 GO
 
-CREATE UNIQUE NONCLUSTERED INDEX UX_Requirement_Number
-    ON dbo.Requirement (Number, CategoryId)
+CREATE UNIQUE NONCLUSTERED INDEX UX_Requirement_CategoryId_Number
+    ON dbo.Requirement (CategoryId, Number)
 GO
 
 
