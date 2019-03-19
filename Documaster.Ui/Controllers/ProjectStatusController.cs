@@ -73,9 +73,9 @@ namespace Documaster.Ui.Controllers
             return RedirectToAction("Index");
         }
 
-        public JsonResult DoesNameExist(string name)
+        public JsonResult DoesNameExist(ProjectStatus projectStatus)
         {
-            var doesNameExist = _namedEntityService.DoesNameExist(name);
+            var doesNameExist = _namedEntityService.DoesNameExist(projectStatus);
             return Json(!doesNameExist, JsonRequestBehavior.AllowGet);
         }
     }

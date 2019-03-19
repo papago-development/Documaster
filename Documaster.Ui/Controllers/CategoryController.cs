@@ -68,22 +68,15 @@ namespace Documaster.Ui.Controllers
             return RedirectToAction("Index");
         }
 
-        public JsonResult DoesNumberExist(int number)
+        public JsonResult DoesNumberExist(Category category)
         {
-            var doesNumberExist = _categoryService.GetCategoryByNumber(number);
-             if(doesNumberExist != null)
-            {
-                return Json(false, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(true, JsonRequestBehavior.AllowGet);
-            }
+            var doesNumberExist = _categoryService.DoesNumberExist(category);
+            return Json(!doesNumberExist, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult DoesNameExist(string name)
+        public JsonResult DoesNameExist(Category category)
         {
-            var doesNameExist = _namedEntityService.DoesNameExist(name);
+            var doesNameExist = _namedEntityService.DoesNameExist(category);
             return Json(!doesNameExist, JsonRequestBehavior.AllowGet);
         }
     }

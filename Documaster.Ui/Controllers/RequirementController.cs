@@ -260,27 +260,15 @@ namespace Documaster.Ui.Controllers
             return PartialView("_PreviewDocument", document);
         }
 
-        public JsonResult DoesNumberExistWithName(Requirement requirement)
+        public JsonResult DoesCategoryNumberCombinationExist(Requirement requirement)
         {
-            return IsCategoryNumberCombinationUnique(requirement.Number, requirement.CategoryId) ? Json(true, JsonRequestBehavior.AllowGet) : Json(false, JsonRequestBehavior.AllowGet);
+            var doesCategoryNumberCombinationExist = _requirementService.DoesCategoryNumberCombinationExist(requirement);
+            return Json(!doesCategoryNumberCombinationExist, JsonRequestBehavior.AllowGet);
         }
 
-        public bool IsCategoryNumberCombinationUnique(int number, int categoryId)
+        public JsonResult DoesNameExist(Requirement requirement)
         {
-            var doesNameExist = _requirementService.GetAll().Where(x => (x.Number == number && x.CategoryId == categoryId)).SingleOrDefault();
-            if (doesNameExist == null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public JsonResult DoesNameExist(string name)
-        {
-            var doesNameExist = _namedEntityService.DoesNameExist(name);
+            var doesNameExist = _namedEntityService.DoesNameExist(requirement);
             return Json(!doesNameExist, JsonRequestBehavior.AllowGet);
         }
     }

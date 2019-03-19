@@ -122,6 +122,10 @@ CREATE UNIQUE NONCLUSTERED INDEX UX_Category_Name
 	ON dbo.Category ([Name])
 GO
 
+CREATE UNIQUE NONCLUSTERED INDEX UX_Category_Number
+	ON dbo.Category (Number)
+GO
+
 
 CREATE TABLE dbo.Requirement (
 	Id INT IDENTITY(1,1) NOT NULL
@@ -130,7 +134,6 @@ CREATE TABLE dbo.Requirement (
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
 	,Number INT NOT NULL
-
 )
 GO
 
@@ -156,6 +159,7 @@ GO
 CREATE UNIQUE NONCLUSTERED INDEX UX_Requirement_Number
     ON dbo.Requirement (Number, CategoryId)
 GO
+
 
 CREATE TABLE dbo.ProjectRequirement (
 	Id INT IDENTITY(1,1) NOT NULL

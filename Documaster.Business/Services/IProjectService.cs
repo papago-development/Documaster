@@ -1,9 +1,5 @@
 ﻿using Documaster.Model.Entities;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Documaster.Business.Services
 {
@@ -12,8 +8,8 @@ namespace Documaster.Business.Services
         IQueryable<Project> GetAllProjects();
         Project CreateProject(Project project);
         Project GetProjectById(int id);
-        //Project GetProjectByNumber(string number);
         bool DeleteProject(Project project);
         bool UpdateProject(Project project);
+        bool DoesNameNumberCombinationExist(Project project);
     }
 }

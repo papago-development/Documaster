@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Documaster.Model.Entities;
 
 namespace Documaster.Business.Services
@@ -28,7 +25,7 @@ namespace Documaster.Business.Services
 
         public Requirement GetRequirementById(int id)
         {
-           return _requirementRepository.Get(id); 
+           return _requirementRepository.Get(id);
         }
 
         public IEnumerable<Requirement> GetRequirements()
@@ -52,14 +49,12 @@ namespace Documaster.Business.Services
             return deletedRequirement;
         }
 
-        public Requirement GetRequirementByNumber(int number)
+        public bool DoesCategoryNumberCombinationExist(Requirement requirement)
         {
-            return _requirementRepository.Get(number);
-        }
-
-        public IQueryable<Requirement> GetAll()
-        {
-            return _requirementRepository.GetAll();
+            var requirements = _requirementRepository.Get(x => x.CategoryId == requirement.CategoryId &&
+                                                               x.Number == requirement.Number &&
+                                                               x.Id != requirement.Id);
+            return requirements.Any();
         }
     }
 }

@@ -4,8 +4,6 @@ using Documaster.Model.Entities;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using System.Web.WebPages;
-using Microsoft.Ajax.Utilities;
 
 namespace Documaster.Ui.Controllers
 {
@@ -15,19 +13,16 @@ namespace Documaster.Ui.Controllers
         private readonly IProjectRequirementService _projectRequirementService;
         private readonly ICustomerService _customerService;
         private readonly IProjectStatusService _projectStatusService;
-        private readonly INamedEntityService<Project> _namedEntityService;
 
-        public ProjectController(IProjectService projectService, 
+        public ProjectController(IProjectService projectService,
                                  IProjectRequirementService projectRequirementService,
                                  ICustomerService customerService,
-                                 IProjectStatusService projectStatusService,
-                                 INamedEntityService<Project> namedEntityService)
+                                 IProjectStatusService projectStatusService)
         {
             _projectService = projectService;
             _projectRequirementService = projectRequirementService;
             _customerService = customerService;
             _projectStatusService = projectStatusService;
-            _namedEntityService = namedEntityService;
         }
 
         [HttpGet]
@@ -73,7 +68,6 @@ namespace Documaster.Ui.Controllers
                 return RedirectToAction("Index");
             }
             return View(project);
-          
         }
 
         [HttpGet]
@@ -118,8 +112,6 @@ namespace Documaster.Ui.Controllers
         public ActionResult Delete(int id)
         {
             var model = _projectService.GetProjectById(id);
-            var pR = _projectRequirementService.GetRequirementsById(id);
-             ViewBag.ProjectId = pR;
             return View(model);
         }
 
@@ -139,7 +131,7 @@ namespace Documaster.Ui.Controllers
             }
 
             _projectService.DeleteProject(project);
-   
+
             return RedirectToAction("Index");
         }
 
@@ -152,9 +144,6 @@ namespace Documaster.Ui.Controllers
                 return HttpNotFound();
             }
 
-            //project.IsReady = state;
-            //_projectRepository.Update(project, new List<string> {"IsReady"});
-            //_unitOfWork.SaveChanges();
             _projectService.UpdateProject(project);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
@@ -173,28 +162,10 @@ namespace Documaster.Ui.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
-        //public JsonResult DoesNameExist(string name)
-        //{
-        //    var doesNameExist = _namedEntityService.DoesNameExist(name);
-        //    return Json(!doesNameExist, JsonRequestBehavior.AllowGet);
-        //}
-
-        public JsonResult DoesNameExistWithNumber(Project project)
+        public JsonResult DoesNameNumberCombinationExist(Project project)
         {
-            return IsNameNumberCombinationUnique(project.Name, project.Number) ? Json(true, JsonRequestBehavior.AllowGet) : Json(false, JsonRequestBehavior.AllowGet);
-        }
-
-        public bool IsNameNumberCombinationUnique(string name, string number)
-        {
-            var doesNameExist = _projectService.GetAllProjects().Where(x => (x.Number == number && x.Name==name)).SingleOrDefault();
-            if (doesNameExist == null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            var doesNameNumberCombinationExist = _projectService.DoesNameNumberCombinationExist(project);
+            return Json(!doesNameNumberCombinationExist, JsonRequestBehavior.AllowGet);
         }
     }
 }

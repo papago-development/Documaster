@@ -1,9 +1,5 @@
 ﻿using Documaster.Model.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Documaster.Business.Services
 {
@@ -12,9 +8,8 @@ namespace Documaster.Business.Services
         IEnumerable<Requirement> GetRequirements();
         Requirement CreateRequirement(Requirement requirement);
         Requirement GetRequirementById(int id);
-        IQueryable<Requirement> GetAll();
-        Requirement GetRequirementByNumber(int number);
         bool UpdateRequirement(Requirement requirement);
         bool DeleteRequirement(Requirement requirement);
+        bool DoesCategoryNumberCombinationExist(Requirement requirement);
     }
 }

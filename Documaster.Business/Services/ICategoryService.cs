@@ -18,8 +18,7 @@ namespace Documaster.Business.Services
         bool DeleteCategory(Category category);
         IEnumerable<Category> GetListOfCategories();
         IEnumerable<AssignedCategory> GetCategoriesByAssignedCategory(int id);
-
-        Category GetCategoryByNumber(int number);
+        bool DoesNumberExist(Category category);
 
     }
 }

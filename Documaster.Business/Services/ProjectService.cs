@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Documaster.Model.Entities;
 
 namespace Documaster.Business.Services
@@ -12,9 +9,9 @@ namespace Documaster.Business.Services
         private readonly IGenericRepository<Project> _projectRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ProjectService(IGenericRepository<Project> proiectRepository, IUnitOfWork unitOfWork)
+        public ProjectService(IGenericRepository<Project> projectRepository, IUnitOfWork unitOfWork)
         {
-            _projectRepository = proiectRepository;
+            _projectRepository = projectRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -26,7 +23,6 @@ namespace Documaster.Business.Services
         public Project CreateProject(Project project)
         {
             var newProject = _projectRepository.Create(project);
-
             _unitOfWork.SaveChanges();
             return newProject;
         }
@@ -48,6 +44,12 @@ namespace Documaster.Business.Services
             var updatedProject = _projectRepository.Update(project, new List<string> { "Name", "Expire", "Number", "ProjectStatusId" });
             _unitOfWork.SaveChanges();
             return updatedProject;
+        }
+
+        public bool DoesNameNumberCombinationExist(Project project)
+        {
+            var projects = _projectRepository.Get(x => x.Name == project.Name && x.Number == project.Number && x.Id != project.Id);
+            return projects.Any();
         }
     }
 }

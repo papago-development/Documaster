@@ -8,7 +8,7 @@ namespace Documaster.Business.Services
     public class CategoryService : ICategoryService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private IGenericRepository<Category> _categoryRepository;
+        private readonly IGenericRepository<Category> _categoryRepository;
 
         public CategoryService(IGenericRepository<Category> categoryRepository,
                                IUnitOfWork unitOfWork)
@@ -87,9 +87,10 @@ namespace Documaster.Business.Services
             return assignedCategories;
         }
 
-        public Category GetCategoryByNumber(int number)
+        public bool DoesNumberExist(Category category)
         {
-           return _categoryRepository.Get(number);
+            var categories = _categoryRepository.Get(x => x.Number == category.Number && x.Id != category.Id);
+            return categories.Any();
         }
     }
 }

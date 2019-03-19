@@ -7,18 +7,18 @@ using System.ComponentModel.DataAnnotations;
 namespace Documaster.Model.Entities
 {
     public class Requirement : NamedEntity
-    { 
-        [Remote("DoesNumberExistWithName", "Requirement", AdditionalFields = "Number", ErrorMessage = "Categorie exista deja")]
+    {
+        [Remote("DoesCategoryNumberCombinationExist", "Requirement", AdditionalFields = "Number, Id", ErrorMessage = "Combinatia Categorie + Numar exista deja")]
         public int CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
 
-        [Remote("DoesNumberExistWithName", "Requirement", AdditionalFields = "CategoryId", ErrorMessage = "Numarul este deja asignat unei categorii")]
-        [Required(ErrorMessage = "Campul Numar nu poate fi null.")]
+        [Remote("DoesCategoryNumberCombinationExist", "Requirement", AdditionalFields = "CategoryId, Id", ErrorMessage = "Combinatia Categorie + Numar exista deja")]
+        [Required(ErrorMessage = "Numarul nu poate fi gol")]
         public int Number { get; set; }
 
-        [Remote("DoesNameExist", "Requirement", ErrorMessage = "Numele exista deja")]
-        [Required(ErrorMessage = "Campul Cerinta nu poate fi null.")]
+        [Remote("DoesNameExist", "Requirement", AdditionalFields = "Id", ErrorMessage = "Numele exista deja")]
+        [Required(ErrorMessage = "Numele nu poate fi gol")]
         public override string Name { get; set; }
 
         [JsonIgnore]
