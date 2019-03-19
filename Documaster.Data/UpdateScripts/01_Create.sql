@@ -26,7 +26,7 @@ CREATE TABLE dbo.Project (
 	,LastUpdate DATETIME NOT NULL
 	,ProjectStatusId INT NOT NULL
 	,Notes NVARCHAR(MAX)
-	,[Number] NVARCHAR(50) NULL
+	,[Number] NVARCHAR(50) NOT NULL
 )
 GO
 
@@ -45,8 +45,8 @@ ALTER TABLE dbo.Project
 	CHECK CONSTRAINT FK_Project_ProjectStatusId_ProjectStatus_Id
 GO
 
-CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Name
-	ON dbo.Project ([Name], Number)
+CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Number
+	ON dbo.Project (Number)
 GO
 
 CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Number

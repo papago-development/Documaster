@@ -264,6 +264,7 @@
     <Content Include="Views\ProjectStatus\Delete.cshtml" />
     <Content Include="Views\ProjectStatus\Edit.cshtml" />
     <Content Include="Scripts\jscolor.js" />
+    <Content Include="Scripts\setColor.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

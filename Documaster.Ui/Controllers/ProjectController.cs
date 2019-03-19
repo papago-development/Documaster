@@ -67,8 +67,13 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Create(Project project)
         {
-            _projectService.CreateProject(project);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _projectService.CreateProject(project);
+                return RedirectToAction("Index");
+            }
+            return View(project);
+          
         }
 
         [HttpGet]
@@ -176,12 +181,12 @@ namespace Documaster.Ui.Controllers
 
         public JsonResult DoesNameExistWithNumber(Project project)
         {
-            return DoesExist(project.Name, project.Number) ? Json(true, JsonRequestBehavior.AllowGet) : Json(false, JsonRequestBehavior.AllowGet);
+            return IsNameNumberCombinationUnique(project.Name, project.Number) ? Json(true, JsonRequestBehavior.AllowGet) : Json(false, JsonRequestBehavior.AllowGet);
         }
 
-        public bool DoesExist(string name, string number)
+        public bool IsNameNumberCombinationUnique(string name, string number)
         {
-            var doesNameExist = _projectService.GetAllProjects().Where(x => x.Number == number).SingleOrDefault();
+            var doesNameExist = _projectService.GetAllProjects().Where(x => (x.Number == number && x.Name==name)).SingleOrDefault();
             if (doesNameExist == null)
             {
                 return true;

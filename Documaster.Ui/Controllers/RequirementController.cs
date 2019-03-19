@@ -262,10 +262,10 @@ namespace Documaster.Ui.Controllers
 
         public JsonResult DoesNumberExistWithName(Requirement requirement)
         {
-            return DoesExist(requirement.Number, requirement.CategoryId) ? Json(true, JsonRequestBehavior.AllowGet) : Json(false, JsonRequestBehavior.AllowGet);
+            return IsCategoryNumberCombinationUnique(requirement.Number, requirement.CategoryId) ? Json(true, JsonRequestBehavior.AllowGet) : Json(false, JsonRequestBehavior.AllowGet);
         }
 
-        public bool DoesExist(int number, int categoryId)
+        public bool IsCategoryNumberCombinationUnique(int number, int categoryId)
         {
             var doesNameExist = _requirementService.GetAll().Where(x => (x.Number == number && x.CategoryId == categoryId)).SingleOrDefault();
             if (doesNameExist == null)
