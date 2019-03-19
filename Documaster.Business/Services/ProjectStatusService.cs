@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Documaster.Model.Entities;
+using System.Data.SqlClient;
 
 namespace Documaster.Business.Services
 {
@@ -25,9 +26,10 @@ namespace Documaster.Business.Services
 
         public bool DeleteProjectStatus(ProjectStatus projectStatus)
         {
-            var deleteProjectStatus = _projectStatusRepository.Delete(projectStatus.Id);
-            _unitOfWork.SaveChanges();
-            return deleteProjectStatus;
+                var deleteProjectStatus = _projectStatusRepository.Delete(projectStatus.Id);
+                _unitOfWork.SaveChanges();
+
+                return deleteProjectStatus;
         }
 
         public bool EditProjectStatus(ProjectStatus projectStatus)

@@ -188,9 +188,7 @@ namespace Documaster.Ui.Controllers
             }
             else
             {
-                //Nu exista un proiect cu acelasi numar in BD
                 return false;
-               
             }
         }
     }

@@ -1,55 +1,57 @@
 ﻿@using Documaster.Business.Models
 @model IEnumerable<AssignedCategory>
+
 @{
-    ViewBag.Title = "Cerinte proiect";
-    var projectId = ViewBag.ProjectId;
+        ViewBag.Title = "Cerinte proiect";
+        var projectId = ViewBag.ProjectId;
 }
 
-<link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
 
-<h2>Cerinte proiect</h2>
-<div class="form-horizontal">
-    @using (Html.BeginForm("SaveProjectRequirements", "Requirement"))
-    {
-
-        @Html.Hidden("ProjectId", (object)projectId)
-
-        @Html.AntiForgeryToken()
-
-        foreach (var assignedCategory in Model)
+    <h2>Cerinte proiect</h2>
+    <div class="form-horizontal">
+        @using (Html.BeginForm("SaveProjectRequirements", "Requirement"))
         {
-            <div class="row">
-                <div class="row">
-                    <p>@Html.DisplayFor(x => assignedCategory.Name)</p>
-                </div>
-                <div class="row">
-                    @foreach (var requirement in assignedCategory.AssignedRequirements)
-                    {
-                        <div>
-                            <div class="col-md-6">
-                                <input type="checkbox"
-                                       name="assignedRequirements"
-                                       id="projectCheckbox-@requirement.Id"
-                                       value="@requirement.Id"
-                                       @(Html.Raw(requirement.Assigned ? "checked=\"checked\"" : "")) />
-                                <label for="projectCheckbox-@requirement.Id">@requirement.Name</label>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-            <hr />
-        }
-        if (Model.Any()) {
-        <div class="form-group">
-            <div>
-                <input type="submit" value="Salveaza" class="btn btn-default" />
-            </div>
-        </div>
-        }
-    }
 
-</div>
-<div>
-    @Html.ActionLink("Inapoi", "Index", "Project")
-</div>
+            @Html.Hidden("ProjectId", (object)projectId)
+
+            @Html.AntiForgeryToken()
+
+            foreach (var assignedCategory in Model)
+            {
+                <div class="row">
+                    <div class="row">
+                        <p>@Html.DisplayFor(x => assignedCategory.Name)</p>
+                    </div>
+                    <div class="row">
+                        @foreach (var requirement in assignedCategory.AssignedRequirements)
+                        {
+                            <div>
+                                <div class="col-md-6">
+                                    <input type="checkbox"
+                                           name="assignedRequirements"
+                                           id="projectCheckbox-@requirement.Id"
+                                           value="@requirement.Id"
+                                           @(Html.Raw(requirement.Assigned ? "checked=\"checked\"" : "")) />
+                                    <label for="projectCheckbox-@requirement.Id">@requirement.Name</label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <hr />
+            }
+            if (Model.Any())
+            {
+                <div class="form-group">
+                    <div>
+                        <input type="submit" value="Salveaza" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+    <div>
+        @Html.ActionLink("Inapoi", "Index", "Project")
+    </div>

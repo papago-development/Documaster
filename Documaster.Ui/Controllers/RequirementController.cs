@@ -95,7 +95,6 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult ProjectRequirements(int projectId)
         {
-            //Ordonare dupa categorii
             var categories = _categoryService.GetCategoriesByAssignedCategory(projectId);
             ViewBag.ProjectId = projectId;
             return View("ProjectRequirements", categories);
