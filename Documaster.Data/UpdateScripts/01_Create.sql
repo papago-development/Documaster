@@ -52,7 +52,7 @@ GO
 
 CREATE TABLE dbo.Customer (
 	Id INT NOT NULL
-	,[Name] NVARCHAR(50) NOT NULL
+	,[Name] NVARCHAR(200) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
 	,Telephone NVARCHAR(10)
@@ -84,7 +84,7 @@ GO
 
 CREATE TABLE dbo.Template (
 	Id INT IDENTITY(1,1) NOT NULL
-	,[Name] NVARCHAR(50) NOT NULL
+	,[Name] NVARCHAR(200) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
 	,[Text] NVARCHAR(MAX)
@@ -126,7 +126,7 @@ GO
 CREATE TABLE dbo.Requirement (
 	Id INT IDENTITY(1,1) NOT NULL
 	,CategoryId INT NOT NULL
-	,[Name] NVARCHAR(50) NOT NULL
+	,[Name] NVARCHAR(200) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
 	,Number INT NOT NULL
@@ -203,7 +203,7 @@ CREATE TABLE dbo.OutputDocument (
 	,RequirementId INT  NULL
 	,ContentType VARCHAR(200) NULL
 	,DocumentType VARCHAR(200) NOT NULL
-	,[Name] NVARCHAR(100) NOT NULL
+	,[Name] NVARCHAR(200) NOT NULL
 	,DocumentData VARBINARY(max) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
