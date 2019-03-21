@@ -23,7 +23,7 @@ namespace Documaster.Model.Entities
 
         [Remote("DoesNameNumberCombinationExist", "Project", AdditionalFields = "Number, Id", ErrorMessage = "Aceasta combinatie Nume + Numar exista deja")]
         [Required(ErrorMessage = "Numele nu poate fi gol")]
-        public override string Name { get; set; }
+         public override string Name { get; set; }
 
         public virtual Customer Customer { get; set; }
         public virtual ProjectStatus ProjectStatus { get; set; }

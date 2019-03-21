@@ -55,8 +55,10 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Delete(ProjectStatus projectStatus)
         {
+
             _projectStatusService.DeleteProjectStatus(projectStatus);
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return View();
         }
 
         [HttpGet]

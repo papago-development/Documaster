@@ -1,113 +1,113 @@
 ﻿@using Documaster.Model.Entities
 @model IEnumerable<Documaster.Model.Entities.Project>
-@{
-    ViewBag.Title = "Lista proiecte";
+    @{
+        ViewBag.Title = "Lista proiecte";
 
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    var sortDescending = !(bool) ViewBag.SortDescending;
-    var colorDictionary = ((IList<ProjectStatus>) ViewBag.ProjectStatuses).ToDictionary(x => x.Name, y => y.Color);
-}
-<br />
-<p>
-    @Html.ActionLink("Lucrare Noua", "Create", new {customerId = ViewBag.CustomerId}, new {projectId = ViewBag.ProjectId, @class = "btn btn-primary"})
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.ActionLink("Nr.", "List", new {sortProperty = "Number", sortDescending})
-        </th>
-        <th>
-            @Html.ActionLink("Creat pe", "List", new {sortProperty = "CreationDate", sortDescending})
-        </th>
-        <th>
-            @Html.ActionLink("Stare", "List", new {sortProperty = "ProjectStatus", sortDescending})
-        </th>
-        <th>
-            @Html.ActionLink("Nume client", "List", new {sortProperty = "Customer.Name", sortDescending})
-        </th>
-        <th>
-            @Html.ActionLink("Nume proiect", "List", new {sortProperty = "Name", sortDescending})
-        </th>
-        <th>
-            @Html.ActionLink("CU expira la", "List", new {sortProperty = "Expire", sortDescending})
-        </th>
-        <th></th>
-    </tr>
-    @if (Model != null)
-    {
-        foreach (var item in Model)
-        {
-            var willExpire = item.Expire.HasValue && (item.Expire - DateTime.Now).Value.TotalDays < 30 ? "willExpire" : "";
-
-            <tr class="@willExpire">
-                @Html.HiddenFor(modelItem => item.Id)
-                @Html.HiddenFor(modelItem => item.ProjectStatus.Color, new {@id = "color"})
-                <td>
-                    @Html.DisplayFor(modelItem => item.Number)
-                </td>
-                <td>
-                    @item.CreationDate.ToShortDateString()
-                </td>
-                <td>
-                    <div class="form-group">
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(modelItem => item.ProjectStatusId, new SelectList(ViewBag.ProjectStatuses, "Id", "Name", item.ProjectStatusId),
-                                                  new {@class = "form-control projectStatus"})
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Customer.Name)
-                </td>
-                <td>
-                    @Html.ActionLink(item.Name, "CustomerProject", "Requirement", new {projectId = item.Id}, "")
-                </td>
-                <td>
-                    @if (item.Expire.HasValue)
-                    {
-                        @item.Expire.Value.ToShortDateString()
-                    }
-                </td>
-                <td>
-                    @Html.ActionLink("Modifica", "Edit", new {id = item.Id}) |
-                    @Html.ActionLink("Sterge", "Delete", new {id = item.Id}) |
-                    @Html.ActionLink("Cerinte", "ProjectRequirements", "Requirement", new {projectId = item.Id}, "")
-                </td>
-            </tr>
-        }
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        var sortDescending = !(bool)ViewBag.SortDescending;
+        var colorDictionary = ((IList<ProjectStatus>)ViewBag.ProjectStatuses).ToDictionary(x => x.Name, y => y.Color);
     }
-</table>
 
-<script type="text/javascript">
+    <br />
+    <p>
+        @Html.ActionLink("Lucrare Noua", "Create", new { customerId = ViewBag.CustomerId }, new { projectId = ViewBag.ProjectId, @class = "btn btn-primary" })
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.ActionLink("Nr.", "List", new { sortProperty = "Number", sortDescending })
+            </th>
+            <th>
+                @Html.ActionLink("Creat pe", "List", new { sortProperty = "CreationDate", sortDescending })
+            </th>
+            <th>
+                @Html.ActionLink("Stare", "List", new { sortProperty = "ProjectStatus", sortDescending })
+            </th>
+            <th>
+                @Html.ActionLink("Nume client", "List", new { sortProperty = "Customer.Name", sortDescending })
+            </th>
+            <th>
+                @Html.ActionLink("Nume proiect", "List", new { sortProperty = "Name", sortDescending })
+            </th>
+            <th>
+                @Html.ActionLink("CU expira la", "List", new { sortProperty = "Expire", sortDescending })
+            </th>
+            <th></th>
+        </tr>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                var willExpire = item.Expire.HasValue && (item.Expire - DateTime.Now).Value.TotalDays < 30 ? "willExpire" : "";
+
+                <tr class="@willExpire">
+                    @Html.HiddenFor(modelItem => item.Id)
+                    @Html.HiddenFor(modelItem => item.ProjectStatus.Color, new { @id = "color" })
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Number)
+                    </td>
+                    <td>
+                        @item.CreationDate.ToShortDateString()
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(modelItem => item.ProjectStatusId, new SelectList(ViewBag.ProjectStatuses, "Id", "Name", item.ProjectStatusId),
+                                                           new { @class = "form-control projectStatus" })
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Customer.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.Name, "CustomerProject", "Requirement", new { projectId = item.Id }, "")
+                    </td>
+                    <td>
+                        @if (item.Expire.HasValue)
+                        {
+                            @item.Expire.Value.ToShortDateString()
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Modifica", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Sterge", "Delete", new { id = item.Id }) |
+                        @Html.ActionLink("Cerinte", "ProjectRequirements", "Requirement", new { projectId = item.Id }, "")
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <script type="text/javascript">
     var javaScriptColorDictionary = @Html.Raw(Json.Encode(colorDictionary));
-    var setColor = function (element, color) {
-        element.css("background-color", "#" + color + " !important");
-    };
+        var setColor = function (element, color) {
+            element.css("background-color", "#" + color + " !important");
+        };
 
-    var setTextColor = function (element, color) {
-        element.css("color", "#" + color + "!important");
-    };
+        var setTextColor = function (element, color) {
+            element.css("color", "#" + color + "!important");
+        };
 
-    $(document).ready(function () {
-        $('.projectStatus').each(function () {
-            var color = javaScriptColorDictionary[$(this).find("option:selected").text()];
-            setColor($(this), color);
-            setTextColor($(this), color);
-        });
+        $(document).ready(function () {
+            $('.projectStatus').each(function () {
+                var color = javaScriptColorDictionary[$(this).find("option:selected").text()];
+                setColor($(this), color);
+                setTextColor($(this), color);
+            });
 
-        $('.projectStatus option').each(function () {
-            var color = javaScriptColorDictionary[$(this).text()];
-            setColor($(this), color);
-            setTextColor($(this), color);
-        });
+            $('.projectStatus option').each(function () {
+                var color = javaScriptColorDictionary[$(this).text()];
+                setColor($(this), color);
+                setTextColor($(this), color);
+            });
 
-        $('.projectStatus').change(function () {
-            var projectStatusId = $(this).val();
-            var projectId = $(this).parent().parent().parent().siblings()[0].value;
-            $.post("ChangeProjectStatus", { projectId, projectStatusId });
-            var color = javaScriptColorDictionary[$(this).find("option:selected").text()];
-            setColor($(this), color);
-            setTextColor($(this), color);
-        });
-    });
-</script>
+            $('.projectStatus').change(function () {
+                var projectStatusId = $(this).val();
+                var projectId = $(this).parent().parent().parent().siblings()[0].value;
+                $.post("ChangeProjectStatus", { projectId, projectStatusId });
+                var color = javaScriptColorDictionary[$(this).find("option:selected").text()];
+                setColor($(this), color);
+                setTextColor($(this), color);
+            });
+        }); 
+   </script>

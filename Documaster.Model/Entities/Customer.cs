@@ -15,10 +15,16 @@ namespace Documaster.Model.Entities
 
         [Key, ForeignKey("Project")]
         public override int Id { get; set; }
+
+        [StringLength(100, ErrorMessage = "Campul nu poate contine mai mult de 100 de caractere")]
         public string Address { get; set; }
         public string Telephone { get; set; }
+
+        [EmailAddress(ErrorMessage = "Adresa de Email nu este valida")]
         public string Email { get; set; }
         public string AdditionalInfo1 { get; set; }
+
+        [StringLength(100, ErrorMessage = "Campul nu poate contine mai mult de 100 de caractere")]
         public string AdditionalInfo2 { get; set; }
         public Project Project { get; set; }
     }

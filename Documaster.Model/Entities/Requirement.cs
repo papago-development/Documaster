@@ -15,6 +15,7 @@ namespace Documaster.Model.Entities
 
         [Remote("DoesCategoryNumberCombinationExist", "Requirement", AdditionalFields = "CategoryId, Id", ErrorMessage = "Combinatia Categorie + Numar exista deja")]
         [Required(ErrorMessage = "Numarul nu poate fi gol")]
+        [Range(1, int.MaxValue, ErrorMessage = "Numerotarea incepe de la 1")]
         public int Number { get; set; }
 
         [Remote("DoesNameExist", "Requirement", AdditionalFields = "Id", ErrorMessage = "Numele exista deja")]
