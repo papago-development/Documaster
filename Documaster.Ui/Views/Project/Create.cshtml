@@ -4,10 +4,13 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var colorDictionary = ((IList<ProjectStatus>) ViewBag.ProjectStatuses).ToDictionary(x => x.Name, y => y.Color);
 }
 
-<script src="~/Scripts/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 <link href="~/Content/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+
+<script src="~/Scripts/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/Documaster/colorTool.js"></script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -78,5 +81,23 @@
             var date = new Date(value);
             dateInput.attr("value", date.toLocaleDateString());
         }
+
+        var javaScriptColorDictionary = @Html.Raw(Json.Encode(colorDictionary));
+        window.documaster.colorTool = colorTool(javaScriptColorDictionary);
+
+        $('#ProjectStatusId').each(function () {
+            var statusName = $(this).find("option:selected").text();
+            window.documaster.colorTool.setStatusDropdownColor($(this), statusName);
+        });
+
+        $('#ProjectStatusId option').each(function () {
+            var statusName = $(this).text();
+            window.documaster.colorTool.setStatusDropdownColor($(this), statusName);
+        });
+
+        $('#ProjectStatusId').change(function () {
+            var statusName = $(this).find("option:selected").text();
+            window.documaster.colorTool.setStatusDropdownColor($(this), statusName);
+        });
     });
 </script>

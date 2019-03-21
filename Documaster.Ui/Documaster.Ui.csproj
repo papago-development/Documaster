@@ -196,6 +196,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker.min.js" />
+    <Content Include="Scripts\bootstrap-notify\bootstrap-notify.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -264,7 +265,7 @@
     <Content Include="Views\ProjectStatus\Delete.cshtml" />
     <Content Include="Views\ProjectStatus\Edit.cshtml" />
     <Content Include="Scripts\jscolor.js" />
-    <Content Include="Scripts\setColor.js" />
+    <Content Include="Scripts\Documaster\colorTool.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

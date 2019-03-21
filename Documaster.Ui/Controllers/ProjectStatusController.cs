@@ -25,7 +25,7 @@ namespace Documaster.Ui.Controllers
         public ActionResult Index()
         {
             var statuses = _projectStatusService.GetAll();
-            return View (statuses);
+            return View(statuses);
         }
 
         [HttpGet]
@@ -55,10 +55,9 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Delete(ProjectStatus projectStatus)
         {
-
-            _projectStatusService.DeleteProjectStatus(projectStatus);
-            //return RedirectToAction("Index");
-            return View();
+            var isDeleted = _projectStatusService.DeleteProjectStatus(projectStatus);
+            TempData["DeleteSuccess"] = isDeleted;
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

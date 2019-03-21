@@ -1,14 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Documaster.Model.Entities;
-using System.Data.SqlClient;
 using System.Data.Entity.Infrastructure;
-using System;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using System.Data.Entity.Infrastructure.Interception;
 
 namespace Documaster.Business.Services
 {
@@ -33,17 +26,15 @@ namespace Documaster.Business.Services
 
         public bool DeleteProjectStatus(ProjectStatus projectStatus)
         {
-             try
+            try
             {
                 var deleteProjectStatus = _projectStatusRepository.Delete(projectStatus.Id);
-
                 _unitOfWork.SaveChanges();
-
                 return deleteProjectStatus;
             }
-            catch(DbUpdateException)
+            catch (DbUpdateException)
             {
-                throw new Exception("In uz");    
+                return false;
             }
         }
 
@@ -54,9 +45,9 @@ namespace Documaster.Business.Services
             return editProjectStatus;
         }
 
-        public IQueryable<ProjectStatus> GetAll()
+        public IEnumerable<ProjectStatus> GetAll()
         {
-            return _projectStatusRepository.GetAll();
+            return _projectStatusRepository.GetAll().ToList();
         }
 
         public ProjectStatus GetProjectStatusById(int id)
