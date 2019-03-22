@@ -88,7 +88,8 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Delete(Requirement requirement)
         {
-            _requirementService.DeleteRequirement(requirement);
+            var isDeleted = _requirementService.DeleteRequirement(requirement);
+            TempData["DeleteSuccess"] = isDeleted;
             return RedirectToAction("Index");
         }
 

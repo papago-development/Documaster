@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Documaster.Model.Entities;
+using System.Data.Entity.Infrastructure;
 
 namespace Documaster.Business.Services
 {
@@ -44,9 +45,16 @@ namespace Documaster.Business.Services
 
         public bool DeleteRequirement(Requirement requirement)
         {
-            var deletedRequirement = _requirementRepository.Delete(requirement.Id);
-            _unitOfWork.SaveChanges();
-            return deletedRequirement;
+            try
+            {
+                var deletedRequirement = _requirementRepository.Delete(requirement.Id);
+                _unitOfWork.SaveChanges();
+                return deletedRequirement;
+            }
+            catch(DbUpdateException)
+            {
+                return false;
+            }
         }
 
         public bool DoesCategoryNumberCombinationExist(Requirement requirement)

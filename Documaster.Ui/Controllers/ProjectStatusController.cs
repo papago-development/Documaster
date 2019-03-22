@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -54,7 +54,7 @@ namespace Documaster.Ui.Controllers
 
         [HttpPost]
         public ActionResult Delete(ProjectStatus projectStatus)
-        {
+        { 
             var isDeleted = _projectStatusService.DeleteProjectStatus(projectStatus);
             TempData["DeleteSuccess"] = isDeleted;
             return RedirectToAction("Index");

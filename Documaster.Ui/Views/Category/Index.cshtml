@@ -1,37 +1,57 @@
 ﻿@model IEnumerable<Documaster.Model.Entities.Category>
 
-@{
-    ViewBag.Title = "Categorii";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h2>Categorii</h2>
-<p>
-    @Html.ActionLink("Adauga", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            Numar
-        </th>
-        <th>
-            Nume
-        </th>
-        <th></th>
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(x => item.Number)
-            </td>
-            <td>
-                @Html.DisplayFor(x => item.Name)
-            </td>
-            <td>
-                @Html.ActionLink("Modifica", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Sterge", "Delete", new { id = item.Id })
-            </td>
-        </tr>
+    @{
+        ViewBag.Title = "Categorii";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        var deleteSuccess = (TempData["DeleteSuccess"] == null || (bool)TempData["DeleteSuccess"]).ToString().ToLower();
     }
-</table>
+    <script src="~/Scripts/bootstrap-notify/bootstrap-notify.js"></script>
+
+    <h2>Categorii</h2>
+    <p>
+        @Html.ActionLink("Adauga", "Create")
+    </p>
+    <br/>
+    <table class="table">
+        <tr>
+            <th>
+                Numar
+            </th>
+            <th>
+                Nume
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(x => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Modifica", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Sterge", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        if(!@deleteSuccess)
+        {
+            $.notify("Aceasta categorie este folosita de o cerinta. Pentru a fi stearsa, trebuie schimbata categoria cerintei.", {
+               type: "info",
+               delay: 6000,
+               offset: 70,
+               z_index: 9999,
+               placement: {
+                    from: "top",
+                    align: "center"
+               }
+            });
+        }
+    });
+    </script>

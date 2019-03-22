@@ -1,4 +1,4 @@
-﻿@using Documaster.Model.Entities
+@using Documaster.Model.Entities
 @model IEnumerable<Documaster.Model.Entities.Project>
 
 @{
@@ -82,6 +82,7 @@
     }
 </table>
 <script type="text/javascript">
+
     var javaScriptColorDictionary = @Html.Raw(Json.Encode(colorDictionary));
     window.documaster.colorTool = colorTool(javaScriptColorDictionary);
 
@@ -100,6 +101,7 @@
             var projectStatusId = $(this).val();
             var projectId = $(this).parent().parent().parent().siblings()[0].value;
             $.post("ChangeProjectStatus", { projectId, projectStatusId });
+
 
             var statusName = $(this).find("option:selected").text();
             window.documaster.colorTool.setStatusDropdownColor($(this), statusName);

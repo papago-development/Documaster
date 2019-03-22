@@ -2,6 +2,7 @@
 using System.Linq;
 using Documaster.Business.Models;
 using Documaster.Model.Entities;
+using System.Data.Entity.Infrastructure;
 
 namespace Documaster.Business.Services
 {
@@ -46,9 +47,16 @@ namespace Documaster.Business.Services
         //Delete category
         public bool DeleteCategory(Category category)
         {
-            var deleteCategory = _categoryRepository.Delete(category.Id);
-            _unitOfWork.SaveChanges();
-            return deleteCategory;
+            try
+            {
+                var deleteCategory = _categoryRepository.Delete(category.Id);
+                _unitOfWork.SaveChanges();
+                return deleteCategory;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
         }
 
         //Edit category

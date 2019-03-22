@@ -1,41 +1,60 @@
 ﻿@model IEnumerable<Documaster.Model.Entities.Requirement>
 
-@{
-    ViewBag.Title = "View";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h2>Lista cerinte</h2>
-<p>
-    @Html.ActionLink("Adauga cerinta noua", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            Nume categorie
-        </th>
-        <th>Numar</th>
-        <th>
-            Nume cerinta
-        </th>
-        <th></th>
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.ActionLink("Modifica", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Sterge", "Delete", new { id = item.Id })
-            </td>
-        </tr>
+    @{
+        ViewBag.Title = "View";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        var deleteSuccess = (TempData["DeleteSuccess"] == null || (bool)TempData["DeleteSuccess"]).ToString().ToLower();
     }
-</table>
+    <script src="~/Scripts/bootstrap-notify/bootstrap-notify.js"></script>
+    <h2>Lista cerinte</h2>
+    <p>
+        @Html.ActionLink("Adauga cerinta noua", "Create")
+    </p>
+    <br/>
+    <table class="table">
+        <tr>
+            <th>
+                Nume categorie
+            </th>
+            <th>Numar</th>
+            <th>
+                Nume cerinta
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Modifica", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Sterge", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            if(!@deleteSuccess)
+            {
+                $.notify("Aceasta cerinta este folosita de catre un proiect. Pentru a fi stearsa, trebuie schimbata cerinta proiectului.",{
+                    type: "info",
+                    delay: "6000",
+                    offset: 70,
+                    z_index: 9999,
+                    placement: {
+                        from: "top",
+                        align: "center"
+                    }
+                });
+            }
+        });
+    </script>

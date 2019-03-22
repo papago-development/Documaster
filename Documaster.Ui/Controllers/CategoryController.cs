@@ -64,7 +64,8 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Delete(Category category)
         {
-            _categoryService.DeleteCategory(category);
+            var isDeleted = _categoryService.DeleteCategory(category);
+            TempData["DeleteSuccess"] = isDeleted;
             return RedirectToAction("Index");
         }
 
