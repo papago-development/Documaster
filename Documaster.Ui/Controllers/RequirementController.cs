@@ -141,8 +141,9 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult CustomerProject(int projectId)
         {
+            var project = _projectService.GetProjectById(projectId);
             ViewBag.ProjectId = projectId;
-            return View();
+            return View(project);
         }
 
         [HttpGet]
@@ -160,6 +161,7 @@ namespace Documaster.Ui.Controllers
                     FileName = outputDocument?.Name,
                     ProjectId = projectId,
                     RequirementName = projectRequirement.Requirement.Name,
+                    CategoryName = projectRequirement.Requirement.Category.Name,
                     IsReady = projectRequirement.IsReady,
                     RequirementId = projectRequirement.RequirementId,
                     ProjectRequirementId = projectRequirement.Id
@@ -167,7 +169,7 @@ namespace Documaster.Ui.Controllers
 
                 fileToUpdates.Add(newFileToUpdate);
             }
-            fileToUpdates = fileToUpdates.OrderBy(x => x.RequirementName).ToList();
+            fileToUpdates = fileToUpdates.OrderBy(x => x.CategoryName).ThenBy(x => x.RequirementName).ToList();
             ViewBag.ProjectId = projectId;
             return PartialView("_ProjectDocumentForRequirement", fileToUpdates);
         }
