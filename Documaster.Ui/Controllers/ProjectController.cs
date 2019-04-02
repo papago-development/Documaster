@@ -14,6 +14,7 @@ namespace Documaster.Ui.Controllers
         private readonly ICustomerService _customerService;
         private readonly IProjectStatusService _projectStatusService;
 
+
         public ProjectController(IProjectService projectService,
                                  IProjectRequirementService projectRequirementService,
                                  ICustomerService customerService,
@@ -28,6 +29,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Welcome()
         {
+            //var photo = _screenPhotoService.GetScreenPhotos().Where(x=>x.IsSelected == true);
             return View();
         }
 

@@ -39,6 +39,7 @@ textarea {
     display: inline-block;
     width: 60px;
     height: 34px;
+    margin-top: 6px;
 }
 
     .switch input {
@@ -124,12 +125,16 @@ input:checked + .slider:before {
 }
 
 #fulfilledRequirementsTable div.row div {
-    padding: 6px;
+    padding: 0px;
 }
 
     #fulfilledRequirementsTable div.row div.switch-column {
         padding: 0px !important;
     }
+
+div.col-md-4 {
+    padding-top: 6px;
+}
 
 #uploadedDocumentsTable .btn-group-vertical {
     margin-bottom: 10px;
@@ -188,5 +193,22 @@ input[type='number'] {
     padding: 0px !important;
     margin-left: -14px;
     width: auto;
+}
+
+.setImageButton input[type="checkbox"] {
+    visibility: hidden;
+    position: absolute
+}
+
+    .setImageButton input[type="checkbox"]:checked {
+        background-color: green
+    }
+
+label:checked{
+    background-color: lightgreen
+}
+
+div.col-md-2.switch-column {
+    padding-top: 6px;
 }
 

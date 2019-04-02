@@ -45,7 +45,7 @@ namespace Documaster.Business
             //Customer
             unityContainer.RegisterType(typeof(ICustomerService), typeof(CustomerService), new PerRequestLifetimeManager());
 
-            //Requireemnt
+            //Requirement
             unityContainer.RegisterType(typeof(IRequirementService), typeof(RequirementService), new PerRequestLifetimeManager());
 
             //OutputDocument
@@ -56,6 +56,7 @@ namespace Documaster.Business
 
             //NameEntity
             unityContainer.RegisterType(typeof(INamedEntityService<>), typeof(NamedEntityService<>), new PerRequestLifetimeManager());
+
         }
     }
 }
