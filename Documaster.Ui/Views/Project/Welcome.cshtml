@@ -1,13 +1,10 @@
-﻿@*@model IEnumerable<Documaster.Model.Entities.ScreenPhoto>*@
-@{
+﻿@{
     ViewBag.Title = "Welcome";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var imgPath = Directory.GetFiles(Server.MapPath("~/Images"), "*.*").FirstOrDefault();
 }
 
-<h3>Welcome Screen</h3>
-
-@foreach (var imgPath in Directory.GetFiles(Server.MapPath("~/Images"), "*.*"))
+@if (imgPath != null)
 {
-    var img = new FileInfo(imgPath);
-    <img src="@Url.Content(String.Format("~/Images/{0}", img.Name))"/>
+    <img src="@Url.Content(String.Format("~/Images/{0}", new FileInfo(imgPath).Name))" />
 }

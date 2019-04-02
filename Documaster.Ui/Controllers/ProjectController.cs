@@ -29,7 +29,6 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Welcome()
         {
-            //var photo = _screenPhotoService.GetScreenPhotos().Where(x=>x.IsSelected == true);
             return View();
         }
 
