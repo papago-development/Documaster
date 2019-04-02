@@ -5,8 +5,9 @@
 }
 
 <h3>Welcome Screen</h3>
-@foreach (var imgPath in Directory.GetFiles(Server.MapPath("~/Images"), "*.png"))
+
+@foreach (var imgPath in Directory.GetFiles(Server.MapPath("~/Images"), "*.*"))
 {
     var img = new FileInfo(imgPath);
-    <img src="@Url.Content(String.Format("~/Images/{0}", img.Name))" width="970" height="200"/>
+    <img src="@Url.Content(String.Format("~/Images/{0}", img.Name))"/>
 }

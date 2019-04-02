@@ -1,12 +1,6 @@
-﻿
-@{
-    /**/
-
-    /**/
-
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var fileName = (object)ViewBag.filename;
 }
 
 <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
@@ -14,12 +8,13 @@
 
 @Scripts.Render("~/bundles/jqueryunobtrusive")
 <script src="~/Scripts/Documaster/ScreenPhoto.js"></script>
+
 <h3>Incarca imagine pentru pagina de start</h3>
+
 @using (Html.BeginForm("Index", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.TextBox("fileUpload", "", new { type = "file" })
 
     <br />
-    <input type="submit" value="Save image" class=" btn btn-primary" />
+    <input type="submit" value="Save image" class="btn btn-primary" />
 }
-
