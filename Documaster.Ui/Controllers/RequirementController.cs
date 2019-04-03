@@ -154,7 +154,8 @@ namespace Documaster.Ui.Controllers
             var projectRequirements = _projectRequirementService.GetProjectRequirementByProjectId(projectId);
             foreach (var projectRequirement in projectRequirements)
             {
-                var outputDocument = _outputDocumentService.GetOutputDocuments(projectId, projectRequirement.Id);
+               
+                var outputDocument = _outputDocumentService.GetOutputDocuments(projectId, projectRequirement.RequirementId); 
                 var newFileToUpdate = new FileToUpdate
                 {
                     Id = outputDocument?.Id ?? 0,
