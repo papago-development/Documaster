@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Documaster.Business.Models.FileToUpdate>
+﻿@using Documaster.Business.Models
+@model IEnumerable<Documaster.Business.Models.FileToUpdate>
     @{
         ViewBag.Title = "CustomerProject";
         var projectId = (object)ViewBag.ProjectId;
@@ -12,24 +13,25 @@
     {
         <div class="container" id="fulfilledRequirementsTable">
             <div class="row" id="header">
-                <div class="col-md-2">
+                <div class="col-md-1">
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <b>Cerinta</b>
                 </div>
                 <div class="col-md-4">
                     <b>Nume fisier</b>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3" style="text-align: center">
                     <b>Actiuni</b>
                 </div>
             </div>
+
             @foreach (var req in Model)
             {
                 var buttonId = "uploadFileButton" + req.Id;
 
                 <div class="documentLine row">
-                    <div class="col-md-2 switch-column">
+                    <div class="col-md-1 switch-column">
                         @Html.Hidden("projectRequirementId", req.ProjectRequirementId, new { @class = "projectRequirementId" })
                         <label class="switch">
                             @Html.CheckBoxFor(x => req.IsReady)
@@ -37,8 +39,8 @@
                         </label>
                     </div>
 
-                    <div class="col-md-2">
-                            @Html.DisplayFor(x => req.CategoryName)<br />
+                    <div class="col-md-4">
+                        @Html.DisplayFor(x => req.CategoryName)<br />
                         @Html.DisplayFor(x => req.RequirementName)
                     </div>
 
@@ -46,7 +48,7 @@
                         @Html.DisplayFor(x => req.FileName, new { id = "fileName" })
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3" style="text-align:center">
                         <input type="file" name="fileToUpload" id="@buttonId" style="display: none " />
                         @Html.Hidden("requirementId", req.RequirementId, new { @class = "requirementId" })
                         <a class="openFile btn-primary btn btn-xs btn-info">Incarca</a>

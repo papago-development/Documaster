@@ -172,6 +172,7 @@ namespace Documaster.Ui.Controllers
             }
             fileToUpdates = fileToUpdates.OrderBy(x => x.CategoryName).ThenBy(x => x.RequirementName).ToList();
             ViewBag.ProjectId = projectId;
+
             return PartialView("_ProjectDocumentForRequirement", fileToUpdates);
         }
 
