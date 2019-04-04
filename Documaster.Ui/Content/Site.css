@@ -132,7 +132,7 @@ input:checked + .slider:before {
     }
 
 div.col-md-4 {
-    padding-top: 6px;
+    padding-top: 10px;
 }
 
 #uploadedDocumentsTable .btn-group-vertical {

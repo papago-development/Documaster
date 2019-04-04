@@ -162,7 +162,9 @@ namespace Documaster.Ui.Controllers
                     FileName = outputDocument?.Name,
                     ProjectId = projectId,
                     RequirementName = projectRequirement.Requirement.Name,
+                    CategoryNumber = projectRequirement.Requirement.Category.Number,
                     CategoryName = projectRequirement.Requirement.Category.Name,
+                    RequirementNumber = projectRequirement.Requirement.Number,
                     IsReady = projectRequirement.IsReady,
                     RequirementId = projectRequirement.RequirementId,
                     ProjectRequirementId = projectRequirement.Id
@@ -170,7 +172,7 @@ namespace Documaster.Ui.Controllers
 
                 fileToUpdates.Add(newFileToUpdate);
             }
-            fileToUpdates = fileToUpdates.OrderBy(x => x.CategoryName).ThenBy(x => x.RequirementName).ToList();
+            fileToUpdates = fileToUpdates.OrderBy(x => x.CategoryNumber).ThenBy(x => x.RequirementNumber).ToList();
             ViewBag.ProjectId = projectId;
 
             return PartialView("_ProjectDocumentForRequirement", fileToUpdates);
