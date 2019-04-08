@@ -241,7 +241,16 @@ CREATE UNIQUE NONCLUSTERED INDEX UX_OutputDocument_ProjectId_RequirementId_Name
 GO
 
 
+CREATE TABLE dbo.UserProfile (
+	Id INT IDENTITY(1,1) NOT NULL
+	,UserName NVARCHAR(50) NOT NULL
+	,[Password] NVARCHAR(200) NOT NULL
+	,CreationDate DATETIME NOT NULL
+	,LastUpdate DATETIME NOT NULL
+)
+GO
 
-
-
-
+ALTER TABLE dbo.UserProfile
+	ADD CONSTRAINT PK_UserProfile
+	PRIMARY KEY CLUSTERED (Id)
+GO

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Documaster.Ui.Controllers
 {
+    [Authorize]
     public class ProjectController : Controller
     {
         private readonly IProjectService _projectService;

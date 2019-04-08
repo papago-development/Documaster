@@ -11,6 +11,7 @@ using Documaster.Business.Models;
 
 namespace Documaster.Ui.Controllers
 {
+    [Authorize]
     public class RequirementController : Controller
     {
         private readonly IRequirementService _requirementService;

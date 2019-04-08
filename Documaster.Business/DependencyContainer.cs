@@ -57,6 +57,8 @@ namespace Documaster.Business
             //NameEntity
             unityContainer.RegisterType(typeof(INamedEntityService<>), typeof(NamedEntityService<>), new PerRequestLifetimeManager());
 
+            //Security
+            unityContainer.RegisterType(typeof(ISecurityService), typeof(SecurityService), new PerRequestLifetimeManager());
         }
     }
 }

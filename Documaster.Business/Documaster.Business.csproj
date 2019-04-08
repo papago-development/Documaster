@@ -102,11 +102,13 @@
     <Compile Include="Models\AssignedCategory.cs" />
     <Compile Include="Models\AssignedRequirement.cs" />
     <Compile Include="Models\FileToUpdate.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\GenericRepository.cs" />
     <Compile Include="Services\ICategoryService.cs" />
+    <Compile Include="Services\ISecurityService.cs" />
     <Compile Include="Services\ICustomerService.cs" />
     <Compile Include="Services\IGenericRepository.cs" />
     <Compile Include="Services\IOutputDocumentService.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="Services\IProjectRequirementService.cs" />
     <Compile Include="Services\IRequirementService.cs" />
     <Compile Include="Services\OutputDocumentService.cs" />
+    <Compile Include="Services\SecurityService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\ProjectRequirementService.cs" />
     <Compile Include="Services\RequirementService.cs" />
