@@ -12,9 +12,10 @@
     @Html.ActionLink("Adauga", "Create")
 </p>
 <br/>
+
 <table class="table" style="width: 75%">
     <tr>
-        <th style="width: 65%">
+        <th style="width: 60%">
             Nume
         </th>
         <th style="width: 10%">
@@ -35,8 +36,12 @@
                 <td style=@style>
                 </td>
                 <td>
-                    @Html.ActionLink("Modifica", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Sterge", "Delete", new { id = item.Id })
+                    <a href="@Url.Action("Edit", new { id = item.Id })">
+                        <span class="glyphicon glyphicon-pencil" title="Modifica"></span>
+                    </a> |
+                    <a href="@Url.Action("Delete", new { id = item.Id })">
+                        <span class="glyphicon glyphicon-trash" title="Sterge"></span>
+                    </a>
                 </td>
             </tr>
         }

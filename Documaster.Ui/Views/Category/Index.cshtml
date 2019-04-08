@@ -12,7 +12,7 @@
         @Html.ActionLink("Adauga", "Create")
     </p>
     <br/>
-    <table class="table">
+    <table class="table" style="width: 75%">
         <tr>
             <th>
                 Numar
@@ -20,7 +20,7 @@
             <th>
                 Nume
             </th>
-            <th></th>
+            <th style="width: 25%"></th>
         </tr>
         @foreach (var item in Model)
         {
@@ -32,9 +32,13 @@
                     @Html.DisplayFor(x => item.Name)
                 </td>
                 <td>
-                    @Html.ActionLink("Modifica", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Sterge", "Delete", new { id = item.Id })
-                </td>
+                    <a href="@Url.Action("Edit", new{ id = item.Id })">
+                        <span class="glyphicon glyphicon-pencil" title="Modifica"></span>
+                    </a> |
+                    <a href="@Url.Action("Delete", new { id = item.Id })">
+                        <span class="glyphicon glyphicon-trash" title="Sterge"></span>
+                    </a>
+                </td> 
             </tr>
         }
     </table>
