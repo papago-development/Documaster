@@ -5,10 +5,20 @@
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
+@media (min-width: 1500px) {
+    .container {
+        max-width: 1450px;
+    }
+
+}
+
+.form-horizontal .control-label {
+    text-align: right;
+}
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
@@ -210,10 +220,9 @@ select > option:hover {
     }
 
 label:checked{
-    background-color: lightgreen
+    background-color: lightgreen;
 }
 
 div.col-md-2.switch-column {
     padding-top: 6px;
 }
-
