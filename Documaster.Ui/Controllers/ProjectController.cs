@@ -169,5 +169,6 @@ namespace Documaster.Ui.Controllers
             var doesNameNumberCombinationExist = _projectService.DoesNameNumberCombinationExist(project);
             return Json(!doesNameNumberCombinationExist, JsonRequestBehavior.AllowGet);
         }
+
     }
 }

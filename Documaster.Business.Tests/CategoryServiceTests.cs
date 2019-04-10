@@ -81,19 +81,19 @@ namespace Documaster.Business.Tests
             _unitOfWork.AssertWasCalled(m => m.SaveChanges());
         }
 
-        [TestMethod]
-        public void WhenEditingCategoryExpectSuccess()
-        {
-            //Arrange
-            var categoryService = new CategoryService(_categoryRepository, _unitOfWork);
+        //[TestMethod]
+        //public void WhenEditingCategoryExpectSuccess()
+        //{
+        //    //Arrange
+        //    var categoryService = new CategoryService(_categoryRepository, _unitOfWork);
 
-            //Act
-          var result = categoryService.EditCategory(category);
+        //    //Act
+        //  var result = categoryService.EditCategory(category);
 
-            //Assert
-           Assert.IsTrue(result);
+        //    //Assert
+        //   Assert.IsTrue(result);
       
-        }
+        //}
 
         [TestMethod]
         public void WhenCreatingCategoryExpectSuccess()
