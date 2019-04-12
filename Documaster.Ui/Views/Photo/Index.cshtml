@@ -8,13 +8,18 @@
 
 @Scripts.Render("~/bundles/jqueryunobtrusive")
 <script src="~/Scripts/Documaster/ScreenPhoto.js"></script>
+<div class="displayContent">
+    <h3>Incarca imagine pentru pagina de start</h3>
 
-<h3>Incarca imagine pentru pagina de start</h3>
+    @using (Html.BeginForm("Index", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.TextBox("fileUpload", "", new { type = "file" })
 
-@using (Html.BeginForm("Index", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.TextBox("fileUpload", "", new { type = "file" })
-
-    <br />
-    <input type="submit" value="Save image" class="btn btn-primary" />
-}
+        <br />
+        <input type="submit" value="Save image" class="btn btn-primary" />
+    }
+    <br/>
+    <div>
+        @Html.ActionLink("Inapoi", "Index", "Project")
+    </div>
+</div>

@@ -13,29 +13,30 @@
     @Scripts.Render("~/bundles/jqueryunobtrusive")
     <script src="~/Scripts/Documaster/ProjectDocument.js"></script>
     <br />
-
-    <div>
-       <div id="projectName">
-           @Html.LabelFor(model => model.Name, "Nume proiect: ")
-           @Html.DisplayFor(model => model.Name)
-       </div>
+    <div class="displayContent">
         <div>
-            @Html.LabelFor(model => model.Customer.Name, "Nume client: ")
-            @Html.DisplayFor(model => model.Customer.Name)
+            <div id="projectName">
+                @Html.LabelFor(model => model.Name, "Nume proiect: ")
+                @Html.DisplayFor(model => model.Name)
+            </div>
+            <div>
+                @Html.LabelFor(model => model.Customer.Name, "Nume client: ")
+                @Html.DisplayFor(model => model.Customer.Name)
+            </div>
         </div>
+        <div id="tabs">
+            <ul>
+                <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.Document} )">Documente</a></li>
+                <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.SpecialDocumentType} )">@specialDocumentTypeText</a></li>
+                <li><a href="@Url.Action( "OutputDocuments", "Requirement", new {projectId} )">Avize</a></li>
+                <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.GroundDrawing} )">Foto Teren</a></li>
+                <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.Photo} )">Foto 3D</a></li>
+                <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.Drawing} )">Desene</a></li>
+                <li><a href="@Url.Action( "Notes", "Requirement", new {projectId} )">Note</a></li>
+            </ul>
+        </div>
+        <div class="modal fade" id="myModal"></div>
     </div>
-    <div id="tabs">
-        <ul>
-            <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.Document} )">Documente</a></li>
-            <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.SpecialDocumentType} )">@specialDocumentTypeText</a></li>
-            <li><a href="@Url.Action( "OutputDocuments", "Requirement", new {projectId} )">Avize</a></li>
-            <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.GroundDrawing} )">Foto Teren</a></li>
-            <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.Photo} )">Foto 3D</a></li>
-            <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.Drawing} )">Desene</a></li>
-            <li><a href="@Url.Action( "Notes", "Requirement", new {projectId} )">Note</a></li>
-        </ul>
-    </div>
-    <div class="modal fade" id="myModal"></div>
     @section scripts{
         <script>
 $(document).ready(function () {

@@ -1,34 +1,52 @@
 ﻿@model Documaster.Business.Models.LoginModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var imgPath = Directory.GetFiles(Server.MapPath("~/Images"), "*.*").FirstOrDefault();
+}
 
-<h1>Autentificare</h1>
+<div class="image-screen">
+    @if (imgPath != null)
+    {
+        <img src="@Url.Content(String.Format("~/Images/{0}", new FileInfo(imgPath).Name))" style="width: 1160px; height: 786px;" />
+    }
+</div>
+<div class="login">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-@using (Html.BeginForm())
-{
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
-
-            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Nume utilizator" })
             @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
 
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Parola" })
             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
 
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 ">
-            <div class="checkbox">
-                @Html.CheckBoxFor(m => m.RememberMe)
-                @Html.LabelFor(m => m.RememberMe)
+        </div>
+        <div class="form-group">
+            <div>
+                <div class="checkbox">
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.LabelFor(m => m.RememberMe)
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-group col-md-offset-2">
-            <input type="submit" value="Adauga" class="btn btn-default" />
-    </div>
-}
+        <div class="form-group">
+            <input type="submit" value="Login" class="btn btn-default" />
+        </div>
+        <hr />
+        <div style="text-align: center;">
+            <p>
+                Documaster &copy; @DateTime.Now.Year by <i>Phonelite</i
+            </p>
+        </div>
+    }
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#footer').empty();
+    });
+</script>

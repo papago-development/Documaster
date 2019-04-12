@@ -13,7 +13,7 @@ namespace Documaster.Ui.Controllers
             return View();
         }
 
-        [HttpPost]
+         [HttpPost]
         public ActionResult Index(HttpPostedFileBase fileUpload)
         {
             if (fileUpload != null && fileUpload.ContentLength > 0)
@@ -25,7 +25,7 @@ namespace Documaster.Ui.Controllers
                 var filepath = Path.Combine(imagesDirectory, filename);
                 fileUpload.SaveAs(filepath);
             }
-            return RedirectToAction("Welcome", "Project");
+            return RedirectToAction("Index", "Project");
         }
 
         private static void DeleteAllFilesInFolder(string imagesDirectory)

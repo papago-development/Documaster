@@ -6,47 +6,47 @@
 }
 
 <script src="~/Scripts/bootstrap-notify/bootstrap-notify.js"></script>
+<div class="displayContent">
+    <h2>Stari</h2>
+    <p>
+        @Html.ActionLink("Adauga", "Create")
+    </p>
+    <br />
 
-<h2>Stari</h2>
-<p>
-    @Html.ActionLink("Adauga", "Create")
-</p>
-<br/>
-
-<table class="table" style="width: 100%">
-    <tr>
-        <th style="width: 60%">
-            Nume
-        </th>
-        <th style="width: 5%">
-            Culoare
-        </th>
-        <th style="width: 25%"></th>
-    </tr>
-    @if(Model != null)
-    {
-        foreach(var item in Model)
+    <table class="table" style="width: 100%">
+        <tr>
+            <th style="width: 60%">
+                Nume
+            </th>
+            <th style="width: 5%">
+                Culoare
+            </th>
+            <th style="width: 25%">Actiuni</th>
+        </tr>
+        @if (Model != null)
         {
-            var style = "background-color:#" + item.Color;
-            @Html.HiddenFor(modelItem => item.Id)
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td style=@style>
-                </td>
-                <td>
-                    <a href="@Url.Action("Edit", new { id = item.Id })">
-                        <span class="glyphicon glyphicon-pencil" title="Modifica"></span>
-                    </a> |
-                    <a href="@Url.Action("Delete", new { id = item.Id })">
-                        <span class="glyphicon glyphicon-trash" title="Sterge"></span>
-                    </a>
-                </td>
-            </tr>
+            foreach (var item in Model)
+            {
+                var style = "background-color:#" + item.Color;
+                @Html.HiddenFor(modelItem => item.Id)
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td style=@style></td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = item.Id })">
+                            <span class="glyphicon glyphicon-pencil" title="Modifica"></span>
+                        </a> |
+                        <a href="@Url.Action("Delete", new { id = item.Id })">
+                            <span class="glyphicon glyphicon-trash" title="Sterge"></span>
+                        </a>
+                    </td>
+                </tr>
+            }
         }
-    }
-</table>
+    </table>
+</div>
 <script>
     $(document).ready(function () {
         if (!@deleteSuccess)

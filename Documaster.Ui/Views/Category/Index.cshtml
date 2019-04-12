@@ -6,7 +6,7 @@
         var deleteSuccess = (TempData["DeleteSuccess"] == null || (bool)TempData["DeleteSuccess"]).ToString().ToLower();
     }
     <script src="~/Scripts/bootstrap-notify/bootstrap-notify.js"></script>
-
+    <div class="displayContent">
     <h2>Categorii</h2>
     <p>
         @Html.ActionLink("Adauga", "Create")
@@ -20,7 +20,7 @@
             <th>
                 Nume
             </th>
-            <th style="width: 25%"></th>
+            <th style="width: 25%">Actiuni</th>
         </tr>
         @foreach (var item in Model)
         {
@@ -42,6 +42,7 @@
             </tr>
         }
     </table>
+</div>
     <script type="text/javascript">
     $(document).ready(function() {
         if(!@deleteSuccess)

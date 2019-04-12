@@ -8,12 +8,12 @@ namespace Documaster.Model.Entities
 {
     public class Requirement : NamedEntity
     {
-        [Remote("DoesCategoryNumberCombinationExist", "Requirement", AdditionalFields = "Number, Id", ErrorMessage = "Combinatia Categorie + Numar exista deja")]
+        [Remote("DoesCategoryNumberCombinationExist", "Requirement", AdditionalFields = "Number, Id")]
         public int CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
 
-        [Remote("DoesCategoryNumberCombinationExist", "Requirement", AdditionalFields = "CategoryId, Id", ErrorMessage = "Combinatia Categorie + Numar exista deja")]
+        [Remote("DoesCategoryNumberCombinationExist", "Requirement", AdditionalFields = "CategoryId, Id", ErrorMessage = "Acest numar exista deja in cadrul categoriei")]
         [Required(ErrorMessage = "Numarul nu poate fi gol")]
         [Range(1, int.MaxValue, ErrorMessage = "Numerotarea incepe de la 1")]
         public int Number { get; set; }

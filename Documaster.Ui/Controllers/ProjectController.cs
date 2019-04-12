@@ -28,12 +28,6 @@ namespace Documaster.Ui.Controllers
         }
 
         [HttpGet]
-        public ActionResult Welcome()
-        {
-            return View();
-        }
-
-        [HttpGet]
         public ActionResult Index()
         {
             return RedirectToAction("List", new {sortProperty = "Expire", sortDescending = true});

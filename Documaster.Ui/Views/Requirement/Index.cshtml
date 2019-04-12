@@ -6,6 +6,7 @@
         var deleteSuccess = (TempData["DeleteSuccess"] == null || (bool)TempData["DeleteSuccess"]).ToString().ToLower();
     }
     <script src="~/Scripts/bootstrap-notify/bootstrap-notify.js"></script>
+    <div class="displayContent">
     <h2>Lista cerinte</h2>
     <p>
         @Html.ActionLink("Adauga cerinta noua", "Create")
@@ -14,25 +15,25 @@
     <table class="table" style="width: 100%">
         <tr>
             <th>
-                Nume categorie
-            </th>
-            <th>Numar</th>
-            <th>
                 Nume cerinta
             </th>
-            <th style="width: 10%"></th>
+            <th>Nume categorie</th>
+            <th>
+                Numar
+            </th>
+            <th style="width: 10%">Actiuni</th>
         </tr>
         @foreach (var item in Model)
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Category.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Number)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
                     <a href="@Url.Action("Edit", new {id = item.Id})">
@@ -45,6 +46,7 @@
             </tr>
         }
     </table>
+</div>
     <script type="text/javascript">
         $(document).ready(function() {
             if(!@deleteSuccess)
@@ -61,4 +63,5 @@
                 });
             }
         });
+
     </script>

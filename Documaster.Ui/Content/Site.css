@@ -5,16 +5,16 @@
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin: 0 !important;
+    width: auto;
 }
 
-@media (min-width: 1500px) {
-    .container {
-        max-width: 1450px;
-    }
-
+.container {
+    max-width: 1680px !important;
 }
+
 
 .form-horizontal .control-label {
     text-align: right;
@@ -225,4 +225,65 @@ label:checked{
 
 div.col-md-2.switch-column {
     padding-top: 6px;
+}
+
+.image-screen {
+    display: table-cell;
+    float: left;
+ width: 100px;
+    height: 20px;
+    margin-right: 8px;
+    background-color: linen;
+}
+
+.login {
+    display: block;
+    width: 520px;
+    height: 250px;
+    float: right;
+    padding-top: 100px;
+    padding-left: 90px;
+    padding-right: 90px;
+
+}
+
+    .login form {
+        padding: 40px 10px 250px;
+    }
+
+    .login .form-group {
+        padding-right: 10px;
+    }
+
+    .login input {
+        margin-left: 15px;
+        width: 280px;
+    }
+
+    .login input[type="checkbox"] {
+        width: 20px;
+        margin-left: 0px;
+    }
+
+    .login .btn {
+        background-color: #da9c4c;
+        color: #FFFFFF;
+    }
+    
+
+.displayContent {
+    padding: 0px 30px;
+    margin: 0px 60px;
+}
+
+#footer {
+    padding: 0px 30px;
+    margin: 0px 60px;
+}
+
+.disabledLink {
+
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
 }

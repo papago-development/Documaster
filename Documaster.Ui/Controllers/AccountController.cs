@@ -36,11 +36,12 @@ namespace Documaster.Ui.Controllers
                     ModelState.AddModelError("", "Nu am putut crea utilizator si/sau parola!");
                 }
             }
+
             var hasLoggedIn = _securityService.ValidateUserAndPassword(loginModel);
             if (hasLoggedIn)
             {
                 FormsAuthentication.SetAuthCookie(loginModel.UserName, loginModel.RememberMe);
-                return RedirectToAction("Welcome","Project");
+                return RedirectToAction("Index","Project");
             }
             ModelState.AddModelError("", "Nume sau parola gresite.");
             return View(loginModel);
@@ -51,7 +52,7 @@ namespace Documaster.Ui.Controllers
         {
             FormsAuthentication.SignOut();
 
-            return RedirectToAction("Welcome", "Project");
+            return RedirectToAction("Index", "Project");
         }
     }
 }
