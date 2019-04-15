@@ -254,3 +254,12 @@ ALTER TABLE dbo.UserProfile
 	ADD CONSTRAINT PK_UserProfile
 	PRIMARY KEY CLUSTERED (Id)
 GO
+
+
+CREATE TABLE dbo.CustomizeTab (
+    Id INT IDENTITY(1, 1) NOT NULL,
+    [Name] NVARCHAR(200) NOT NULL,
+    Type NVARCHAR(25) NOT NULL,
+    Number INT NOT NULL
+)
+GO

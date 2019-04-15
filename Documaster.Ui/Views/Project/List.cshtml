@@ -60,7 +60,7 @@
                             <div class="form-group">
                                 <div class="col-md-10">
                                     @Html.DropDownListFor(modelItem => item.ProjectStatusId, new SelectList(ViewBag.ProjectStatuses, "Id", "Name", item.ProjectStatusId),
-                                                                         new { @class = "form-control projectStatus" })
+                                                                              new { @class = "form-control projectStatus" })
                                 </div>
                             </div>
                         </td>
@@ -80,11 +80,12 @@
                             <a href="@Url.Action("Edit", new {id = item.Id})">
                                 <span class="glyphicon glyphicon-pencil" title="Modifica"></span>
                             </a> |
-                            <a href="@Url.Action("Delete", new {id = item.Id})">
-                                <span class=" glyphicon glyphicon-trash" title="Sterge"></span>
-                            </a>|
+
                             <a href="@Url.Action("ProjectRequirements", "Requirement", new {projectId = item.Id}, "")">
                                 <span class="glyphicon glyphicon-list-alt" title="Cerinte"></span>
+                            </a> |
+                            <a href="@Url.Action("Delete", new {id = item.Id})">
+                                <span class=" glyphicon glyphicon-trash" title="Sterge"></span>
                             </a>
                         </td>
                     </tr>
