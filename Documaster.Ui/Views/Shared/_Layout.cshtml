@@ -12,6 +12,8 @@
     <script>window.documaster = {};</script>
 </head>
 <body>
+    @if (Request.IsAuthenticated)
+    {
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -35,7 +37,7 @@
                             <li>@Html.ActionLink("Cerinte", "Index", "Requirement")</li>
                             <li>@Html.ActionLink("Categorii de cerinte", "Index", "Category")</li>
                             <li>@Html.ActionLink("Stari proiect", "Index", "ProjectStatus")</li>
-                            <li><a href="@Url.Action( "Index", "Photo", new { documentType = Documaster.Model.Enums.DocumentType.Photo} )">Incarca imagine de fundal</a></li>
+                            <li><a href="@Url.Action("Index", "Photo", new { documentType = Documaster.Model.Enums.DocumentType.Photo })">Incarca imagine de fundal</a></li>
                             @if (Request.IsAuthenticated)
                             {
                                 <li>@Html.ActionLink("Iesire", "Logout", "Account")</li>
@@ -46,6 +48,7 @@
             </div>
         </div>
     </div>
+    }
     <div class="container body-content">
         @RenderBody()
         <div id="footer">
