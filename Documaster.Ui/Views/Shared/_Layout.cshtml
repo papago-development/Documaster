@@ -32,8 +32,8 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("Categorii de cerinte", "Index", "Requirement")</li>
-                            <li>@Html.ActionLink("Categorii", "Index", "Category")</li>
+                            <li>@Html.ActionLink("Cerinte", "Index", "Requirement")</li>
+                            <li>@Html.ActionLink("Categorii de cerinte", "Index", "Category")</li>
                             <li>@Html.ActionLink("Stari proiect", "Index", "ProjectStatus")</li>
                             <li><a href="@Url.Action( "Index", "Photo", new { documentType = Documaster.Model.Enums.DocumentType.Photo} )">Incarca imagine de fundal</a></li>
                             @if (Request.IsAuthenticated)
