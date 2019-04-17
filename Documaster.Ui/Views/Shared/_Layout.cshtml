@@ -37,11 +37,10 @@
                                 <li>@Html.ActionLink("Cerinte", "Index", "Requirement")</li>
                                 <li>@Html.ActionLink("Categorii de cerinte", "Index", "Category")</li>
                                 <li>@Html.ActionLink("Stari proiect", "Index", "ProjectStatus")</li>
+                                @*<li>@Html.ActionLink("Customizare taburi", "Index", "CustomizeTab")</li>*@
                                 <li><a href="@Url.Action("Index", "Photo", new { documentType = Documaster.Model.Enums.DocumentType.Photo })">Incarca imagine de fundal</a></li>
-                                @if (Request.IsAuthenticated)
-                                {
-                                    <li>@Html.ActionLink("Iesire", "Logout", "Account")</li>
-                                }
+                                <li>@Html.ActionLink("Iesire", "Logout", "Account")</li>
+
                                 <li>@Html.ActionLink("Ajutor", "Index", "Help")</li>
                             </ul>
                         </li>

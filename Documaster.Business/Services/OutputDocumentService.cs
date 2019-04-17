@@ -36,7 +36,7 @@ namespace Documaster.Business.Services
                 Name = fileUpload.FileName,
                 DocumentData = tempImage,
                 ContentType = fileUpload.ContentType,
-                DocumentType = parsedDocumentType.ToString(),
+                //DocumentType = parsedDocumentType.ToString(),
                 ProjectId = projectId,
                 RequirementId = requirementId,
             };
@@ -45,7 +45,31 @@ namespace Documaster.Business.Services
             _unitOfWork.SaveChanges();
             return documentCreated;
         }
-        
+        //public OutputDocument CreateOutputDocument(HttpPostedFileBase fileUpload, int projectId, int? requirementId, int customizeTabId)
+        //{
+        //    if (fileUpload == null)
+        //    {
+        //        return null;
+        //    }
+
+        //    var length = fileUpload.ContentLength;
+        //    var tempImage = new byte[length];
+        //    fileUpload.InputStream.Read(tempImage, 0, length);
+
+        //    var output = new OutputDocument
+        //    {
+        //        Name = fileUpload.FileName,
+        //        DocumentData = tempImage,
+        //        ContentType = fileUpload.ContentType,
+        //        CustomizeTabId = customizeTabId,
+        //        ProjectId = projectId,
+        //        RequirementId = requirementId,
+        //    };
+
+        //    var documentCreated = _outputDocumentRepository.Create(output);
+        //    _unitOfWork.SaveChanges();
+        //    return documentCreated;
+        //}
         public OutputDocument GetOutputDocuments(int projectId, int requirementId)
         {
             return _outputDocumentRepository
@@ -71,10 +95,23 @@ namespace Documaster.Business.Services
            return _outputDocumentRepository.Get(documentId);
         }
 
+        //public List<FileToUpdate> GetOutputDocumentByIdAndDocType(int projectId, int customizeTabId)
+        //{
+        //    return _outputDocumentRepository
+        //                    .Get(x => x.ProjectId == projectId && x.CustomizeTabId == customizeTabId)
+        //                    .Select(item => new FileToUpdate
+        //                    {
+        //                        Id = item?.Id ?? 0,
+        //                        FileName = item?.Name,
+        //                        ProjectId = projectId
+        //                    })
+        //                    .ToList();
+        //}
+
         public List<FileToUpdate> GetOutputDocumentByIdAndDocType(int projectId, string documentType)
         {
             return _outputDocumentRepository
-                            .Get(x => x.ProjectId == projectId && x.DocumentType == documentType)
+                            .Get(x => x.ProjectId == projectId && x.DocumentType == documentType )
                             .Select(item => new FileToUpdate
                             {
                                 Id = item?.Id ?? 0,

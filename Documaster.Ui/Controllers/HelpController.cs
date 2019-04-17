@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Documaster.Ui.Controllers
 {
+    [Authorize]
     public class HelpController : Controller
     {
         public ActionResult Index()

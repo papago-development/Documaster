@@ -129,6 +129,8 @@
     <Compile Include="Services\ProjectStatusService.cs" />
     <Compile Include="Services\NamedEntityService.cs" />
     <Compile Include="Services\INamedEntityService.cs" />
+    <Compile Include="Services\ICustomizeTabService.cs" />
+    <Compile Include="Services\CustomizeTabService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

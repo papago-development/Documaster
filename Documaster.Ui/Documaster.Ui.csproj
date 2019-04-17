@@ -148,6 +148,7 @@
     <Compile Include="Controllers\ProjectStatusController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
+    <Compile Include="Controllers\CustomizeTabController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker\css\bootstrap-datepicker.css" />
@@ -287,6 +288,10 @@
     <Content Include="Help Images\Requirements.png" />
     <Content Include="Help Images\RequirementsList.png" />
     <Content Include="Help Images\Settings.png" />
+    <Content Include="Views\CustomizeTab\Index.cshtml" />
+    <Content Include="Views\CustomizeTab\Create.cshtml" />
+    <Content Include="Views\CustomizeTab\Edit.cshtml" />
+    <Content Include="Views\CustomizeTab\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

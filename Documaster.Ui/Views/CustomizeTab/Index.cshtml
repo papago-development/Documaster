@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Documaster.Model.Entities.CustomizeTab>
+    @using Documaster.Model.Entities
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    <div class="displayContent">
+        <h2>Customizare Taburi </h2>
+        <p>
+            @Html.ActionLink("Adauga tab nou", "Create", "CustomizeTab", new { @class = "btn btn-primary" })
+        </p>
+        <br />
+        <table class="table table-responsive" style="width: 85%">
+            <tr>
+                <th>Numar</th>
+                <th>Name</th>
+                <th>Tip</th>
+                <th>Actiuni</th>
+            </tr>
+            <tbody id="sortable">
+                @foreach (var item in Model)
+                {
+
+                <tr>
+                    @Html.HiddenFor(x => item.Id, new { @class = "customizeTabId" })
+                    @Html.HiddenFor(x => item.Number, new { @class = "number" })
+                <td>@Html.DisplayFor(x => item.Number)</td>
+                <td>@Html.DisplayFor(x => item.Name)</td>
+                <td>@Html.DisplayFor(x => item.Type)</td>
+                <td>
+                    <a href="@Url.Action("Edit", new{ id = item.Id })">
+                        <span class="glyphicon glyphicon-pencil" title="Modifica"></span>
+                    </a> |
+                    <a href="@Url.Action("Delete", new { id = item.Id })">
+                        <span class="glyphicon glyphicon-trash" title="Sterge"></span>
+                    </a>
+                </td>
+                </tr>
+
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+    <script type="text/javascript">
+$(document).ready(function () {
+            $("#sortable").sortable({
+                    axis: 'y',
+                    update: function(event, ui) {
+                        var order = $('.number').val();
+                        console.log(order);
+                        var model = [];
+                         $("#sortable tr").each(function () {
+                              var customizeTabId = $('.customizeTabId').val();
+                             console.log(customizeTabId);
+
+                            var customizeTab = {Id: customizeTabId  , Number: order};
+                            model.push(customizeTab);
+                            order++;
+                        });
+
+                        if(model.length > 1)
+                        {
+                            $.ajax({
+                                type: "POST",
+                                url: '@Url.Action("SaveOrder", "CustomizeTab")',
+                                data: JSON.stringify({model : model}),
+                                success: function(data) {
+                                    console.log("Success");
+                                },
+                                error: function(e) {
+                                    console.log("Error");
+                                }
+                            });
+                        }
+                    }
+                });
+            $("#sortable").disableSelection();
+        });
+    </script>

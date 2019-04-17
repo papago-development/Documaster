@@ -1,0 +1,23 @@
+﻿@model Documaster.Model.Entities.CustomizeTab
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="displayContent">
+    <h2>Esti sigur?</h2>
+    <hr />
+    <div>
+        Nume tab: <b>@Html.DisplayFor(x => x.Name)</b>
+    </div>
+    <hr />
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sterge" class="btn btn-default" /> |
+            @Html.ActionLink("Inapoi", "Index")
+        </div>
+    }
+</div>

@@ -8,7 +8,7 @@ namespace Documaster.Model.Entities
 {
     public class Requirement : NamedEntity
     {
-        [Remote("DoesCategoryNumberCombinationExist", "Requirement", AdditionalFields = "Number, Id")]
+        [Remote("DoesCategoryNumberCombinationExist", "Requirement", AdditionalFields = "Number, Id", ErrorMessage = "Combinatia Categorie + Numar exista deja")]
         public int CategoryId { get; set; }
 
         public virtual Category Category { get; set; }

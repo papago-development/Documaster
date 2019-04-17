@@ -20,12 +20,14 @@ namespace Documaster.Ui.Controllers
         private readonly IOutputDocumentService _outputDocumentService;
         private readonly IProjectService _projectService;
         private readonly INamedEntityService<Requirement> _namedEntityService;
+        //private readonly ICustomizeTabService _customizeTabService;
 
         public RequirementController(IRequirementService requirementService,
                                      ICategoryService categoryService,
                                      IProjectRequirementService projectRequirementService,
                                      IOutputDocumentService outputDocumentService,
                                      IProjectService projectService,
+                                     //ICustomizeTabService customizeTabService,
                                      INamedEntityService<Requirement> namedEntityService)
         {
             _requirementService = requirementService;
@@ -34,6 +36,7 @@ namespace Documaster.Ui.Controllers
             _outputDocumentService = outputDocumentService;
             _projectService = projectService;
             _namedEntityService = namedEntityService;
+          // _customizeTabService = customizeTabService;
         }
 
         [HttpGet]
@@ -143,6 +146,10 @@ namespace Documaster.Ui.Controllers
         public ActionResult CustomerProject(int projectId)
         {
             var project = _projectService.GetProjectById(projectId);
+
+            //var customizeTabs = _customizeTabService.GetCustomizeTabs();
+            //ViewBag.CustomizeTabs = customizeTabs;
+
             ViewBag.ProjectId = projectId;
             return View(project);
         }
@@ -249,15 +256,13 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult DisplayDocuments(int projectId, string documentType)
         {
-            if (!Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType))
-            {
-                return HttpNotFound();
-            }
-
+        if(!Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType))
+        {
+        return HttpNotFound();
+        }
             var model = _outputDocumentService.GetOutputDocumentByIdAndDocType(projectId, documentType);
             ViewBag.ProjectId = projectId;
             ViewBag.DocumentType = parsedDocumentType.ToString();
-
             return PartialView("_ProjectDocument", model);
         }
 
