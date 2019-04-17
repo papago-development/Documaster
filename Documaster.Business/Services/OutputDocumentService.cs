@@ -36,7 +36,7 @@ namespace Documaster.Business.Services
                 Name = fileUpload.FileName,
                 DocumentData = tempImage,
                 ContentType = fileUpload.ContentType,
-                //DocumentType = parsedDocumentType.ToString(),
+                DocumentType = parsedDocumentType.ToString(),
                 ProjectId = projectId,
                 RequirementId = requirementId,
             };
