@@ -28,17 +28,10 @@
     </div>
     <div id="tabs">
         <ul>
-            @*@foreach (var item in customizeTabs)
+            @foreach (var item in customizeTabs)
             {
-                <li><a href="@Url.Action("DisplayDocuments", "Requirement", new {projectId, customizeTabId = item.Id})">@item.Name</a></li>
-            }*@
-            <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.Document} )">Documente</a></li>
-                <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.SpecialDocumentType} )">@specialDocumentTypeText</a></li>
-                <li><a href="@Url.Action( "OutputDocuments", "Requirement", new {projectId} )">Avize</a></li>
-                <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.GroundDrawing} )">Foto Teren</a></li>
-                <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.Photo} )">Foto 3D</a></li>
-                <li><a href="@Url.Action( "DisplayDocuments", "Requirement", new {projectId, documentType = Documaster.Model.Enums.DocumentType.Drawing} )">Desene</a></li>
-                <li><a href="@Url.Action( "Notes", "Requirement", new {projectId} )">Note</a></li>
+                <li><a href="@Url.Action(item.Type, "Requirement", new {projectId, customizeTabId = item.Id})">@item.Name</a></li>
+            }
         </ul>
     </div>
     <div class="modal fade" id="myModal"></div>

@@ -72,7 +72,6 @@ namespace Documaster.Business.Services
             return _categoryRepository.GetAll().ToList();
         }
 
-        // ???
         public IEnumerable<AssignedCategory> GetCategoriesByAssignedCategory(int id)
         {
             var allCategories = _categoryRepository.GetAll();

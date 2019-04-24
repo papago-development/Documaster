@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Photos";
     var projectId = ( object ) ViewBag.ProjectId;
-    var documentType = ( object ) ViewBag.DocumentType;
+    var customizeTabId = (object) ViewBag.CustomizeTabId;
 }
 
 <div id="uploadedDocumentsTable" class="container">
@@ -37,7 +37,7 @@
         $("input[type='file']").each (function (index, value) {
             var requirementId = $ (value).parent().find ("input[name='requirementId']").val();
             $ (value).change (function (element) {
-                uploadFile (element, projectId, requirementId, "@documentType");
+                uploadFile (element, projectId, requirementId, "@customizeTabId");
             });
         });
         $(".openFile").each (function (index, value) {

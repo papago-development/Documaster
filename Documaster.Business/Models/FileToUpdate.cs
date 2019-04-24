@@ -11,6 +11,7 @@ namespace Documaster.Business.Models
         public string RequirementName { get; set; }
         public int ProjectId { get; set; }
         public int RequirementId { get; set; }
+        public int CustomizeTabId { get; set; }
         public int ProjectRequirementId { get; set; }
         public int CategoryNumber { get; set; }
         public string CategoryName { get; set; }

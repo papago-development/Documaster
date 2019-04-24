@@ -2,7 +2,8 @@
 @model IEnumerable<Documaster.Business.Models.FileToUpdate>
     @{
         ViewBag.Title = "CustomerProject";
-        var projectId = (object)ViewBag.ProjectId;
+        var projectId = ( object ) ViewBag.ProjectId;
+        var customizeTabId =  ( object ) ViewBag.CustomizeTabId;
     }
 
     @if (!Model.Any())
@@ -78,7 +79,7 @@
         $ ("input[type='file']").each (function (index, value) {
             var requirementId = $ (value).parent().find ("input[name='requirementId']").val();
             $ (value).change (function (element) {
-                uploadFile (element, projectId, requirementId, documentType);
+                uploadFile (element, projectId, requirementId, @customizeTabId);
             });
         });
         $ (".openFile").each (function (index, value) {

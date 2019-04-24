@@ -22,7 +22,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _customizeTabService.GetCustomizeTabs();
+            var model = _customizeTabService.GetCustomizeTabs().OrderBy(x=>x.Number);
             ViewBag.CustomizeTabs = model;
             return View (model);
         }
@@ -85,19 +85,11 @@ namespace Documaster.Ui.Controllers
             return Json(!doesNameExist, JsonRequestBehavior.AllowGet);
         }
 
-      [HttpPost]
-      public ActionResult SaveOrder(List<CustomizeTab> model)
+        [HttpPost]
+        public ActionResult SaveOrder(IList<int> sortedList, string entityName)
         {
-            foreach(var item in model)
-            {
-                var customizeTabs = _customizeTabService.GetCustomizeTabs().Where(x => x.Id == item.Id).FirstOrDefault();
-                if(customizeTabs != null)
-                {
-                    customizeTabs.Number = item.Number;
-                }
-            }
+           _customizeTabService.SaveOrder(sortedList, entityName);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
-
         }
     }
 }

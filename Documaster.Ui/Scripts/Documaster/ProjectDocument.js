@@ -3,12 +3,12 @@
     $("#tabs").tabs('load', currentIndex);
 };
 
-var uploadFile = function (e, projectId, requirementId, documentType) {
+var uploadFile = function (e, projectId, requirementId, customizeTabId) {
     const formData = new FormData();
     formData.append("fileUpload", e.target.files[0]);
     formData.append("projectId", projectId);
     formData.append("requirementId", requirementId);
-    formData.append("documentType", documentType);
+    formData.append("customizeTabId", customizeTabId);
     $.ajax({
         type: "POST",
         url: "upload",

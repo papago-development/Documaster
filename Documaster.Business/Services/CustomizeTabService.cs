@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Documaster.Model.Entities;
 using System.Linq;
+using System.Data.Entity;
 
 namespace Documaster.Business.Services
 {
@@ -54,6 +55,17 @@ namespace Documaster.Business.Services
         {
             var customizeTabs = _customizeTabRepository.Get(x => x.Number == customizeTab.Number && x.Id != customizeTab.Id);
             return customizeTabs.Any();
+        }
+
+        public void SaveOrder(IList<int> sortedList, string entityName)
+        {
+            foreach(var id in sortedList)
+            {
+                var customizeTab = _customizeTabRepository.Get(id);
+                customizeTab.Number = sortedList.IndexOf(id)+1;
+                _customizeTabRepository.Update(customizeTab, new List<string> { "Number" });
+                _unitOfWork.SaveChanges();
+            }
         }
     }
 }

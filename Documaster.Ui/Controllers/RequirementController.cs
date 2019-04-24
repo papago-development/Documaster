@@ -20,14 +20,14 @@ namespace Documaster.Ui.Controllers
         private readonly IOutputDocumentService _outputDocumentService;
         private readonly IProjectService _projectService;
         private readonly INamedEntityService<Requirement> _namedEntityService;
-        //private readonly ICustomizeTabService _customizeTabService;
+        private readonly ICustomizeTabService _customizeTabService;
 
         public RequirementController(IRequirementService requirementService,
                                      ICategoryService categoryService,
                                      IProjectRequirementService projectRequirementService,
                                      IOutputDocumentService outputDocumentService,
                                      IProjectService projectService,
-                                     //ICustomizeTabService customizeTabService,
+                                     ICustomizeTabService customizeTabService,
                                      INamedEntityService<Requirement> namedEntityService)
         {
             _requirementService = requirementService;
@@ -36,7 +36,7 @@ namespace Documaster.Ui.Controllers
             _outputDocumentService = outputDocumentService;
             _projectService = projectService;
             _namedEntityService = namedEntityService;
-          // _customizeTabService = customizeTabService;
+           _customizeTabService = customizeTabService;
         }
 
         [HttpGet]
@@ -147,15 +147,15 @@ namespace Documaster.Ui.Controllers
         {
             var project = _projectService.GetProjectById(projectId);
 
-            //var customizeTabs = _customizeTabService.GetCustomizeTabs();
-            //ViewBag.CustomizeTabs = customizeTabs;
+            var customizeTabs = _customizeTabService.GetCustomizeTabs().OrderBy(x => x.Number).ToList();
+            ViewBag.CustomizeTabs = customizeTabs;
 
             ViewBag.ProjectId = projectId;
             return View(project);
         }
 
         [HttpGet]
-        public ActionResult OutputDocuments(int projectId)
+        public ActionResult OutputDocuments(int projectId, int customizeTabId)
         {
             var fileToUpdates = new List<FileToUpdate>();
 
@@ -173,6 +173,7 @@ namespace Documaster.Ui.Controllers
                     CategoryNumber = projectRequirement.Requirement.Category.Number,
                     CategoryName = projectRequirement.Requirement.Category.Name,
                     RequirementNumber = projectRequirement.Requirement.Number,
+                    CustomizeTabId = customizeTabId,
                     IsReady = projectRequirement.IsReady,
                     RequirementId = projectRequirement.RequirementId,
                     ProjectRequirementId = projectRequirement.Id
@@ -182,7 +183,7 @@ namespace Documaster.Ui.Controllers
             }
             fileToUpdates = fileToUpdates.OrderBy(x => x.CategoryNumber).ThenBy(x => x.RequirementNumber).ToList();
             ViewBag.ProjectId = projectId;
-
+            ViewBag.CustomizeTabId = customizeTabId;
             return PartialView("_ProjectDocumentForRequirement", fileToUpdates);
         }
 
@@ -226,9 +227,9 @@ namespace Documaster.Ui.Controllers
 
         //Metoda pentru incarcarea fisierelor
         [HttpPost]
-        public void Upload(HttpPostedFileBase fileUpload, int projectId, int? requirementId, string documentType)
+        public void Upload(HttpPostedFileBase fileUpload, int projectId, int? requirementId, int customizeTabId)
         {
-            _outputDocumentService.CreateOutputDocument(fileUpload, projectId, requirementId, documentType);
+            _outputDocumentService.CreateOutputDocument(fileUpload, projectId, requirementId, customizeTabId);
             var outputDocuments = _outputDocumentService.GetOutputDocumentByProjectId(projectId);
             ViewBag.OutputDocuments = outputDocuments;
         }
@@ -254,15 +255,11 @@ namespace Documaster.Ui.Controllers
         }
 
         [HttpGet]
-        public ActionResult DisplayDocuments(int projectId, string documentType)
+        public ActionResult DisplayDocuments(int projectId, int customizeTabId)
         {
-        if(!Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType))
-        {
-        return HttpNotFound();
-        }
-            var model = _outputDocumentService.GetOutputDocumentByIdAndDocType(projectId, documentType);
+            var model = _outputDocumentService.GetOutputDocumentByIdAndDocType(projectId, customizeTabId);
             ViewBag.ProjectId = projectId;
-            ViewBag.DocumentType = parsedDocumentType.ToString();
+            ViewBag.CustomizeTabId = customizeTabId;
             return PartialView("_ProjectDocument", model);
         }
 
