@@ -17,7 +17,7 @@
             <li class="ui-state-default" data-customizeTabId="@(item.Id)">
                 <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>@Html.DisplayFor(x => item.Name)
                 <a href="@Url.Action("Edit", new{ id = item.Id })">
-                    <i class="glyphicon glyphicon-pencil" title="Modifica" id="icon"></i></a> 
+                   <i class="glyphicon glyphicon-pencil" title="Modifica" id="icon"></i></a> 
                 <a href="@Url.Action("Delete", new { id = item.Id })">
                     <i class="glyphicon glyphicon-trash" title="Sterge" id="icon"></i>
                 </a>
