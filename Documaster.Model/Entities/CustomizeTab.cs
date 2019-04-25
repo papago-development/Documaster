@@ -5,7 +5,7 @@ using Documaster.Model.BaseEntities;
 
 namespace Documaster.Model.Entities
 {
-    public class CustomizeTab: NamedEntity, IOrderedEntity
+    public class CustomizeTab: NamedEntity
     {
         [Remote("DoesNameExist", "CustomizeTab", AdditionalFields = "Id", ErrorMessage = "Numele exista deja")]
         public override string Name { get; set; }
@@ -18,14 +18,5 @@ namespace Documaster.Model.Entities
         [Range(1, int.MaxValue, ErrorMessage = "Numerotarea incepe de la 1")]
         public int Number { get; set; }
 
-        public int GetOrder()
-        {
-            return Number;
-        }
-
-        public void SetOrder(int value)
-        {
-            Number = value;
-        }
     }
 }
