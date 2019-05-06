@@ -28,6 +28,7 @@ namespace Documaster.Ui
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/themes/base/jquery-ui.css",
                       "~/Content/Site.css"));
         }
     }
