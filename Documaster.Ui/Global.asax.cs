@@ -19,18 +19,18 @@ namespace Documaster.Ui
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        protected void Application_Error(object sender, EventArgs e)
-        {
-            var ex = Server.GetLastError().GetBaseException();
+        //protected void Application_Error(object sender, EventArgs e)
+        //{
+        //    var ex = Server.GetLastError().GetBaseException();
 
-            var httpContext = ((MvcApplication)sender).Context;
-            httpContext.Response.Clear();
-            httpContext.Response.ContentType = "text/plain";
-            httpContext.Response.TrySkipIisCustomErrors = true;
-            Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            Response.Write(ex);
+        //    var httpContext = ((MvcApplication)sender).Context;
+        //    httpContext.Response.Clear();
+        //    httpContext.Response.ContentType = "text/plain";
+        //    httpContext.Response.TrySkipIisCustomErrors = true;
+        //    Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        //    Response.Write(ex);
 
-            Server.ClearError();
-        }
+        //    Server.ClearError();
+        //}
     }
 }
