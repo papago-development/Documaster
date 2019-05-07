@@ -5,6 +5,8 @@
         ViewBag.Title = "Index";
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <div class="displayContent">
         <h2>Customizare Taburi </h2>
         <p>
@@ -31,7 +33,6 @@
             stop: function(event, ui){
                 saveOrder();
             }
-
         });
     });
       var saveOrder = function() {
