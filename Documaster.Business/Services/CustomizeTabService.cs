@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Documaster.Model.Entities;
 using System.Linq;
 using System.Data.Entity;
+using Documaster.Data.DataAccess;
+using System.Data.Entity.Infrastructure.Interception;
 
 namespace Documaster.Business.Services
 {
@@ -64,6 +66,7 @@ namespace Documaster.Business.Services
                 var customizeTab = _customizeTabRepository.Get(id);
                 customizeTab.Number = sortedList.IndexOf(id)+1;
                 _customizeTabRepository.Update(customizeTab, new List<string> { "Number" });
+               
                 _unitOfWork.SaveChanges();
             }
         }
