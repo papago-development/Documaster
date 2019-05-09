@@ -289,3 +289,19 @@ GO
 CREATE UNIQUE NONCLUSTERED INDEX UX_CustomizeTab_Number
      ON dbo.CustomizeTab (Number)
 GO
+
+CREATE TABLE dbo.LogMessage (
+    Id INT IDENTITY(1,1) NOT NULL Primary key
+    [TimeStamp] DATETIME NOT NULL,
+    Level VARCHAR(100) NOT NULL,
+    Logger VARCHAR(1000) NOT NULL,
+    Message VARCHAR(3600) NOT NULL,
+    CallSite VARCHAR(3600) NULL,
+    Exception VARCHAR(3600) NULL
+) 
+GO
+
+ALTER TABLE dbo.LogMessage
+    ADD CONSTRAINT  PK_LogMessage
+    PRIMARY KEY CLUSTERED (Id)
+GO

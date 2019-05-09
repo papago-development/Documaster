@@ -3,19 +3,27 @@
     padding-left: 0px;
     padding-right: 0px;
     margin: 0 !important;
-    width: auto;
+    width: 100%;
 }
 
 .container {
     max-width: 1680px !important;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
     .image-screen, .container {
         width: 100%;
         margin-top: 0;
     }
+
+    .displayContent, .table, .form-horizontal {
+        width: 100%;
+        margin: 0 !important;
+        padding: 50px 10px 20px !important;
+    }
+
 }
+
 
 .form-horizontal .control-label {
     text-align: right;

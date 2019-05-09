@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Documaster.Model.Entities;
 using System.Linq;
-using System.Data.Entity;
-using Documaster.Data.DataAccess;
-using System.Data.Entity.Infrastructure.Interception;
+using NLog;
 
 namespace Documaster.Business.Services
 {
@@ -12,6 +9,7 @@ namespace Documaster.Business.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IGenericRepository<CustomizeTab> _customizeTabRepository;
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         public CustomizeTabService(IUnitOfWork unitOfWork,
                             IGenericRepository<CustomizeTab> customizeTabRepository)
@@ -64,6 +62,7 @@ namespace Documaster.Business.Services
             foreach(var id in sortedList)
             {
                 var customizeTab = _customizeTabRepository.Get(id);
+                _logger.Info($"Customize tab: {customizeTab.Name}");
                 customizeTab.Number = sortedList.IndexOf(id)+1;
                 _customizeTabRepository.Update(customizeTab, new List<string> { "Number" });
                

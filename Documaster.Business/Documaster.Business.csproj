@@ -95,6 +95,15 @@
       <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.4.6.3\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyContainer.cs" />
@@ -135,6 +144,8 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="NLog.xsd" />
+    <None Include="NLog.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Documaster.Data\Documaster.Data.csproj">

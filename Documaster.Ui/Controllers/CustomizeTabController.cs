@@ -13,7 +13,6 @@ namespace Documaster.Ui.Controllers
     {
         private readonly ICustomizeTabService _customizeTabService;
         private readonly INamedEntityService<CustomizeTab> _namedEntityService;
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
      
 
         public CustomizeTabController(ICustomizeTabService customizeTabService,
@@ -92,21 +91,21 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult SaveOrder(IList<int> sortedList, string entityName)
         {
-            try
-            {
+            //try
+            //{
                 _customizeTabService.SaveOrder(sortedList, entityName);
 
-                _logger.Debug("Test");
-                _logger.Info("Test");
-                _logger.Warn("Test");
+                //_logger.Debug("Test");
+                //_logger.Info("Test");
+                //_logger.Warn("Test");
 
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
-            }catch (Exception ex)
-            {
-                _logger.Error(ex, "Test Error");
-                _logger.Fatal(ex, "Test Fatal");
-                throw;
-            }
+            //}catch (Exception ex)
+            //{
+            //    _logger.Error(ex, "Test Error");
+            //    _logger.Fatal(ex, "Test Fatal");
+            //    throw;
+            //}
         }
     }
 }
