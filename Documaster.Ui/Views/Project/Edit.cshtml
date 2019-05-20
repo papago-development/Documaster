@@ -111,7 +111,8 @@
         var dateInput = $("#expire-textbox");
         dateInput.datepicker({
             todayHighlight: true,
-            todayBtn: "linked"
+            todayBtn: "linked",
+            dateFormat: "dd/mm/yyyy"
         });
         var value = dateInput.attr("value");
         if (value !== "") {

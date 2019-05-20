@@ -1,0 +1,245 @@
+------Info(2019-05-09 13:57:05.9577)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Documente
+
+------Info(2019-05-09 13:57:05.9795)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Note
+
+------Info(2019-05-09 13:57:05.9932)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Desene
+
+------Info(2019-05-09 13:57:06.0055)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Certificat de Urbanism
+
+------Info(2019-05-09 13:57:06.0175)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Foto 3D
+
+------Info(2019-05-09 13:57:06.0279)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Foto Teren
+
+------Info(2019-05-09 13:57:06.0380)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Avize
+
+------Info(2019-05-09 13:57:11.4678)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Documente
+
+------Info(2019-05-09 13:57:11.4801)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Note
+
+------Info(2019-05-09 13:57:11.4907)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Desene
+
+------Info(2019-05-09 13:57:11.5008)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Foto 3D
+
+------Info(2019-05-09 13:57:11.5102)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Certificat de Urbanism
+
+------Info(2019-05-09 13:57:11.5186)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Foto Teren
+
+------Info(2019-05-09 13:57:11.5274)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Avize
+
+------Info(2019-05-09 13:57:49.0249)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Documente
+
+------Info(2019-05-09 13:57:49.2123)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Desene
+
+------Info(2019-05-09 13:57:49.2224)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Foto 3D
+
+------Info(2019-05-09 13:57:49.2311)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Certificat de Urbanism
+
+------Info(2019-05-09 13:57:49.2399)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Note
+
+------Info(2019-05-09 13:57:49.2487)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Foto Teren
+
+------Info(2019-05-09 13:57:49.2569)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Avize
+
+------Info(2019-05-09 13:57:52.9077)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Documente
+
+------Info(2019-05-09 13:57:52.9221)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Desene
+
+------Info(2019-05-09 13:57:52.9335)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Note
+
+------Info(2019-05-09 13:57:52.9434)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Foto 3D
+
+------Info(2019-05-09 13:57:52.9525)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Certificat de Urbanism
+
+------Info(2019-05-09 13:57:52.9614)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Foto Teren
+
+------Info(2019-05-09 13:57:52.9711)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Avize
+
+------Info(2019-05-09 13:57:55.4349)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Documente
+
+------Info(2019-05-09 13:57:55.4471)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Note
+
+------Info(2019-05-09 13:57:55.4583)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Foto 3D
+
+------Info(2019-05-09 13:57:55.4714)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Certificat de Urbanism
+
+------Info(2019-05-09 13:57:55.4809)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Foto Teren
+
+------Info(2019-05-09 13:57:55.4911)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Desene
+
+------Info(2019-05-09 13:57:55.5000)Alexandras-MacBook-Pro------
+
+                      Exception Type: |
+                      Exception Message: |
+                      Stack Trace: |
+                      Additional Info:Customize tab: Avize
+

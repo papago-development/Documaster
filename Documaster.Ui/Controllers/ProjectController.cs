@@ -36,7 +36,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return RedirectToAction("List", new {sortProperty = "Expire", sortDescending = true});
+            return RedirectToAction("List", new {sortProperty = "Number", sortDescending = false});
         }
 
         [HttpGet]

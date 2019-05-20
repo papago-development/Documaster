@@ -30,7 +30,7 @@
             <th>
                 @Html.ActionLink("Nume client", "List", new { sortProperty = "Customer.Name", sortDescending })
             </th>
-            <th  style="width: 40%">
+            <th style="width: 40%">
                 @Html.ActionLink("Nume proiect", "List", new { sortProperty = "Name", sortDescending })
             </th>
             <th style="width: 10%">
@@ -51,17 +51,17 @@
                         @Html.DisplayFor(modelItem => item.Number)
                     </td>
                     <td>
-                        @item.CreationDate.ToShortDateString()
+                        @Convert.ToDateTime(@item.CreationDate).ToString("dd/MM/yyyy")
                     </td>
                     <td>
                         <div class="form-group">
                             <div class="col-md-10">
                                 @Html.DropDownListFor(modelItem => item.ProjectStatusId, new SelectList(ViewBag.ProjectStatuses, "Id", "Name", item.ProjectStatusId),
-                                                                new { @class = "form-control projectStatus" })
+                                                                     new { @class = "form-control projectStatus" })
                             </div>
                         </div>
                     </td>
-                    <td >
+                    <td>
                         @Html.DisplayFor(modelItem => item.Customer.Name)
                     </td>
                     <td>
@@ -70,7 +70,7 @@
                     <td>
                         @if (item.Expire.HasValue)
                         {
-                            @item.Expire.Value.ToShortDateString()
+                            @Convert.ToDateTime(@item.Expire.Value).ToString("dd/MM/yyyy")
                         }
                     </td>
                     <td>

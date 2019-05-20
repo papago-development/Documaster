@@ -36,6 +36,7 @@
         var projectId = @projectId;
         $("input[type='file']").each (function (index, value) {
             var requirementId = $ (value).parent().find ("input[name='requirementId']").val();
+            console.log("@documentType");
             $ (value).change (function (element) {
                 uploadFile (element, projectId, requirementId, "@documentType");
             });
