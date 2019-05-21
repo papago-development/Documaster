@@ -3,7 +3,6 @@
 @{
     var data = string.Format("data:{0};base64,{1}", Model.ContentType, Convert.ToBase64String(Model.DocumentData));
 }
-
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
@@ -13,7 +12,7 @@
             <h4 class="modal-title">Previzualizare document</h4>
         </div>
         <div class="modal-body">
-            <object data="@data" type="@Model.ContentType" width="550px" height="500px"></object>
+            <object data="@data" type="@Model.ContentType" width="1450px" height="700px"></object>
         </div>
     </div>
 </div>

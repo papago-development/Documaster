@@ -19,6 +19,7 @@ var uploadFile = function (e, projectId, requirementId, documentType) {
         reloadCurrentTab();
     })
         .fail(function (jqXhr) {
+            console.log(jqXhr);
         });
 };
 

@@ -39,10 +39,18 @@ namespace Documaster.Business.Services
                 DocumentType = parsedDocumentType.ToString(),
                 ProjectId = projectId,
                 RequirementId = requirementId,
+                CreationDate = DateTime.Now
             };
 
             var documentCreated = _outputDocumentRepository.Create(output);
-            _unitOfWork.SaveChanges();
+            try
+            {
+
+                _unitOfWork.SaveChanges();
+            }catch(Exception e)
+            {
+                Console.Error.WriteLine(e);
+            }
             return documentCreated;
         }
         
