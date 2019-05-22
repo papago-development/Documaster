@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Documaster.Model.Entities;
+using System;
 
 namespace Documaster.Business.Services
 {
@@ -21,9 +22,11 @@ namespace Documaster.Business.Services
         }
 
         public Project CreateProject(Project project)
-        {
+        { 
             var newProject = _projectRepository.Create(project);
+  
             _unitOfWork.SaveChanges();
+
             return newProject;
         }
 

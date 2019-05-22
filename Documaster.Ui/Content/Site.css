@@ -1,13 +1,16 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    width: 100%;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    display: grid;
 }
+
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
@@ -222,3 +225,53 @@ div.col-md-2.switch-column {
     padding-top: 6px;
 }
 
+.image-screen {
+    position: absolute;
+    width: 70%;
+    left: 0;
+    display: flex;
+    float: left;
+    display: inline-block;
+}
+    .image-screen img {
+        width: 1160px;
+       height: 830px;
+    }
+
+.login {
+    position: absolute;
+    width: 30%;
+    right: 0;
+    margin-top: 10%;
+    float: right;
+    display: inline-block;
+}
+
+#username-input {
+    margin-left: 20%;
+}
+
+#password-input {
+    margin-left: 20%;
+}
+
+#checkbox {
+    margin-left: 20%;
+}
+
+#login-button {
+    margin-left: 20%;
+}
+
+    #login-button input {
+        width: 280px;
+        background-color: #eb7f2a;
+    }
+
+.footer {
+    text-align: center;
+}
+
+.footer hr {
+    width: 70%;
+}

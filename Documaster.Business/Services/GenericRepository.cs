@@ -39,7 +39,7 @@ namespace Documaster.Business.Services
                 throw new ArgumentNullException( nameof(entity) );
             }
 
-            //entity.CreationDate = DateTime.Now;
+            entity.CreationDate = DateTime.Now;
             entity.LastUpdate = DateTime.Now;
             var savedEntity = _dbContext.Create( entity );
             return savedEntity;

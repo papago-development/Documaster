@@ -21,7 +21,7 @@ namespace Documaster.Business.Services
         }
 
         public OutputDocument CreateOutputDocument(HttpPostedFileBase fileUpload, int projectId, int? requirementId, string documentType)
-        {
+         {
             if(fileUpload == null || !Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType))
             {
                 return null;
@@ -38,8 +38,7 @@ namespace Documaster.Business.Services
                 ContentType = fileUpload.ContentType,
                 DocumentType = parsedDocumentType.ToString(),
                 ProjectId = projectId,
-                RequirementId = requirementId,
-                CreationDate = DateTime.Now
+                RequirementId = requirementId
             };
 
             var documentCreated = _outputDocumentRepository.Create(output);

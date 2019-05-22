@@ -40,7 +40,7 @@ namespace Documaster.Ui.Controllers
             if (hasLoggedIn)
             {
                 FormsAuthentication.SetAuthCookie(loginModel.UserName, loginModel.RememberMe);
-                return RedirectToAction("Welcome","Project");
+                return RedirectToAction("Index","Project");
             }
             ModelState.AddModelError("", "Nume sau parola gresite.");
             return View(loginModel);
