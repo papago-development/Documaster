@@ -32,4 +32,4 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-- task: P
+- task: PublishBuildArtifacts@1
