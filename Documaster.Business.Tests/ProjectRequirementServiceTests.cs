@@ -29,17 +29,17 @@ namespace Documaster.Business.Tests
          }
 
         [TestMethod]
-        public void WhenCreatingProjectRequirementExpectSuccess()
-        {
-            //Arrange
-            var projectRequirementService = new ProjectRequirementService(_projectRequirementRepository, _unitOfWork);
+        //public void WhenCreatingProjectRequirementExpectSuccess()
+        //{
+         //   //Arrange
+         //   var projectRequirementService = new ProjectRequirementService(_projectRequirementRepository, _unitOfWork);
             
-            //Act
-            var result = projectRequirementService.CreateProjectRequirement(projectRequirement);
+         //   //Act
+         //   var result = projectRequirementService.CreateProjectRequirement(projectRequirement);
 
-            //Assert
-            _unitOfWork.AssertWasCalled(x => x.SaveChanges());
-            var createdProjectRequirement = _projectRequirementRepository.Create(result);
-         }
+         //   //Assert
+         //   _unitOfWork.AssertWasCalled(x => x.SaveChanges());
+         //   var createdProjectRequirement = _projectRequirementRepository.Create(result);
+         //}
     }
 }
