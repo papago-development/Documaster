@@ -27,7 +27,6 @@ CREATE TABLE dbo.Project (
 	,ProjectStatusId INT NOT NULL
 	,Notes NVARCHAR(MAX)
 	,[Number] NVARCHAR(50) NOT NULL
-    ,Created DATETIME NOT NULL
 )
 GO
 
