@@ -158,6 +158,11 @@ div.col-md-4 {
     margin-bottom: 10px;
 }
 
+.modal-dialog {
+    width: 1500px !important;
+    height: 850px !important;
+}
+
 .modal-body {
     padding: 15px !important;
 }

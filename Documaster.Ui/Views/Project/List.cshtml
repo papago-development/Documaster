@@ -54,7 +54,7 @@
                             @Html.DisplayFor(modelItem => item.Number)
                         </td>
                         <td>
-                            @item.CreationDate.ToShortDateString()
+                            @Convert.ToDateTime(@item.Created).ToString("dd/MM/yyyy")
                         </td>
                         <td>
                             <div class="form-group">
@@ -73,7 +73,7 @@
                         <td>
                             @if (item.Expire.HasValue)
                             {
-                                @item.Expire.Value.ToShortDateString()
+                                @Convert.ToDateTime(@item.Expire).ToString("dd/MM/yyyy")
                             }
                         </td>
                         <td>
