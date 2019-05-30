@@ -25,7 +25,7 @@ namespace Documaster.Ui.Controllers
                 var filepath = Path.Combine(imagesDirectory, filename);
                 fileUpload.SaveAs(filepath);
             }
-            return RedirectToAction("Welcome", "Project");
+            return RedirectToAction("Index", "Project");
         }
 
         private static void DeleteAllFilesInFolder(string imagesDirectory)

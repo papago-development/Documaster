@@ -143,13 +143,15 @@ div.col-md-4 {
 }
 
 .modal-dialog {
-    width: 1500px !important;
+    width: 1200px;
     height: 850px !important;
 }
 
+
 .modal-body {
-    padding: 15px !important;
+    padding: 20px !important;
 }
+
 
 button.close {
     margin-top: 5px !important;
@@ -224,6 +226,12 @@ label:checked{
 div.col-md-2.switch-column {
     padding-top: 6px;
 }
+
+.displayContent {
+    padding: 50px 30px 20px;
+    margin: 0px 60px;
+}
+
 
 .image-screen {
     position: absolute;
