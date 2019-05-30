@@ -54,13 +54,13 @@
                             @Html.DisplayFor(modelItem => item.Number)
                         </td>
                         <td>
-                            @item.CreationDate.ToShortDateString()
+                            @Convert.ToDateTime(item.Created).ToString("dd/MM/yyyy")
                         </td>
                         <td>
                             <div class="form-group">
                                 <div class="col-md-10">
                                     @Html.DropDownListFor(modelItem => item.ProjectStatusId, new SelectList(ViewBag.ProjectStatuses, "Id", "Name", item.ProjectStatusId),
-                                                                              new { @class = "form-control projectStatus" })
+                                                                                   new { @class = "form-control projectStatus" })
                                 </div>
                             </div>
                         </td>
@@ -73,7 +73,7 @@
                         <td>
                             @if (item.Expire.HasValue)
                             {
-                                @item.Expire.Value.ToShortDateString()
+                                @Convert.ToDateTime(item.Expire).ToString("dd/MM/yyyy")
                             }
                         </td>
                         <td>

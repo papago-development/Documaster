@@ -1,33 +1,21 @@
-﻿/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 0px;
-    padding-right: 0px;
-    margin: 0 !important;
+﻿/*body {
+    padding-top: 50px;
+    padding-bottom: 20px;
     width: 100%;
+}*/
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    display: grid;
 }
 
-.container {
-    max-width: 1680px !important;
+@media (max-width: 768px) .image-screen, .login-content {
+    float: none;
+    width: auto;
 }
 
-@media screen and (max-width: 800px) {
-    .image-screen, .container {
-        width: 100%;
-        margin-top: 0;
-    }
-
-    .displayContent, .table, .form-horizontal {
-        width: 100%;
-        margin: 0 !important;
-        padding: 50px 10px 20px !important;
-    }
-
-}
-
-
-.form-horizontal .control-label {
-    text-align: right;
-}
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
@@ -158,9 +146,16 @@ div.col-md-4 {
     margin-bottom: 10px;
 }
 
-.modal-body {
-    padding: 15px !important;
+.modal-dialog {
+    width: 1200px;
+    height: 850px !important;
 }
+
+
+.modal-body {
+    padding: 20px !important;
+}
+
 
 button.close {
     margin-top: 5px !important;
@@ -202,6 +197,8 @@ button.close {
         border-radius: 5px;
     }
 
+
+
 input[type='number'] {
     width: 70px !important;
 }
@@ -227,75 +224,66 @@ select > option:hover {
     }
 
 label:checked {
-    background-color: lightgreen;
+    background-color: lightgreen
 }
 
 div.col-md-2.switch-column {
     padding-top: 6px;
 }
+.displayContent {
+    padding: 50px 15px 20px;
+    margin: 0px 0px;
+}
+
+.login-page {
+    width: 100vw;
+    position: relative;
+    margin-left: -51vw;
+    height: 100px;
+    margin-top: -50px;
+    left: 50%;
+}
 
 .image-screen {
-    display: table-cell;
-    float: left;
-    width: 100px;
-    height: 100%;
-    margin-right: 8px;
-    background-color: linen;
+    position: fixed;
+    left: 0;
+    right: 500px;
+    top: 0;
+    bottom: 0;
+    -webkit-transform: translateZ(0);
+    overflow: hidden;
+    margin-left: -15px;
 }
 
-body > div > .image-screen {
-    padding-top: 0px !important;
+    .image-screen img {
+        width: 1160px;
+        height: 837px;
+    }
+
+.login-content {
+    float: right;
+    width: 500px;
 }
+
 
 .login {
-    display: block;
-    width: 520px;
-    height: 250px;
-    float: right;
-    padding-top: 100px;
-    padding-left: 90px;
-    padding-right: 90px;
+    width: auto;
+    padding: 30px 60px;
+    padding-top: 200px;
 }
 
-    .login form {
-        padding: 40px 10px 250px;
-    }
 
-    .login .form-group {
-        padding-right: 10px;
-    }
-
-    .login input {
-        margin-left: 15px;
-        width: 280px;
-    }
-
-        .login input[type="checkbox"] {
-            width: 20px;
-            margin-left: 0px;
-        }
-
-    .login .btn {
-        background-color: #da9c4c;
-        color: #FFFFFF;
-    }
-
-
-.displayContent {
-    padding: 50px 30px 20px;
-    margin: 0px 60px;
+#login-button input {
+    width: 280px;
+    background-color: #eb7f2a;
 }
 
-#footer {
-    padding: 0px 30px;
-    margin: 0px 60px;
+/*.footer {
+    text-align: center;
 }
-
-.disabledLink {
-    cursor: not-allowed;
-    opacity: 0.5;
-    text-decoration: none;
-}
+    .footer hr {
+        width: 78%;
+    }*/
 
 #sortable {
     list-style-type: none;
@@ -320,12 +308,11 @@ body > div > .image-screen {
 i {
     margin: 0 5px;
     color: #2a21b2;
-
 }
 
-    #icon {
-        float: right;
-    }
+#icon {
+    float: right;
+}
 
 i:hover {
     color: gray;
