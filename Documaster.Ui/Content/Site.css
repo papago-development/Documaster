@@ -11,6 +11,10 @@
     display: grid;
 }
 
+@media (max-width: 768px) .image-screen, .login-content {
+    float: none;
+    width: auto;
+}
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
@@ -179,7 +183,7 @@ button.close {
     margin: 2px 0 0 !important;
 }
 
-.project-state:after {
+    .project-state:after {
         content: " ";
         background-color: green;
         display: inline-block;
@@ -219,7 +223,7 @@ select > option:hover {
         background-color: green
     }
 
-label:checked{
+label:checked {
     background-color: lightgreen
 }
 
@@ -232,54 +236,53 @@ div.col-md-2.switch-column {
     margin: 0px 60px;
 }
 
+.login-page {
+    width: 100vw;
+    position: relative;
+    margin-left: -51vw;
+    height: 100px;
+    margin-top: -50px;
+    left: 50%;
+}
 
 .image-screen {
-    position: absolute;
-    width: 70%;
+    position: fixed;
     left: 0;
-    display: flex;
-    float: left;
-    display: inline-block;
+    right: 500px;
+    top: 0;
+    bottom: 0;
+    -webkit-transform: translateZ(0);
+    overflow: hidden;
+    margin-left: -15px;
 }
+
     .image-screen img {
         width: 1160px;
-       height: 830px;
+        height: 837px;
     }
+
+.login-content {
+    float: right;
+    width: 500px;
+}
+
 
 .login {
-    position: absolute;
-    width: 30%;
-    right: 0;
-    margin-top: 10%;
-    float: right;
-    display: inline-block;
+    width: auto;
+    padding: 30px 60px;
+    padding-top: 200px;
 }
 
-#username-input {
-    margin-left: 20%;
+
+#login-button input {
+    width: 280px;
+    background-color: #eb7f2a;
 }
 
-#password-input {
-    margin-left: 20%;
-}
-
-#checkbox {
-    margin-left: 20%;
-}
-
-#login-button {
-    margin-left: 20%;
-}
-
-    #login-button input {
-        width: 280px;
-        background-color: #eb7f2a;
-    }
-
-.footer {
+/*.footer {
     text-align: center;
 }
 
-.footer hr {
-    width: 70%;
-}
+    .footer hr {
+        width: 78%;
+    }*/

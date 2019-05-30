@@ -3,50 +3,52 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var imgPath = Directory.GetFiles(Server.MapPath("~/Images"), "*.*").FirstOrDefault();
 }
-
-<div class="image-screen">
-    @if (imgPath != null)
+<div class="login-page">
+    <div class="image-screen col-md-8">
+        @if (imgPath != null)
     {
-        <img src="@Url.Content(String.Format("~/Images/{0}", new FileInfo(imgPath).Name))"  />
+        <img src="@Url.Content(String.Format("~/Images/{0}", new FileInfo(imgPath).Name))" />
     }
-</div>
-<div class="login">
-    @using (Html.BeginForm())
+    </div>
+    <div class="login-content col-md-4">
+        @using (Html.BeginForm())
     {
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="login">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group" id="username-input">
-            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Nume utilizator" })
-            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+            <div class="form-group" id="username-input">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Nume utilizator" })
+                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
 
-        </div>
-        <div class="form-group" id="password-input">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Parola" })
-            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group" id="password-input">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Parola" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
 
-        </div>
-        <div class="form-group" id="checkbox">
-            <div>
-                <div class="checkbox">
-                    @Html.CheckBoxFor(m => m.RememberMe)
-                    @Html.LabelFor(m => m.RememberMe)
+            </div>
+            <div class="form-group" id="checkbox">
+                <div>
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group" id="login-button">
-            <input type="submit" value="Login" class="btn btn-default" />
-        </div>
+            <div class="form-group" id="login-button">
+                <input type="submit" value="Login" class="btn btn-default" />
+            </div>
 
 
-        <div class="footer">
-            <hr />
-            <p>
-                Documaster &copy; @DateTime.Now.Year by <i>Phonelite</i>
-            </p>
+            <div class="footer">
+                <hr />
+                <p>
+                    Documaster &copy; @DateTime.Now.Year by <i>Phonelite</i>
+                </p>
+            </div>
         </div>
     }
+    </div>
 </div>
-
 <script>$(document).ready(function () {
         $('#footer').empty();
     });</script>
