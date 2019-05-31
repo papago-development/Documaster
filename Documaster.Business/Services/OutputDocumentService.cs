@@ -42,7 +42,14 @@ namespace Documaster.Business.Services
             };
 
             var documentCreated = _outputDocumentRepository.Create(output);
-            _unitOfWork.SaveChanges();
+            try {
+
+                _unitOfWork.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                Console.Write(e);
+            }
             return documentCreated;
         }
 

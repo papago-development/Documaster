@@ -305,3 +305,12 @@ ALTER TABLE dbo.LogMessage
     ADD CONSTRAINT  PK_LogMessage
     PRIMARY KEY CLUSTERED (Id)
 GO
+
+
+
+ALTER TABLE OutputDocument
+ADD CustomizeTabId INT 
+
+UPDATE OutputDocument
+Set CustomizeTabId=1
+ALTER TABLE OutputDocument ALTER COLUMN CustomizeTabId INTEGER NOT NULL

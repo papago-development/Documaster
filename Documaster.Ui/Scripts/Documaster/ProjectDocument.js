@@ -29,7 +29,7 @@ var applyClickTransfer = function (element) {
     });
 };
 
-var deleteDocument = function () {
+var deleteDocument = function (documentId) {
     const formData = new FormData();
     formData.append("documentId", documentId);
     $.ajax({
