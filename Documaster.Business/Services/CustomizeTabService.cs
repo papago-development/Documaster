@@ -66,8 +66,9 @@ namespace Documaster.Business.Services
                 customizeTab.Number = sortedList.IndexOf(id)+1;
                 _customizeTabRepository.Update(customizeTab, new List<string> { "Number" });
                
-                _unitOfWork.SaveChanges();
+
             }
+            _unitOfWork.SaveChanges();
         }
     }
 }

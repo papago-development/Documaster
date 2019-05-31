@@ -91,21 +91,9 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult SaveOrder(IList<int> sortedList, string entityName)
         {
-            //try
-            //{
                 _customizeTabService.SaveOrder(sortedList, entityName);
 
-                //_logger.Debug("Test");
-                //_logger.Info("Test");
-                //_logger.Warn("Test");
-
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
-            //}catch (Exception ex)
-            //{
-            //    _logger.Error(ex, "Test Error");
-            //    _logger.Fatal(ex, "Test Fatal");
-            //    throw;
-            //}
         }
     }
 }
