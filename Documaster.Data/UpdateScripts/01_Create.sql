@@ -241,7 +241,7 @@ CREATE UNIQUE NONCLUSTERED INDEX UX_OutputDocument_ProjectId_RequirementId_Name
 	ON dbo.OutputDocument (ProjectId, RequirementId, [Name])
 GO
 
- ALTER TABLE dbo.OutputDocument WITH CHECK
+ALTER TABLE dbo.OutputDocument WITH CHECK
      ADD CONSTRAINT FK_OutputDocument_CustomizeTabId_CustomizeTab_Id
      FOREIGN KEY (CustomizeTabId)
      REFERENCES dbo.CustomizeTab (Id)
@@ -251,6 +251,7 @@ GO
 ALTER TABLE dbo.OutputDocument 
      CHECK CONSTRAINT FK_OutputDocument_CustomizeTabId_CustomizeTab_Id
 GO
+
 
 CREATE TABLE dbo.UserProfile (
 	Id INT IDENTITY(1,1) NOT NULL
@@ -270,7 +271,7 @@ GO
 CREATE TABLE dbo.CustomizeTab (
     Id INT IDENTITY(1, 1) NOT NULL
     ,[Name] NVARCHAR(200) NOT NULL
-    ,Type NVARCHAR(25) NOT NULL
+    ,[Type] NVARCHAR(25) NOT NULL
     ,Number INT NOT NULL
     ,CreationDate DATETIME NOT NULL
     ,LastUpdate DATETIME NOT NULL
@@ -278,7 +279,7 @@ CREATE TABLE dbo.CustomizeTab (
 GO
 
 ALTER TABLE dbo.CustomizeTab
-    ADD CONSTRAINT  PK_CustomizeTab
+    ADD CONSTRAINT PK_CustomizeTab
     PRIMARY KEY CLUSTERED (Id)
 GO
 
@@ -290,6 +291,8 @@ CREATE UNIQUE NONCLUSTERED INDEX UX_CustomizeTab_Number
      ON dbo.CustomizeTab (Number)
 GO
 
+
+/*
 CREATE TABLE dbo.LogMessage (
     Id INT IDENTITY(1,1) NOT NULL Primary key
     [TimeStamp] DATETIME NOT NULL,
@@ -314,3 +317,4 @@ ADD CustomizeTabId INT
 UPDATE OutputDocument
 Set CustomizeTabId=1
 ALTER TABLE OutputDocument ALTER COLUMN CustomizeTabId INTEGER NOT NULL
+*/

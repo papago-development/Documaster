@@ -34,6 +34,7 @@ namespace Documaster.Ui.Controllers
                 if (!hasCreatedUser)
                 {
                     ModelState.AddModelError("", "Nu am putut crea utilizator si/sau parola!");
+                    return View(loginModel);
                 }
             }
 
