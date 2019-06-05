@@ -55,6 +55,5 @@ namespace Documaster.Data.DataAccess
         public IDbSet<Template> Templates { get; set; }
         public IDbSet<Category> Categories { get; set; }
         public IDbSet<ProjectStatus> ProjectStatuses { get; set; }
-        public IDbSet<UserProfile> UserProfiles { get; set; }
     }
 }

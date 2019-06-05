@@ -28,7 +28,7 @@ namespace Documaster.Business.Tests
             _projectRequirementRepository.Stub(m => m.Create(projectRequirement)).Return(projectRequirement);
          }
 
-        [TestMethod]
+        //[TestMethod]
         //public void WhenCreatingProjectRequirementExpectSuccess()
         //{
          //   //Arrange

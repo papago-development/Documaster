@@ -4,7 +4,6 @@ using System.IO;
 
 namespace Documaster.Ui.Controllers
 {
-    [Authorize]
     public class PhotoController : Controller
     {
         [HttpGet]

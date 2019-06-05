@@ -4,7 +4,6 @@ using Documaster.Model.Entities;
 
 namespace Documaster.Ui.Controllers
 {
-    [Authorize]
     public class ProjectStatusController : Controller
     {
         private readonly IProjectStatusService _projectStatusService;
@@ -50,7 +49,7 @@ namespace Documaster.Ui.Controllers
 
         [HttpPost]
         public ActionResult Delete(ProjectStatus projectStatus)
-        { 
+        {
             var isDeleted = _projectStatusService.DeleteProjectStatus(projectStatus);
             TempData["DeleteSuccess"] = isDeleted;
             return RedirectToAction("Index");
