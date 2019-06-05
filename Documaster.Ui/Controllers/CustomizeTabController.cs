@@ -4,8 +4,6 @@ using Documaster.Model.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using NLog;
-using System;
 
 namespace Documaster.Ui.Controllers
 {
@@ -13,7 +11,6 @@ namespace Documaster.Ui.Controllers
     {
         private readonly ICustomizeTabService _customizeTabService;
         private readonly INamedEntityService<CustomizeTab> _namedEntityService;
-     
 
         public CustomizeTabController(ICustomizeTabService customizeTabService,
                                       INamedEntityService<CustomizeTab> namedEntityService)
@@ -91,9 +88,8 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult SaveOrder(IList<int> sortedList, string entityName)
         {
-                _customizeTabService.SaveOrder(sortedList, entityName);
-
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            _customizeTabService.SaveOrder(sortedList, entityName);
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }

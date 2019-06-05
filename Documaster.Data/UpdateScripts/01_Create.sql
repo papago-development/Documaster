@@ -21,12 +21,13 @@ CREATE TABLE dbo.Project (
 	Id INT IDENTITY(1,1) NOT NULL
 	,Expire DATETIME  
 	,ProjectData VARBINARY(MAX)
-	,[Name] NVARCHAR(200) NOT NULL
+	,[Name] NVARCHAR(1000) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
 	,ProjectStatusId INT NOT NULL
 	,Notes NVARCHAR(MAX)
 	,[Number] NVARCHAR(50) NOT NULL
+	,Created DATETIME NOT NULL
 )
 GO
 
@@ -197,6 +198,26 @@ CREATE UNIQUE NONCLUSTERED INDEX UX_ProjectRequirement_ProjectId_RequirementId
 GO
 
 
+CREATE TABLE dbo.CustomizeTab (
+    Id INT IDENTITY(1, 1) NOT NULL
+    ,[Name] NVARCHAR(200) NOT NULL
+    ,[Type] NVARCHAR(25) NOT NULL
+    ,Number INT NOT NULL
+    ,CreationDate DATETIME NOT NULL
+    ,LastUpdate DATETIME NOT NULL
+)
+GO
+
+ALTER TABLE dbo.CustomizeTab
+    ADD CONSTRAINT PK_CustomizeTab
+    PRIMARY KEY CLUSTERED (Id)
+GO
+
+CREATE UNIQUE NONCLUSTERED INDEX UX_CustomizeTab_Name
+     ON dbo.CustomizeTab ([Name])
+GO
+
+
 CREATE TABLE dbo.OutputDocument (
 	Id INT IDENTITY(1,1) NOT NULL
 	,ProjectId INT NOT NULL
@@ -266,31 +287,6 @@ ALTER TABLE dbo.UserProfile
 	ADD CONSTRAINT PK_UserProfile
 	PRIMARY KEY CLUSTERED (Id)
 GO
-
-
-CREATE TABLE dbo.CustomizeTab (
-    Id INT IDENTITY(1, 1) NOT NULL
-    ,[Name] NVARCHAR(200) NOT NULL
-    ,[Type] NVARCHAR(25) NOT NULL
-    ,Number INT NOT NULL
-    ,CreationDate DATETIME NOT NULL
-    ,LastUpdate DATETIME NOT NULL
-)
-GO
-
-ALTER TABLE dbo.CustomizeTab
-    ADD CONSTRAINT PK_CustomizeTab
-    PRIMARY KEY CLUSTERED (Id)
-GO
-
-CREATE UNIQUE NONCLUSTERED INDEX UX_CustomizeTab_Name
-     ON dbo.CustomizeTab ([Name])
-GO
-
-CREATE UNIQUE NONCLUSTERED INDEX UX_CustomizeTab_Number
-     ON dbo.CustomizeTab (Number)
-GO
-
 
 /*
 CREATE TABLE dbo.LogMessage (
