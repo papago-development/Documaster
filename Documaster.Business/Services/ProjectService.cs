@@ -41,7 +41,7 @@ namespace Documaster.Business.Services
 
         public bool UpdateProject(Project project)
         {
-            var updatedProject = _projectRepository.Update(project, new List<string> { "Name", "Expire", "Number", "ProjectStatusId" });
+            var updatedProject = _projectRepository.Update(project, new List<string> { "Name", "Expire", "ProjectStatusId" });
             _unitOfWork.SaveChanges();
             return updatedProject;
         }

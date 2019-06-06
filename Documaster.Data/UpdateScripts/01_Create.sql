@@ -288,29 +288,25 @@ ALTER TABLE dbo.UserProfile
 	PRIMARY KEY CLUSTERED (Id)
 GO
 
-/*
-CREATE TABLE dbo.LogMessage (
-    Id INT IDENTITY(1,1) NOT NULL Primary key
-    [TimeStamp] DATETIME NOT NULL,
-    Level VARCHAR(100) NOT NULL,
-    Logger VARCHAR(1000) NOT NULL,
-    Message VARCHAR(3600) NOT NULL,
-    CallSite VARCHAR(3600) NULL,
-    Exception VARCHAR(3600) NULL
-) 
+
+-- Database modifications --
+Update CustomizeTab
+    SET Type = 'Documente' WHERE Type = 'DisplayDocuments'
 GO
 
-ALTER TABLE dbo.LogMessage
-    ADD CONSTRAINT  PK_LogMessage
-    PRIMARY KEY CLUSTERED (Id)
+UPDATE CustomizeTab SET Type = 'Avize' WHERE Type = 'OutputDocuments'
 GO
 
+UPDATE CustomizeTab SET Type = 'Note' WHERE Type = 'Notes'
+GO
 
-
-ALTER TABLE OutputDocument
+ALTER TABLE OutputDocument 
 ADD CustomizeTabId INT 
+GO
 
 UPDATE OutputDocument
-Set CustomizeTabId=1
-ALTER TABLE OutputDocument ALTER COLUMN CustomizeTabId INTEGER NOT NULL
-*/
+SET CustomizeTabId=1
+GO
+
+ALTER TABLE OutputDocument ALTER COLUMN CustomizeTabId INT NOT NULL
+GO

@@ -4,6 +4,9 @@ using Documaster.Model.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System;
+using Documaster.Model.Enums;
+using System.Web.Mvc.Html;
 
 namespace Documaster.Ui.Controllers
 {
@@ -30,6 +33,8 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            var documentTypes = Enum.GetNames(typeof(Documaster.Model.Enums.DocumentType)).ToString();
+            ViewBag.DocumentTypes = documentTypes;
             return View();
         }
 
@@ -43,6 +48,9 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Edit(int id) 
         {
+            var documentTypes = Enum.GetNames(typeof(Documaster.Model.Enums.DocumentType)).ToString();
+            ViewBag.DocumentTypes = documentTypes;
+
             var model = _customizeTabService.GetCustomizeTabById(id);
             return View(model);
         }

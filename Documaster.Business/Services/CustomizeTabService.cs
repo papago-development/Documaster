@@ -27,6 +27,7 @@ namespace Documaster.Business.Services
         public CustomizeTab Create(CustomizeTab customizeTab)
         {
             var createdCustomizeTab = _customizeTabRepository.Create(customizeTab);
+
             _unitOfWork.SaveChanges();
 
             return createdCustomizeTab;
@@ -39,7 +40,7 @@ namespace Documaster.Business.Services
 
         public bool Edit(CustomizeTab customizeTab)
         {
-            var editedCustomizeTab = _customizeTabRepository.Update(customizeTab, new List<string> { "Number", "Name", "Type" });
+            var editedCustomizeTab = _customizeTabRepository.Update(customizeTab, new List<string> { "Name", "Type" });
             _unitOfWork.SaveChanges();
             return editedCustomizeTab;
         }
