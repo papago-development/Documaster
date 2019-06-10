@@ -56,12 +56,13 @@ else
                     @Html.Hidden("requirementId", req.RequirementId)
 
                     @if (!string.IsNullOrEmpty(req.FileName))
-                    {
-                        var href = baseUrl + "Requirement/DownloadDocument?documentId=" + req.Id;
-                        <a class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument(@req.Id)" data-documentid="@req.Id">Sterge</a>
-                        <a class="button btn btn-primary btn-xs" href=@href>Descarca</a>
-                        @Ajax.ActionLink("Vezi", "PreviewDocument", new { documentId = req.Id }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn btn-info btn-xs" })
-                    }
+    {
+        var href = baseUrl + "Requirement/DownloadDocument?documentId=" + req.Id;
+                <a class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument(@req.Id)" data-documentid="@req.Id">Sterge</a>
+
+                @Ajax.ActionLink("Descarca", "DownloadDocument", new { documentId = req.Id }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace }, new { @class = "button btn btn-primary btn-xs" })
+                @Ajax.ActionLink("Vezi", "PreviewDocument", new { documentId = req.Id }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn btn-info btn-xs" })
+}
                 </div>
             </div>
 
