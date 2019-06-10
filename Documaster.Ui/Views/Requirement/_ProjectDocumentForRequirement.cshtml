@@ -1,98 +1,99 @@
-﻿@using Documaster.Business.Models
-@model IEnumerable<Documaster.Business.Models.FileToUpdate>
-    @{
-        ViewBag.Title = "CustomerProject";
-        var projectId = (object)ViewBag.ProjectId;
-    }
+﻿@model IEnumerable<Documaster.Business.Models.FileToUpdate>
 
-    @if (!Model.Any())
-    {
-        <p>Nu ai adaugat nicio cerinta!</p>
-    }
-    else
-    {
-        <div class="container" id="fulfilledRequirementsTable">
-            <div class="row" id="header">
-                <div class="col-md-1">
+@{
+    ViewBag.Title = "CustomerProject";
+    var projectId = (object)ViewBag.ProjectId;
+    var baseUrl = Url.Content("~");
+}
+
+@if (!Model.Any())
+{
+    <p>Nu ai adaugat nicio cerinta!</p>
+}
+else
+{
+    <div class="container" id="fulfilledRequirementsTable">
+        <div class="row" id="header">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-4">
+                <b>Cerinta</b>
+            </div>
+            <div class="col-md-4">
+                <b>Nume fisier</b>
+            </div>
+            <div class="col-md-3" style="text-align: left">
+                <b>Actiuni</b>
+            </div>
+        </div>
+
+        @foreach (var req in Model)
+        {
+            var buttonId = "uploadFileButton" + req.Id;
+
+            <div class="documentLine row">
+                <div class="col-md-1 switch-column">
+                    @Html.Hidden("projectRequirementId", req.ProjectRequirementId, new { @class = "projectRequirementId" })
+                    <label class="switch">
+                        @Html.CheckBoxFor(x => req.IsReady)
+                        <div class="slider round"></div>
+                    </label>
                 </div>
+                <div class="col-md-4" style="padding-top: 6px">
+                    @Html.DisplayFor(x => req.RequirementName)
+                </div>
+
                 <div class="col-md-4">
-                    <b>Cerinta</b>
+                    @Html.DisplayFor(x => req.FileName, new { id = "fileName" })
                 </div>
-                <div class="col-md-4">
-                    <b>Nume fisier</b>
-                </div>
-                <div class="col-md-3" style="text-align: left">
-                    <b>Actiuni</b>
+
+                <div class="col-md-3" style="text-align:left">
+                    <input type="file" name="fileToUpload" id="@buttonId" style="display: none " />
+                    @Html.Hidden("requirementId", req.RequirementId, new { @class = "requirementId" })
+                    <a class="openFile btn-primary btn btn-xs btn-info">Incarca</a>
+
+                    @Html.Hidden("projectId", req.ProjectId)
+                    @Html.Hidden("requirementId", req.RequirementId)
+
+                    @if (!string.IsNullOrEmpty(req.FileName))
+                    {
+                        var href = baseUrl + "Requirement/DownloadDocument?documentId=" + req.Id;
+                        <a class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument(@req.Id)" data-documentid="@req.Id">Sterge</a>
+                        <a class="button btn btn-primary btn-xs" href=@href>Descarca</a>
+                        @Ajax.ActionLink("Vezi", "PreviewDocument", new { documentId = req.Id }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn btn-info btn-xs" })
+                    }
                 </div>
             </div>
 
-            @foreach (var req in Model)
-            {
-                var buttonId = "uploadFileButton" + req.Id;
+        }
+    </div>
+}
 
-                <div class="documentLine row">
-                    <div class="col-md-1 switch-column">
-                        @Html.Hidden("projectRequirementId", req.ProjectRequirementId, new { @class = "projectRequirementId" })
-                        <label class="switch">
-                            @Html.CheckBoxFor(x => req.IsReady)
-                            <div class="slider round"></div>
-                        </label>
-                    </div>
-                    <div class="col-md-4" style="padding-top: 6px">
-                        @Html.DisplayFor(x => req.RequirementName)
-                    </div>
+<script type="text/javascript">
+var showModalDialog = function () {
+    $("#myModal").modal("show");
+};
 
-                    <div class="col-md-4">
-                        @Html.DisplayFor(x => req.FileName, new { id = "fileName" })
-                    </div>
-
-                    <div class="col-md-3" style="text-align:left">
-                        <input type="file" name="fileToUpload" id="@buttonId" style="display: none " />
-                        @Html.Hidden("requirementId", req.RequirementId, new { @class = "requirementId" })
-                        <a class="openFile btn-primary btn btn-xs btn-info">Incarca</a>
-
-                        @Html.Hidden("projectId", req.ProjectId)
-                        @Html.Hidden("requirementId", req.RequirementId)
-
-                        @if (!string.IsNullOrEmpty(req.FileName))
-                        {
-    var baseUrl = "@Url.Content('~')";
-                            <a class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument(@req.Id)" data-documentid="@req.Id">Sterge</a>
-                            <a class="button btn btn-primary btn-xs" href= baseUrl + "/Requirement/DownloadDocument?documentId=@req.Id">Descarca</a>
-                            @Ajax.ActionLink("Vezi", "PreviewDocument", new { documentId = req.Id }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn btn-info btn-xs" })
-                      }
-                    </div>
-                </div>
-
-            }
-        </div>
-    }
-
-    <script type="text/javascript">
-    var showModalDialog = function () {
-        $("#myModal").modal("show");
-    };
-
-    $(document).ready (function () {
-        var projectId = @projectId;
-        var documentType = "@Documaster.Model.Enums.DocumentType.OutputDocument.ToString()";
-        $ ("input[type='file']").each (function (index, value) {
-            var requirementId = $ (value).parent().find ("input[name='requirementId']").val();
-            $ (value).change (function (element) {
-                uploadFile (element, projectId, requirementId, documentType);
-            });
-        });
-        $ (".openFile").each (function (index, value) {
-            applyClickTransfer (value);
-        });
-
-       //Save toggle button status
-        $(".switch-column input[type='checkbox']").change(function () {
-            var projectRequirementId = $(this).parent().parent().find("input[type='hidden']").val();
-            var state = $(this).prop("checked");
-            $.post("ToggleDocumentState", { projectRequirementId, state }, function () {
-
-            });
+$(document).ready (function () {
+    var projectId = @projectId;
+    var documentType = "@Documaster.Model.Enums.DocumentType.OutputDocument.ToString()";
+    $ ("input[type='file']").each (function (index, value) {
+        var requirementId = $ (value).parent().find ("input[name='requirementId']").val();
+        $ (value).change (function (element) {
+            uploadFile (element, projectId, requirementId, documentType);
         });
     });
-    </script>
+    $ (".openFile").each (function (index, value) {
+        applyClickTransfer (value);
+    });
+
+   //Save toggle button status
+    $(".switch-column input[type='checkbox']").change(function () {
+        var projectRequirementId = $(this).parent().parent().find("input[type='hidden']").val();
+        var state = $(this).prop("checked");
+        $.post("ToggleDocumentState", { projectRequirementId, state }, function () {
+
+        });
+    });
+});
+</script>
