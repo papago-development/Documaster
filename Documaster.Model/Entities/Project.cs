@@ -9,6 +9,7 @@ namespace Documaster.Model.Entities
 {
     public class Project : NamedEntity
     {
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Expire { get; set; }
 
         public byte[] ProjectData { get; set; }

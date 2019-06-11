@@ -20,7 +20,7 @@
 
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
 <div class="form-horizontal">
 
@@ -81,7 +81,7 @@
         dateInput.datepicker({
             todayHighlight: true,
             todayBtn: "linked",
-            //format: "mm/dd/yyyy",
+            format: 'dd.MM.yyyy'
         });
         var value = dateInput.attr("value");
         if (value !== "") {
@@ -92,8 +92,8 @@
 
         var creationDateInput = $("#creation-textbox");
         creationDateInput.datepicker({
-            dateFormat: 'dd-mm-yy',
-            regional: "[ro-RO]"
+            format: 'dd.mm.yyyy',
+
         });
         createdDateInput.datepicker()
 
