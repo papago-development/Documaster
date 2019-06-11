@@ -6,8 +6,8 @@
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
     display: grid;
 }
 
@@ -231,7 +231,7 @@ div.col-md-2.switch-column {
     padding-top: 6px;
 }
 .displayContent {
-    padding: 50px 15px 20px;
+    padding: 45px 10px 20px;
     margin: 0px 0px;
 }
 

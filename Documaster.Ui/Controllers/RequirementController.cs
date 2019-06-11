@@ -148,6 +148,7 @@ namespace Documaster.Ui.Controllers
             var project = _projectService.GetProjectById(projectId);
 
             var customizeTabs = _customizeTabService.GetCustomizeTabs().OrderBy(x => x.Number).ToList();
+
             ViewBag.CustomizeTabs = customizeTabs;
 
             ViewBag.ProjectId = projectId;

@@ -10,6 +10,7 @@ namespace Documaster.Business.Services
         CustomizeTab Create(CustomizeTab customizeTab);
         CustomizeTab GetCustomizeTabById(int id);
 
+
         bool Edit(CustomizeTab customizeTab);
         bool Delete(CustomizeTab customizeTab);
         bool DoesNumberExist(CustomizeTab customizeTab);

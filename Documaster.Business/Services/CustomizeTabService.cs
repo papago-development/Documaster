@@ -26,6 +26,7 @@ namespace Documaster.Business.Services
 
         public CustomizeTab Create(CustomizeTab customizeTab)
         {
+
             var createdCustomizeTab = _customizeTabRepository.Create(customizeTab);
 
             _unitOfWork.SaveChanges();

@@ -30,8 +30,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Type, "Tip", new { @class = "control-label col-md-1" })
             <div class="col-md-11">
-                @Html.DropDownListFor(model => model.Type,new SelectList(ViewBag.DocumentTypes), new { @class = "form-control" })
-                @*@Html.DropDownList("DocumentType", EnumHelper.GetSelectList(typeof(Documaster.Model.Enums.DocumentType)), "Selecteaza tipul documentului", new { @class = "form-control" })*@
+                @Html.DropDownList("Type", new SelectList(ViewBag.DocumentsType, "Value", "Text"), new { @class = "form-control" })
 
             </div>
         </div>

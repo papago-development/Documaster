@@ -33,8 +33,17 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var documentTypes = Enum.GetNames(typeof(Documaster.Model.Enums.DocumentType)).ToString();
-            ViewBag.DocumentTypes = documentTypes;
+            var documentTypeList = new List<SelectListItem>();
+            documentTypeList.Add(new SelectListItem
+            {
+                Text = "Select",
+                Value = ""
+            });
+            foreach (DocumentType eVal in Enum.GetValues(typeof(DocumentType)))
+            {
+                documentTypeList.Add(new SelectListItem { Text = Enum.GetName(typeof(DocumentType), eVal), Value = eVal.ToString() });
+            }
+            ViewBag.DocumentsType = documentTypeList;
             return View();
         }
 
@@ -48,8 +57,17 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Edit(int id) 
         {
-            var documentTypes = Enum.GetNames(typeof(Documaster.Model.Enums.DocumentType)).ToString();
-            ViewBag.DocumentTypes = documentTypes;
+             var documentTypeList = new List<SelectListItem>();
+            documentTypeList.Add(new SelectListItem
+            {
+                Text = "Select",
+                Value = ""
+            });
+            foreach (DocumentType eVal in Enum.GetValues(typeof(DocumentType)))
+            {
+                documentTypeList.Add(new SelectListItem { Text = Enum.GetName(typeof(DocumentType), eVal), Value = eVal.ToString() });
+            }
+            ViewBag.DocumentsType = documentTypeList;
 
             var model = _customizeTabService.GetCustomizeTabById(id);
             return View(model);
@@ -58,13 +76,8 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Edit(CustomizeTab customizeTab)
         {
-            if (ModelState.IsValid)
-            {
                 _customizeTabService.Edit(customizeTab);
                 return RedirectToAction("Index");
-            }
-
-            return View(customizeTab);
         }
 
         [HttpGet]
