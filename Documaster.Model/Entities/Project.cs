@@ -26,7 +26,7 @@ namespace Documaster.Model.Entities
         [Required(ErrorMessage = "Numele nu poate fi gol")]
          public override string Name { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd.mm.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Created { get; set; }
          
         public virtual Customer Customer { get; set; }

@@ -112,12 +112,14 @@
         dateInput.datepicker({
             todayHighlight: true,
             todayBtn: "linked",
-             format: 'dd.mm.yyyy'
+            format: 'dd.mm.yyyy'
         });
+
         var value = dateInput.attr("value");
         if (value !== "") {
             var date = new Date(value);
             dateInput.attr("value", date.toLocaleDateString());
+            console.log(date.toLocaleDateString());
         }
 
         var javaScriptColorDictionary = @Html.Raw(Json.Encode(colorDictionary));
