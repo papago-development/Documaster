@@ -9,10 +9,8 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 
-<script src="~/Scripts/combodate.js"></script>
-<script src="~/Scripts/moment.js"></script>
-<script src="~/Scripts/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-<link href="~/Content/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+<script src="~/Scripts/combodate/combodate.js"></script>
+<script src="~/Scripts/combodate/moment.min.js"></script>
 <script src="~/Scripts/jscolor.js"></script>
 <script src="~/Scripts/Documaster/colorTool.js"></script>
 
@@ -117,18 +115,16 @@
         var dateInput = $("#expire-textbox");
         var value = dateInput.attr("value");
 
-        if (value !== "") {
-           var date = new Date(value);
+        dateInput.combodate({
+            format: 'MM/DD/YYYY',
+            template: 'DD. MM. YYYY',
+            firstItem: 'none',
+            maxYear: new Date().getFullYear() + 10,
+            smartDays: true
+        });
 
-           dateInput.combodate({
-              format: 'MM/DD/YYYY',
-              template: 'DD. MM. YYYY',
-              firstItem: 'none',
-              maxYear: new Date().getFullYear(),
-              smartDays: true
-           });
-
-           dateInput.combodate('setValue',  new Date($('#expire-textbox').val()));
+        if (value != null) {
+            dateInput.combodate('setValue', new Date(value));
         }
 
         var javaScriptColorDictionary = @Html.Raw(Json.Encode(colorDictionary));

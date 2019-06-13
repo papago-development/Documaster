@@ -273,9 +273,8 @@
     <Content Include="Scripts\Documaster\colorTool.js" />
     <Content Include="Views\Photo\Index.cshtml" />
     <Content Include="Scripts\Documaster\ScreenPhoto.js" />
-    <Content Include="Scripts\moment.min.js" />
-    <Content Include="Scripts\moment.js" />
-    <Content Include="Scripts\combodate.js" />
+    <Content Include="Scripts\combodate\moment.min.js" />
+    <Content Include="Scripts\combodate\combodate.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
