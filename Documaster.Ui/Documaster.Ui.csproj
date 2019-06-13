@@ -200,8 +200,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\Logo.png" />
     <Content Include="Images\Original\Logo.png" />
-    <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker.js" />
-    <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap-notify\bootstrap-notify.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -275,6 +273,9 @@
     <Content Include="Scripts\Documaster\colorTool.js" />
     <Content Include="Views\Photo\Index.cshtml" />
     <Content Include="Scripts\Documaster\ScreenPhoto.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\combodate.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

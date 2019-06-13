@@ -42,13 +42,15 @@ namespace Documaster.Ui.Controllers
         public ActionResult List(string sortProperty, bool sortDescending)
         {
             var model = sortDescending
-                    ? _projectService.GetAllProjects().OrderByDescending(sortProperty).ToList()
-                    : _projectService.GetAllProjects().OrderBy(sortProperty).ToList();
+                    ? _projectService.GetAllProjects().OrderByDescending(sortProperty)
+                    : _projectService.GetAllProjects().OrderBy(sortProperty);
 
+
+            var newModel = model.ThenBy(x => x.Number).ToList();
             var projectStatusList = _projectStatusService.GetAll();
             ViewBag.ProjectStatuses = projectStatusList;
             ViewBag.SortDescending = sortDescending;
-            return View(model);
+            return View(newModel);
         }
 
         [HttpGet]
