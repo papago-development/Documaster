@@ -7,9 +7,9 @@
     var colorDictionary = ((IList<ProjectStatus>) ViewBag.ProjectStatuses).ToDictionary(x => x.Name, y => y.Color);
 }
 
-<link href="~/Content/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
 
-<script src="~/Scripts/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/combodate.js"></script>
+<script src="~/Scripts/moment.js"></script>
 <script src="~/Scripts/Documaster/colorTool.js"></script>
 
 @section Scripts {
@@ -20,7 +20,7 @@
 
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
 <div class="form-horizontal">
 
@@ -76,27 +76,18 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        var dateInput = $("#expire-textbox");
-        dateInput.datepicker({
-            todayHighlight: true,
-            todayBtn: "linked",
-            //format: "mm/dd/yyyy",
-        });
-        var value = dateInput.attr("value");
-        if (value !== "") {
-            var date = new Date(value);
-            dateInput.attr("value", date.toLocaleDateString());
-        }
 
+    $(document).ready(function () {
 
         var creationDateInput = $("#creation-textbox");
-        creationDateInput.datepicker({
-            dateFormat: 'dd-mm-yy',
-            regional: "[ro-RO]"
+        creationDateInput.combodate({
+            format: 'MM/DD/YYYY',
+            template: 'DD. MM. YYYY',
+            firstItem: 'none',
+            maxYear: new Date().getFullYear(),
+            value: new Date(),
+            smartDays: true
         });
-        createdDateInput.datepicker()
-
 
         var javaScriptColorDictionary = @Html.Raw(Json.Encode(colorDictionary));
         window.documaster.colorTool = colorTool(javaScriptColorDictionary);

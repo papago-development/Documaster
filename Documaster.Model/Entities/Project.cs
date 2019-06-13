@@ -9,6 +9,7 @@ namespace Documaster.Model.Entities
 {
     public class Project : NamedEntity
     {
+  
         public DateTime? Expire { get; set; }
 
         public byte[] ProjectData { get; set; }
@@ -25,7 +26,7 @@ namespace Documaster.Model.Entities
         [Required(ErrorMessage = "Numele nu poate fi gol")]
          public override string Name { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+
         public DateTime Created { get; set; }
          
         public virtual Customer Customer { get; set; }

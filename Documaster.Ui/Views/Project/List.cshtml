@@ -25,7 +25,7 @@
                 @Html.ActionLink("Creat pe", "List", new { sortProperty = "CreationDate", sortDescending })
             </th>
             <th>
-                @Html.ActionLink("Stare", "List", new { sortProperty = "ProjectStatus", sortDescending })
+                @Html.ActionLink("Stare", "List", new { sortProperty = "ProjectStatus.Name", sortDescending })
             </th>
             <th>
                 @Html.ActionLink("Nume client", "List", new { sortProperty = "Customer.Name", sortDescending })
@@ -51,7 +51,7 @@
                         @Html.DisplayFor(modelItem => item.Number)
                     </td>
                     <td>
-                        @Convert.ToDateTime(@item.Created).ToString("dd.MM.yyyy")
+                        @item.Created.ToString("dd.MM.yyyy")
                     </td>
                     <td>
                         <div class="form-group">
@@ -70,8 +70,8 @@
                     <td>
                         @if (item.Expire.HasValue)
                         {
-                            @Convert.ToDateTime(@item.Expire.Value).ToString("dd.MM.yyyy")
-                        }
+                            @item.Expire.Value.ToString("dd.MM.yyyy");
+                    }
                     </td>
                     <td>
                         <a href="@Url.Action("Edit", new {id = item.Id})">
@@ -93,7 +93,35 @@
     var javaScriptColorDictionary = @Html.Raw(Json.Encode(colorDictionary));
     window.documaster.colorTool = colorTool(javaScriptColorDictionary);
 
+
+
     $(document).ready(function () {
+
+         var createDateInput = $("#creationDate");
+         var value = createDateInput.attr("value");
+        console.log(value);
+        if (value !== "") {
+            var date = new Date(value);
+            createDateInput.attr("value", date.toLocaleDateString('ro'));
+            console.log(createDateInput);
+        }
+
+        var expireDateInput = $("#expire-textbox");
+         var value = expireDateInput.attr("value");
+        console.log(value);
+        if (value !== "") {
+            var date = new Date(value);
+            expireDateInput.attr("value", date.toLocaleDateString('ro'));
+
+        }
+
+
+
+          @*$("#creationDate").each(function() {
+             var date = new Date($(this)).getDay();
+            console.log(date);
+        });*@
+
         $('.projectStatus').each(function () {
             var statusName = $(this).find("option:selected").text();
             window.documaster.colorTool.setStatusDropdownColor($(this), statusName);
@@ -115,3 +143,4 @@
         });
     });
     </script>
+
