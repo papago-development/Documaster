@@ -4,7 +4,6 @@ using Documaster.Model.Entities;
 
 namespace Documaster.Ui.Controllers
 {
-    [Authorize]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;

@@ -12,93 +12,116 @@
     <script src="~/Scripts/Documaster/colorTool.js"></script>
 
     <br />
-    <div class="displayContent">
-        <p>
-            @Html.ActionLink("Lucrare Noua", "Create", new { customerId = ViewBag.CustomerId }, new { projectId = ViewBag.ProjectId, @class = "btn btn-primary" })
-        </p>
+    <p>
+        @Html.ActionLink("Lucrare Noua", "Create", new { customerId = ViewBag.CustomerId }, new { projectId = ViewBag.ProjectId, @class = "btn btn-primary" })
+    </p>
 
-        <table class="table" style="width: 100%">
-            <tr>
-                <th>
-                    @Html.ActionLink("Nr.", "List", new { sortProperty = "Number", sortDescending })
-                </th>
-                <th>
-                    @Html.ActionLink("Creat pe", "List", new { sortProperty = "CreationDate", sortDescending })
-                </th>
-                <th>
-                    @Html.ActionLink("Stare", "List", new { sortProperty = "ProjectStatusId", sortDescending })
-                </th>
-                <th>
-                    @Html.ActionLink("Nume client", "List", new { sortProperty = "Customer.Name", sortDescending })
-                </th>
-                <th style="width: 40%">
-                    @Html.ActionLink("Nume proiect", "List", new { sortProperty = "Name", sortDescending })
-                </th>
-                <th style="width: 10%">
-                    @Html.ActionLink("CU expira la", "List", new { sortProperty = "Expire", sortDescending })
-                </th>
-                <th style="width: 15%" class="disabledLink">
-                    Actiuni
-                </th>
-            </tr>
-            @if (Model != null)
+    <table class="table" style="width: 100%">
+        <tr>
+            <th>
+                @Html.ActionLink("Nr.", "List", new { sortProperty = "Number", sortDescending })
+            </th>
+            <th>
+                @Html.ActionLink("Creat pe", "List", new { sortProperty = "CreationDate", sortDescending })
+            </th>
+            <th>
+                @Html.ActionLink("Stare", "List", new { sortProperty = "ProjectStatus.Name", sortDescending })
+            </th>
+            <th>
+                @Html.ActionLink("Nume client", "List", new { sortProperty = "Customer.Name", sortDescending })
+            </th>
+            <th style="width: 40%">
+                @Html.ActionLink("Nume proiect", "List", new { sortProperty = "Name", sortDescending })
+            </th>
+            <th style="width: 10%">
+                @Html.ActionLink("CU expira la", "List", new { sortProperty = "Expire", sortDescending })
+            </th>
+            <th style="width: 15%"></th>
+        </tr>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
             {
-                foreach (var item in Model)
-                {
-                    var willExpire = item.Expire.HasValue && (item.Expire - DateTime.Now).Value.TotalDays < 30 ? "willExpire" : "";
+                var willExpire = item.Expire.HasValue && (item.Expire - DateTime.Now).Value.TotalDays < 30 ? "willExpire" : "";
 
-                    <tr class="@willExpire">
-                        @Html.HiddenFor(modelItem => item.Id)
-                        @Html.HiddenFor(modelItem => item.ProjectStatus.Color, new { @id = "color" })
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Number)
-                        </td>
-                        <td>
-                            @Convert.ToDateTime(item.Created).ToString("dd.MM.yyyy")
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <div class="col-md-10">
-                                    @Html.DropDownListFor(modelItem => item.ProjectStatusId, new SelectList(ViewBag.ProjectStatuses, "Id", "Name", item.ProjectStatusId),
-                                                                                   new { @class = "form-control projectStatus" })
-                                </div>
+                <tr class="@willExpire">
+                    @Html.HiddenFor(modelItem => item.Id)
+                    @Html.HiddenFor(modelItem => item.ProjectStatus.Color, new { @id = "color" })
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Number)
+                    </td>
+                    <td>
+                        @item.Created.ToString("dd.MM.yyyy")
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(modelItem => item.ProjectStatusId, new SelectList(ViewBag.ProjectStatuses, "Id", "Name", item.ProjectStatusId),
+                                                                     new { @class = "form-control projectStatus" })
                             </div>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Customer.Name)
-                        </td>
-                        <td>
-                            @Html.ActionLink(item.Name, "CustomerProject", "Requirement", new { projectId = item.Id }, "")
-                        </td>
-                        <td>
-                            @if (item.Expire.HasValue)
-                            {
-                                @Convert.ToDateTime(item.Expire).ToString("dd.MM.yyyy")
-                            }
-                        </td>
-                        <td>
-                            <a href="@Url.Action("Edit", new {id = item.Id})">
-                                <span class="glyphicon glyphicon-pencil" title="Modifica"></span>
-                            </a> |
-
-                            <a href="@Url.Action("ProjectRequirements", "Requirement", new {projectId = item.Id}, "")">
-                                <span class="glyphicon glyphicon-list-alt" title="Cerinte"></span>
-                            </a> |
-                            <a href="@Url.Action("Delete", new {id = item.Id})">
-                                <span class=" glyphicon glyphicon-trash" title="Sterge"></span>
-                            </a>
-                        </td>
-                    </tr>
-                }
+                        </div>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Customer.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.Name, "CustomerProject", "Requirement", new { projectId = item.Id }, "")
+                    </td>
+                    <td>
+                        @if (item.Expire.HasValue)
+                        {
+                            @item.Expire.Value.ToString("dd.MM.yyyy");
+                    }
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", new {id = item.Id})">
+                            <span class="glyphicon glyphicon-pencil" title="Modifica"></span>
+                        </a> |
+                        <a href="@Url.Action("Delete", new {id = item.Id})">
+                            <span class=" glyphicon glyphicon-trash" title="Sterge"></span>
+                        </a>|
+                        <a href="@Url.Action("ProjectRequirements", "Requirement", new {projectId = item.Id}, "")">
+                            <span class="glyphicon glyphicon-list-alt" title="Cerinte"></span>
+                        </a>
+                    </td>
+                </tr>
             }
-        </table>
-    </div>
+        }
+    </table>
     <script type="text/javascript">
 
     var javaScriptColorDictionary = @Html.Raw(Json.Encode(colorDictionary));
     window.documaster.colorTool = colorTool(javaScriptColorDictionary);
 
+
+
     $(document).ready(function () {
+
+         var createDateInput = $("#creationDate");
+         var value = createDateInput.attr("value");
+        console.log(value);
+        if (value !== "") {
+            var date = new Date(value);
+            createDateInput.attr("value", date.toLocaleDateString('ro'));
+            console.log(createDateInput);
+        }
+
+        var expireDateInput = $("#expire-textbox");
+         var value = expireDateInput.attr("value");
+        console.log(value);
+        if (value !== "") {
+            var date = new Date(value);
+            expireDateInput.attr("value", date.toLocaleDateString('ro'));
+
+        }
+
+
+
+          @*$("#creationDate").each(function() {
+             var date = new Date($(this)).getDay();
+            console.log(date);
+        });*@
+
         $('.projectStatus').each(function () {
             var statusName = $(this).find("option:selected").text();
             window.documaster.colorTool.setStatusDropdownColor($(this), statusName);
@@ -119,5 +142,5 @@
             window.documaster.colorTool.setStatusDropdownColor($(this), statusName);
         });
     });
-
     </script>
+

@@ -7,64 +7,63 @@
     var colorDictionary = ((IList<ProjectStatus>) ViewBag.ProjectStatuses).ToDictionary(x => x.Name, y => y.Color);
 }
 
-<link href="~/Content/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
-
-<script src="~/Scripts/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/combodate/combodate.js"></script>
+<script src="~/Scripts/combodate/moment.min.js"></script>
 <script src="~/Scripts/Documaster/colorTool.js"></script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-<div class="displayContent">
+
 <h2>Adauga proiect</h2>
 
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
 <div class="form-horizontal">
 
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(m => m.Customer.Name, "Nume client", htmlAttributes: new { @class = "control-label col-md-1" })
-        <div class="col-md-11">
-            @Html.EditorFor(m => m.Customer.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.LabelFor(m => m.Customer.Name, "Nume client", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.Customer.Name, new { htmlAttributes = new { @class = "form-control" }, autocomplete = "off" })
             @Html.ValidationMessageFor(m => m.Customer.Name, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Name, "Nume proiect", htmlAttributes: new { @class = "control-label col-md-1" })
-        <div class="col-md-11">
-            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.LabelFor(m => m.Name, "Nume proiect", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" }, autocomplete = "off"})
             @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.Number, "Numar", new { @class = "control-label col-md-1" })
-        <div class="col-md-11">
-            @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.LabelFor(model => model.Number, "Numar", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" }, autocomplete = "off"})
             @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
         </div>
     </div>
     @*insert dropdown*@
     <div class="form-group">
-        @Html.LabelFor(model => model.ProjectStatus.Name, "Stare", new { @class = "control-label col-md-1" })
-        <div class="col-md-11" id="color">
+        @Html.LabelFor(model => model.ProjectStatus.Name, "Stare", new { @class = "control-label col-md-2" })
+        <div class="col-md-10" id="color">
             @Html.DropDownList("ProjectStatusId",
-                                new SelectList(ViewBag.ProjectStatuses, "Id", "Name"),
-                                new { @class = "form-control jscolor" })
+                           new SelectList(ViewBag.ProjectStatuses, "Id", "Name"),
+                           new { @class = "form-control jscolor" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.Created, "Creat pe", new { @class = "control-label col-md-1" })
-        <div class="col-md-11">
-            @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control", id = "creation-textbox" } })
+        @Html.LabelFor(model => model.Created, "Creat pe", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control", id = "creation-textbox" }, autocomplete = "off" })
             @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        <div class="col-sm-offset-1 col-md-11">
+        <div class="col-md-offset-2 col-md-5">
             <input type="submit" value="Adauga" class="btn btn-default" />
         </div>
     </div>
@@ -74,24 +73,19 @@
 <div>
     @Html.ActionLink("Inapoi la lista", "Index")
 </div>
-    </div>
+
 <script type="text/javascript">
+
     $(document).ready(function () {
-        var dateInput = $("#expire-textbox");
-        dateInput.datepicker({
-            todayHighlight: true,
-            todayBtn: "linked",
-            //format: "m/dd/yyyy"
-        });
-        var value = dateInput.attr("value");
-        if (value !== "") {
-            var date = new Date(value);
-            dateInput.attr("value", date.toLocaleDateString());
-        }
 
         var creationDateInput = $("#creation-textbox");
-        creationDateInput.datepicker({
-            dateFormat: "dd/mm/yyyy"
+        creationDateInput.combodate({
+            format: 'MM/DD/YYYY',
+            template: 'DD. MM. YYYY',
+            firstItem: 'none',
+            maxYear: new Date().getFullYear(),
+            value: new Date(),
+            smartDays: true
         });
 
         var javaScriptColorDictionary = @Html.Raw(Json.Encode(colorDictionary));

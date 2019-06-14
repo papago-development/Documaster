@@ -2,7 +2,8 @@
 @{
     ViewBag.Title = "Photos";
     var projectId = ( object ) ViewBag.ProjectId;
-    var customizeTabId = (object) ViewBag.CustomizeTabId;
+    var documentType = ( object ) ViewBag.DocumentType;
+    var baseUrl = Url.Content("~");
 }
 
 <div id="uploadedDocumentsTable" class="container">
@@ -13,16 +14,16 @@
     
     @foreach (var photo in Model)
     {
+        var href = baseUrl + "Requirement/DownloadDocument?documentId=" + photo.Id;
         <div class="documentLine row">
             <div class="col-md-4">
                 <label>
                     @Html.DisplayFor(x => photo.FileName)
-                    @*<img src="@Url.Content(photo.FileName)"/>*@
                 </label>
             </div>
             <div class="col-md-4">
                 <a class="deleteButton btn btn-danger btn-xs" onclick="deleteDocument (@photo.Id)" data-documentid="@photo.Id">Sterge</a>
-                <a class="button btn btn-primary btn-xs" href="/Requirement/DownloadDocument?documentId=@photo.Id">Descarca</a>
+                <a class="button btn btn-primary btn-xs" href=@href>Descarca</a>
                 @Ajax.ActionLink("Vezi", "PreviewDocument", new { documentId = photo.Id }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn btn-info btn-xs" })
             </div>
         </div>
@@ -37,8 +38,9 @@
         var projectId = @projectId;
         $("input[type='file']").each (function (index, value) {
             var requirementId = $ (value).parent().find ("input[name='requirementId']").val();
+            console.log("@documentType");
             $ (value).change (function (element) {
-                uploadFile (element, projectId, requirementId, "@customizeTabId");
+                uploadFile (element, projectId, requirementId, "@documentType");
             });
         });
         $(".openFile").each (function (index, value) {

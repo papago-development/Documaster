@@ -57,6 +57,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Messaging" />
     <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -126,15 +127,9 @@
     <Reference Include="Aliencube.HtmlHelper.Extended">
       <HintPath>..\packages\Aliencube.HtmlHelper.Extended.1.0.2.0\lib\net45\Aliencube.HtmlHelper.Extended.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
-    <Reference Include="NLog">
-      <HintPath>..\packages\NLog.4.6.3\lib\net45\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -142,7 +137,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\RequirementController.cs" />
@@ -152,8 +146,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\ProjectStatusController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
-    <Compile Include="Controllers\HelpController.cs" />
-    <Compile Include="Controllers\CustomizeTabController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker\css\bootstrap-datepicker.css" />
@@ -206,9 +198,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Logo.png" />
     <Content Include="Images\Original\Logo.png" />
-    <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker.js" />
-    <Content Include="Scripts\bootstrap-datepicker\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap-notify\bootstrap-notify.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -273,6 +264,7 @@
     <Content Include="Views\Requirement\_ProjectDocument.cshtml" />
     <Content Include="Views\Requirement\_PreviewDocument.cshtml" />
     <Content Include="Views\Requirement\_ProjectNotes.cshtml" />
+    <Content Include="Views\Project\Welcome.cshtml" />
     <Content Include="Views\ProjectStatus\Index.cshtml" />
     <Content Include="Views\ProjectStatus\Create.cshtml" />
     <Content Include="Views\ProjectStatus\Delete.cshtml" />
@@ -281,27 +273,11 @@
     <Content Include="Scripts\Documaster\colorTool.js" />
     <Content Include="Views\Photo\Index.cshtml" />
     <Content Include="Scripts\Documaster\ScreenPhoto.js" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Help\Index.cshtml" />
-    <Content Include="Help Images\AddProject.png" />
-    <Content Include="Help Images\CategoryList.png" />
-    <Content Include="Help Images\LoginPage.png" />
-    <Content Include="Help Images\OutputDocuments.png" />
-    <Content Include="Help Images\ProjectState.png" />
-    <Content Include="Help Images\ProjectsList.png" />
-    <Content Include="Help Images\Requirements.png" />
-    <Content Include="Help Images\RequirementsList.png" />
-    <Content Include="Help Images\Settings.png" />
-    <Content Include="Views\CustomizeTab\Index.cshtml" />
-    <Content Include="Views\CustomizeTab\Create.cshtml" />
-    <Content Include="Views\CustomizeTab\Edit.cshtml" />
-    <Content Include="Views\CustomizeTab\Delete.cshtml" />
-    <None Include="NLog.xsd" />
-    <Content Include="NLog.config" />
+    <Content Include="Scripts\combodate\moment.min.js" />
+    <Content Include="Scripts\combodate\combodate.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Help Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
