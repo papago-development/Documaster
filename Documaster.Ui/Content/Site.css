@@ -279,10 +279,12 @@ div.col-md-2.switch-column {
     background-color: #eb7f2a;
 }
 
-/*.footer {
-    text-align: center;
+/* Changed position for combodate */
+.comboDate {
+    padding-top: 5px;
 }
 
-    .footer hr {
-        width: 78%;
-    }*/
+.day, .month, .year {
+    border-radius: 4px;
+    height: 30px;
+}
