@@ -20,9 +20,9 @@ namespace Documaster.Business.Services
             _unitOfWork = unitOfWork;
         }
 
-        public OutputDocument CreateOutputDocument(HttpPostedFileBase fileUpload, int projectId, int? requirementId, int customizeTabId)
+        public OutputDocument CreateOutputDocument(HttpPostedFileBase fileUpload, int projectId, int? requirementId, string documentType)
         {
-            if (fileUpload == null)
+            if (fileUpload == null || !Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType))
             {
                 return null;
             }
@@ -36,7 +36,7 @@ namespace Documaster.Business.Services
                 Name = fileUpload.FileName,
                 DocumentData = tempImage,
                 ContentType = fileUpload.ContentType,
-                CustomizeTabId = customizeTabId,
+                DocumentType = parsedDocumentType.ToString(),
                 ProjectId = projectId,
                 RequirementId = requirementId,
             };
@@ -78,10 +78,10 @@ namespace Documaster.Business.Services
            return _outputDocumentRepository.Get(documentId);
         }
 
-        public List<FileToUpdate> GetOutputDocumentByIdAndDocType(int projectId, int customizeTabId)
+        public List<FileToUpdate> GetOutputDocumentByIdAndDocType(int projectId, string documentType)
         {
             return _outputDocumentRepository
-                            .Get(x => x.ProjectId == projectId && x.CustomizeTabId == customizeTabId)
+                            .Get(x => x.ProjectId == projectId && x.DocumentType == documentType)
                             .Select(item => new FileToUpdate
                             {
                                 Id = item?.Id ?? 0,

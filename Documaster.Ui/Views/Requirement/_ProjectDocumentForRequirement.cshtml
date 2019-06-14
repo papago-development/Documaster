@@ -76,7 +76,8 @@ var showModalDialog = function () {
 
 $(document).ready (function () {
     var projectId = @projectId;
-    var documentType = "@Documaster.Model.Enums.DocumentType.OutputDocument.ToString()";
+    var documentType = "@Documaster.Model.Enums.DocumentType.OutputDocuments.ToString()";
+    console.log(documentType);
     $ ("input[type='file']").each (function (index, value) {
         var requirementId = $ (value).parent().find ("input[name='requirementId']").val();
         $ (value).change (function (element) {

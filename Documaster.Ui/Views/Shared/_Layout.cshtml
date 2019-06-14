@@ -33,9 +33,13 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("Cerinte", "Index", "Requirement")</li>
-                            <li>@Html.ActionLink("Categorii", "Index", "Category")</li>
-                            <li>@Html.ActionLink("Stari", "Index", "ProjectStatus")</li>
-                            <li><a href="@Url.Action("Index", "Photo", new { documentType = Documaster.Model.Enums.DocumentType.Photo })">Incarca imagine</a></li>
+                            <li>@Html.ActionLink("Categorii de cerinte", "Index", "Category")</li>
+                            <li>@Html.ActionLink("Stari proiect", "Index", "ProjectStatus")</li>
+                            <li>@Html.ActionLink("Customizare taburi", "Index", "CustomizeTab")</li>
+                            <li>@Html.ActionLink("Incarca imagine de fundal", "Index", "Photo")</li>
+                            <li>@Html.ActionLink("Iesire", "Logout", "Account")</li>
+
+                            <li>@Html.ActionLink("Ajutor", "Index", "Help")</li>
                         </ul>
                     </li>
                 </ul>

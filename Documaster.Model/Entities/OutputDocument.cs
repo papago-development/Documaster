@@ -9,7 +9,7 @@ namespace Documaster.Model.Entities
 
         public int? RequirementId { get; set; }
 
-        public int CustomizeTabId { get; set; }
+        public string DocumentType { get; set; }
 
         public byte[] DocumentData { get; set; }
 
