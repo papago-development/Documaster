@@ -1,8 +1,8 @@
-﻿/*body {
+﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
     width: 100%;
-}*/
+}
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -231,11 +231,6 @@ div.col-md-2.switch-column {
     padding-top: 6px;
 }
 
-.displayContent {
-    padding: 50px 15px 20px;
-    margin: 0px 0px;
-}
-
 .login-page {
     width: 100vw;
     position: relative;
@@ -258,7 +253,7 @@ div.col-md-2.switch-column {
 
     .image-screen img {
         width: 1160px;
-        height: 837px;
+        height: 844px;
     }
 
 .login-content {
@@ -279,46 +274,12 @@ div.col-md-2.switch-column {
     background-color: #eb7f2a;
 }
 
-/*.footer {
-    text-align: center;
-}
-    .footer hr {
-        width: 78%;
-    }*/
-
-#sortable {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 50%;
+/* Changed position for combodate */
+.comboDate {
+    padding-top: 3px;
 }
 
-    #sortable li {
-        margin: 0 10px 3px 3px;
-        padding: 0.4em;
-        padding-left: 1.5em;
-        font-size: 1.4em;
-        height: 45px;
-    }
-
-        #sortable li span {
-            position: absolute;
-            margin-left: -1.3em;
-        }
-
-i {
-    margin: 0 5px;
-    color: #2a21b2;
-}
-
-#icon {
-    float: right;
-}
-
-i:hover {
-    color: gray;
-}
-
-.ui-sortable-handle {
-    width: 60%;
+.day, .month, .year {
+    border-radius: 4px;
+    height: 30px;
 }

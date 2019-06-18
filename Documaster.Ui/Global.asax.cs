@@ -28,8 +28,6 @@ namespace Documaster.Ui
             Response.Write(ex);
 
             Server.ClearError();
-
-
         }
     }
 }

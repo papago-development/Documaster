@@ -25,25 +25,26 @@
         </tr>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Number)
-                </td>
-                <td>
-                    <a href="@Url.Action("Edit", new {id = item.Id})">
-                        <span class="glyphicon glyphicon-pencil" title="Modifica"></span>
-                    </a> |
-                    <a href="@Url.Action("Delete", new {id = item.Id})">
-                        <span class=" glyphicon glyphicon-trash" title="Sterge"></span>
-                    </a>
-                </td>
-            </tr>
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", new {id = item.Id})">
+                    <span class="glyphicon glyphicon-pencil" title="Modifica"></span>
+                </a> |
+                <a href="@Url.Action("Delete", new {id = item.Id})">
+                    <span class=" glyphicon glyphicon-trash" title="Sterge"></span>
+                </a>
+            </td>
+        </tr>
         }
     </table>
 </div>
