@@ -36,7 +36,7 @@ namespace Documaster.Ui.Controllers
             var documentTypeList = new List<SelectListItem>();
             documentTypeList.Add(new SelectListItem
             {
-                Text = "Select",
+                Text = "Selecteaza tipul documentului",
                 Value = ""
             });
             foreach (DocumentType eVal in Enum.GetValues(typeof(DocumentType)))

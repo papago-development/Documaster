@@ -226,9 +226,9 @@ namespace Documaster.Ui.Controllers
 
         //Metoda pentru incarcarea fisierelor
         [HttpPost]
-        public void Upload(HttpPostedFileBase fileUpload, int projectId, int? requirementId, string documentType)
+        public void Upload(HttpPostedFileBase fileUpload, int projectId, int? requirementId,int customizeTabId, string documentType)
         {
-            _outputDocumentService.CreateOutputDocument(fileUpload, projectId, requirementId, documentType);
+            _outputDocumentService.CreateOutputDocument(fileUpload, projectId, requirementId, customizeTabId, documentType);
             var outputDocuments = _outputDocumentService.GetOutputDocumentByProjectId(projectId);
             ViewBag.OutputDocuments = outputDocuments;
         }
@@ -254,15 +254,16 @@ namespace Documaster.Ui.Controllers
         }
 
         [HttpGet]
-        public ActionResult DisplayDocuments(int projectId, string documentType)
+        public ActionResult DisplayDocuments(int projectId, int customizeTabId, string documentType)
         {
             if(!Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType))
             {
                 return HttpNotFound();
             }
 
-            var model = _outputDocumentService.GetOutputDocumentByIdAndDocType(projectId, documentType);
+            var model = _outputDocumentService.GetOutputDocumentByIdAndDocType(projectId, customizeTabId, documentType);
             ViewBag.ProjectId = projectId;
+            ViewBag.CustomizeTabId = customizeTabId;
             ViewBag.DocumentType = parsedDocumentType.ToString();
             return PartialView("_ProjectDocument", model);
         }

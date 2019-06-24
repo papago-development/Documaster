@@ -222,6 +222,7 @@ CREATE TABLE dbo.OutputDocument (
 	Id INT IDENTITY(1,1) NOT NULL
 	,ProjectId INT NOT NULL
 	,RequirementId INT  NULL
+	,CustomizeTabId INT NOT NULL
 	,DocumentType VARCHAR(200) NOT NULL
 	,ContentType VARCHAR(200) NULL
 	,[Name] NVARCHAR(200) NOT NULL

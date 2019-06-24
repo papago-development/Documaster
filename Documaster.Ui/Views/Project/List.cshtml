@@ -77,12 +77,12 @@
                         <td>
                             <a href="@Url.Action("Edit", new {id = item.Id})">
                                 <span class="glyphicon glyphicon-pencil" title="Modifica"></span>
-                            </a> |
-                            <a href="@Url.Action("Delete", new {id = item.Id})">
-                                <span class=" glyphicon glyphicon-trash" title="Sterge"></span>
                             </a>|
                             <a href="@Url.Action("ProjectRequirements", "Requirement", new {projectId = item.Id}, "")">
                                 <span class="glyphicon glyphicon-list-alt" title="Cerinte"></span>
+                            </a> |
+                            <a href="@Url.Action("Delete", new {id = item.Id})">
+                                <span class=" glyphicon glyphicon-trash" title="Sterge"></span>
                             </a>
                         </td>
                     </tr>
@@ -117,13 +117,6 @@
 
         }
 
-
-
-          @*$("#creationDate").each(function() {
-             var date = new Date($(this)).getDay();
-            console.log(date);
-        });*@
-
         $('.projectStatus').each(function () {
             var statusName = $(this).find("option:selected").text();
             window.documaster.colorTool.setStatusDropdownColor($(this), statusName);
@@ -138,7 +131,6 @@
             var projectStatusId = $(this).val();
             var projectId = $(this).parent().parent().parent().siblings()[0].value;
             $.post("ChangeProjectStatus", { projectId, projectStatusId });
-
 
             var statusName = $(this).find("option:selected").text();
             window.documaster.colorTool.setStatusDropdownColor($(this), statusName);
