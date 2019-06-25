@@ -42,7 +42,7 @@
             var requirementId = $ (value).parent().find ("input[name='requirementId']").val();
             console.log("@documentType");
             $ (value).change (function (element) {
-                uploadFile (element, projectId, requirementId, customizeTabId, "@documentType");
+                uploadFile (element, projectId, requirementId, customizeTabId);
             });
         });
         $(".openFile").each (function (index, value) {
