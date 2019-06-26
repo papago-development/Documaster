@@ -4,6 +4,7 @@ using Documaster.Model.BaseEntities;
 using Newtonsoft.Json;
 using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Documaster.Model.Entities
 {
@@ -34,5 +35,23 @@ namespace Documaster.Model.Entities
 
         [JsonIgnore]
         public virtual ICollection<OutputDocument> OutputDocuments { get; set; } = new List<OutputDocument>();
+
+        [NotMapped]
+        public short ExpireYear { get; set; }
+
+        [NotMapped]
+        public short ExpireDay { get; set; }
+
+        [NotMapped]
+        public short ExpireMonth { get; set; }
+
+        [NotMapped]
+        public short CreatedYear { get; set; }
+
+        [NotMapped]
+        public short CreatedDay { get; set; }
+
+        [NotMapped]
+        public short CreatedMonth { get; set; }
     }
 }

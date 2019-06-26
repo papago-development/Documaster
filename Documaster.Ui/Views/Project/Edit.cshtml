@@ -16,10 +16,12 @@
 
 <h2>Modifica proiect</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Project", FormMethod.Post, htmlAttributes: new { id = "projectsForm" }))
 {
     @Html.AntiForgeryToken()
-
+    @Html.HiddenFor(model => model.ExpireDay, new { id = "expireDay" })
+    @Html.HiddenFor(model => model.ExpireMonth, new { id = "expireMonth" })
+    @Html.HiddenFor(model => model.ExpireYear, new {id = "expireYear"})
     <div class="form-horizontal">
 
         <hr />
@@ -92,8 +94,6 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Expire, "Expira la", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-
-
                 @Html.EditorFor(model => model.Expire, new { htmlAttributes = new { @class = "form-control", id = "expire-textbox" }, autocomplete = "off" })
                 @Html.ValidationMessageFor(model => model.Expire, "", new { @class = "text-danger" })
             </div>
@@ -104,12 +104,25 @@
             </div>
         </div>
     </div>
-}
+    }
 <div>
     @Html.ActionLink("Inapoi la lista", "Index")
 </div>
 
 <script>
+    $("#projectsForm").submit(function (event) {
+
+        var expireDay = $("#projectsForm .day option:selected").text();
+        var expireMonth = $("#projectsForm .month option:selected").text();
+        var expireYear = $("#projectsForm .year option:selected").text();
+        var expirationDateInput = $("#expire-textbox");
+        expirationDateInput.val("01/01/2001");
+        
+        $("#expireDay").val(expireDay);
+        $("#expireMonth").val(expireMonth);
+        $("#expireYear").val(expireYear);
+    });
+
     $(document).ready(function () {
 
         var dateInput = $("#expire-textbox");

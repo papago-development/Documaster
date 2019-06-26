@@ -50,7 +50,6 @@ CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Name_Number
 	ON dbo.Project ([Name], Number)
 GO
 
-
 CREATE TABLE dbo.Customer (
 	Id INT NOT NULL
 	,[Name] NVARCHAR(200) NOT NULL

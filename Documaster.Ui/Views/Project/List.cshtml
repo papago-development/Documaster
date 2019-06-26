@@ -99,7 +99,7 @@
 
          var createDateInput = $("#creationDate");
          var value = createDateInput.attr("value");
-        console.log(value);
+
         if (value !== "") {
             var date = new Date(value);
             createDateInput.attr("value", date.toLocaleDateString('ro'));
@@ -108,7 +108,7 @@
 
         var expireDateInput = $("#expire-textbox");
          var value = expireDateInput.attr("value");
-        console.log(value);
+
         if (value !== "") {
             var date = new Date(value);
             expireDateInput.attr("value", date.toLocaleDateString('ro'));
