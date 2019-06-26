@@ -53,6 +53,13 @@ namespace Documaster.Business.Services
             return updatedProject;
         }
 
+        public bool UpdateProjectNotes(Project project)
+        {
+            var updatedProjectNotes = _projectRepository.Update(project, new List<string> { "Notes" });
+            _unitOfWork.SaveChanges();
+            return updatedProjectNotes;
+        }
+
         public bool DoesNameNumberCombinationExist(Project project)
         {
             var projects = _projectRepository.Get(x => x.Name == project.Name && x.Number == project.Number && x.Id != project.Id);
