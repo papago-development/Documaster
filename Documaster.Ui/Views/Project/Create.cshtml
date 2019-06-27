@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var colorDictionary = ((IList<ProjectStatus>) ViewBag.ProjectStatuses).ToDictionary(x => x.Name, y => y.Color);
+    var colorDictionary = ((IList<ProjectStatus>)ViewBag.ProjectStatuses).ToDictionary(x => x.Name, y => y.Color);
 }
 
 <script src="~/Scripts/combodate/combodate.js"></script>
@@ -17,57 +17,58 @@
 
 <h2>Adauga proiect</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Project", FormMethod.Post, htmlAttributes: new { id = "projectsForm" }))
 {
-@Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.CreatedDay, new { id = "createdDay" })
+    @Html.HiddenFor(model => model.CreatedMonth, new { id = "createdMonth" })
+    @Html.HiddenFor(model => model.CreatedYear, new { id = "createdYear" })
 
-<div class="form-horizontal">
+    <div class="form-horizontal">
 
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Customer.Name, "Nume client", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(m => m.Customer.Name, new { htmlAttributes = new { @class = "form-control" }, autocomplete = "off" })
-            @Html.ValidationMessageFor(m => m.Customer.Name, "", new { @class = "text-danger" })
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Customer.Name, "Nume client", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => m.Customer.Name, new { htmlAttributes = new { @class = "form-control" }, autocomplete = "off" })
+                @Html.ValidationMessageFor(m => m.Customer.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name, "Nume proiect", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" }, autocomplete = "off" })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Number, "Numar", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" }, autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @*insert dropdown*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectStatus.Name, "Stare", new { @class = "control-label col-md-2" })
+            <div class="col-md-10" id="color">
+                @Html.DropDownList("ProjectStatusId", new SelectList(ViewBag.ProjectStatuses, "Id", "Name"), new { @class = "form-control jscolor" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Created, "Creat pe", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control", id = "creation-textbox" }, autocomplete = "off" })
+                @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-5">
+                <input type="submit" value="Adauga" class="btn btn-default" />
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Name, "Nume proiect", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" }, autocomplete = "off"})
-            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Number, "Numar", new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" }, autocomplete = "off"})
-            @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    @*insert dropdown*@
-    <div class="form-group">
-        @Html.LabelFor(model => model.ProjectStatus.Name, "Stare", new { @class = "control-label col-md-2" })
-        <div class="col-md-10" id="color">
-            @Html.DropDownList("ProjectStatusId",
-                           new SelectList(ViewBag.ProjectStatuses, "Id", "Name"),
-                           new { @class = "form-control jscolor" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Created, "Creat pe", new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control", id = "creation-textbox" }, autocomplete = "off" })
-            @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-5">
-            <input type="submit" value="Adauga" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
 <div>
@@ -76,8 +77,28 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function () {
+    $("#projectsForm").submit(function (event) {
+        var form = $(event.currentTarget);
+        var createdDay = $("#projectsForm .day option:selected").text();
 
+        var createdMonth = $("#projectsForm .month option:selected").text();
+
+        var createdYear = $("#projectsForm .year option:selected").text();
+
+        var creationDateInput = $("#creation-textbox");
+        creationDateInput.val("01/01/2001");
+
+        $("#createdDay").val(createdDay);
+        console.log( $("#createdDay"));
+
+        $("#createdMonth").val(createdMonth);
+        console.log($("#createdMonth"));
+
+        $("#createdYear").val(createdYear);
+        console.log($("#createdYear"));
+    });
+
+    $(document).ready(function () {
         var creationDateInput = $("#creation-textbox");
         creationDateInput.combodate({
             format: 'MM/DD/YYYY',

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Documaster.Model.Entities;
+using System;
 
 namespace Documaster.Business.Services
 {
@@ -22,7 +23,9 @@ namespace Documaster.Business.Services
 
         public Project CreateProject(Project project)
         {
-            var newProject = _projectRepository.Create(project);
+            project.Created = new DateTime(project.CreatedYear, project.CreatedMonth, project.CreatedDay);
+                            var newProject = _projectRepository.Create(project);
+
             _unitOfWork.SaveChanges();
             return newProject;
         }
@@ -41,9 +44,22 @@ namespace Documaster.Business.Services
 
         public bool UpdateProject(Project project)
         {
-            var updatedProject = _projectRepository.Update(project, new List<string> { "Name", "Expire", "ProjectStatusId" });
+            if (project.ExpireDay != 0 && project.ExpireYear != 0 && project.ExpireMonth != 0)
+            {
+                project.Expire = new DateTime(project.ExpireYear, project.ExpireMonth, project.ExpireDay);
+                _projectRepository.Update(project, new List<string> { "Expire" });
+            }
+
+            var updatedProject = _projectRepository.Update(project, new List<string> { "Name", "Number", "ProjectStatusId" });
             _unitOfWork.SaveChanges();
             return updatedProject;
+        }
+
+        public bool UpdateProjectNotes(Project project)
+        {
+            var updatedProjectNotes = _projectRepository.Update(project, new List<string> { "Notes" });
+            _unitOfWork.SaveChanges();
+            return updatedProjectNotes;
         }
 
         public bool DoesNameNumberCombinationExist(Project project)

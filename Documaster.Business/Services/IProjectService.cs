@@ -10,6 +10,7 @@ namespace Documaster.Business.Services
         Project GetProjectById(int id);
         bool DeleteProject(Project project);
         bool UpdateProject(Project project);
+        bool UpdateProjectNotes(Project project);
         bool DoesNameNumberCombinationExist(Project project);
     }
 }

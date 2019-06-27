@@ -208,7 +208,7 @@ namespace Documaster.Ui.Controllers
             }
 
             project.Notes = notes;
-            _projectService.UpdateProject(project);
+            _projectService.UpdateProjectNotes(project);
             return RedirectToAction("CustomerProject", new { projectId = id });
         }
 
