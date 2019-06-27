@@ -46,9 +46,13 @@ namespace Documaster.Business.Services
 
         public bool UpdateProject(Project project)
         {
-            project.Expire = new DateTime(project.ExpireYear, project.ExpireMonth, project.ExpireDay);
-  
-            var updatedProject = _projectRepository.Update(project, new List<string> { "Name", "Expire", "Number", "ProjectStatusId" });
+            if(project.ExpireDay != 0 && project.ExpireYear != 0 && project.ExpireMonth != 0)
+            {
+                project.Expire = new DateTime(project.ExpireYear, project.ExpireMonth, project.ExpireDay);
+                _projectRepository.Update(project, new List<string> { "Expire" });
+            }
+
+            var updatedProject = _projectRepository.Update(project, new List<string> { "Name", "Number", "ProjectStatusId" });
             _unitOfWork.SaveChanges();
             return updatedProject;
         }

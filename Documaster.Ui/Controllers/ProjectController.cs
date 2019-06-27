@@ -106,8 +106,6 @@ namespace Documaster.Ui.Controllers
                 _projectService.UpdateProject(project);
             }
 
-           _projectService.UpdateProject(project);
-
             return RedirectToAction("Index");
         }
 

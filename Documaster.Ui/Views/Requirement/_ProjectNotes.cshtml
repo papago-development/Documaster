@@ -4,12 +4,8 @@
 
 <script src="~/Scripts/summernote/summernote.min.js"></script>
 
-@using (Html.BeginForm("Notes", "Requirement", FormMethod.Post, htmlAttributes: new { id = "projectsForm" }))
+@using (Html.BeginForm("Notes", "Requirement", FormMethod.Post))
 {
-    @Html.HiddenFor(model => model.ExpireDay, new { id = "expireDay" })
-    @Html.HiddenFor(model => model.ExpireMonth, new { id = "expireMonth" })
-    @Html.HiddenFor(model => model.ExpireYear, new { id = "expireYear" })
-    @Html.HiddenFor(model => model.Expire, new { htmlAttributes = new { id = "expire-textbox" } })
     <div class="form-horizontal">
         @Html.TextAreaFor(x => x.Notes, new { id = "project-notes" })
     </div>
@@ -20,29 +16,8 @@
 }
 
     <script>
-$("#projectsForm").submit(function (event) {
 
-            var expireDay = $("#projectsForm .day option:selected").text();
-            var expireMonth = $("#projectsForm .month option:selected").text();
-            var expireYear = $("#projectsForm .year option:selected").text();
-            var expirationDateInput = $("#expire-textbox");
-            expirationDateInput.val("01/01/2001");
-
-            $("#expireDay").val(expireDay);
-            $("#expireMonth").val(expireMonth);
-            $("#expireYear").val(expireYear);
-        });
         $(document).ready(function () {
-            var dateInput = $("#expire-textbox").val();
-            @*var value = dateInput.attr("value");
-
-            if (value != null) {
-                dateInput.combodate('setValue', new Date(value));
-            }*@
-            console.log(dateInput);
-            var expire = '@Model.Expire';
-            console.log(expire);
-
             $("#project-notes").summernote({
                 height: 500,
                 toolbar: [

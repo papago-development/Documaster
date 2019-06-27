@@ -38,7 +38,9 @@ namespace Documaster.Business.Services
 
         public bool UpdateCustomer(Customer customer)
         {
-            return _customerRepository.Update(customer, new List<string> { "Name", "Telephone", "Email", "Address", "AdditionalInfo1", "AdditionalInfo2" });
+            var updatedCustomer = _customerRepository.Update(customer, new List<string> { "Name", "Telephone", "Email", "Address", "AdditionalInfo1", "AdditionalInfo2" });
+            _unitOfWork.SaveChanges();
+            return updatedCustomer;
         }
     }
 }
