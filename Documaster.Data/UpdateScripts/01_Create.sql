@@ -50,6 +50,10 @@ CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Name_Number
 	ON dbo.Project ([Name], Number)
 GO
 
+ALTER TABLE Project
+ADD AllowNotification BIT NOT NULL CONSTRAINT DF_Project_AllowNotification DEFAULT (0)
+GO   
+
 
 CREATE TABLE dbo.Customer (
 	Id INT NOT NULL

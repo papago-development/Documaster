@@ -37,6 +37,8 @@ namespace Documaster.Model.Entities
         [JsonIgnore]
         public virtual ICollection<OutputDocument> OutputDocuments { get; set; } = new List<OutputDocument>();
 
+        public bool AllowNotification { get; set; }
+
         [NotMapped]
         public short ExpireYear { get; set; }
 
