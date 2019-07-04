@@ -1,15 +1,7 @@
-﻿using Documaster.Model.Entities;
-using System.Collections.Generic;
-
+﻿using System;
 namespace Documaster.Business.Services
 {
     public interface ITemplateService
     {
-        IEnumerable<Template> GetTemplates();
-        Template CreateTemplate(Template template);
-        Template GetTemplateById(int id);
-
-        bool UpdateTemplate(Template template);
-        bool DeleteTemplate(Template template);
     }
 }

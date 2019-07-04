@@ -1,31 +1,9 @@
-﻿@model Documaster.Model.Entities.Template
+﻿@model ASP._Page_Views_Category_Edit_cshtml
 
 @{
-    ViewBag.Title = "Sterge template";
+    ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2>Delete</h2>
 
-<div class="displayContent">
-    <h2>Sterge categorie</h2>
-
-    <h3>Esti sigur?</h3>
-    <div>
-
-        <hr />
-        <div>
-            Nume: <b>@Html.DisplayFor(x => x.Name)</b>
-        </div>
-        <hr />
-
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="form-actions no-color">
-                <input type="submit" value="Sterge" class="btn btn-default" /> |
-                @Html.ActionLink("Inapoi", "Index")
-            </div>
-        }
-    </div>
-</div>
