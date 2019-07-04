@@ -140,6 +140,8 @@
     <Compile Include="Services\INamedEntityService.cs" />
     <Compile Include="Services\ICustomizeTabService.cs" />
     <Compile Include="Services\CustomizeTabService.cs" />
+    <Compile Include="Services\ITemplateService.cs" />
+    <Compile Include="Services\TemplateService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

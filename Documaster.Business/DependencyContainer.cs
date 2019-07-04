@@ -62,6 +62,9 @@ namespace Documaster.Business
 
             //Customize Tab
             unityContainer.RegisterType(typeof(ICustomizeTabService), typeof(CustomizeTabService), new PerRequestLifetimeManager());
+
+            //Template service
+            unityContainer.RegisterType(typeof(ITemplateService), typeof(TemplateService), new PerRequestLifetimeManager());
         }
     }
 }
