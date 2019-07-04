@@ -1,16 +1,75 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Documaster.Business.Services;
+using Documaster.Model.Entities;
 
 namespace Documaster.Ui.Controllers
 {
+    [Authorize]
     public class TemplateController : Controller
     {
+        private readonly ITemplateService _templateService;
+
+        public TemplateController(ITemplateService templateService)
+        {
+            _templateService = templateService;
+        }
+
+        [HttpGet]
         public ActionResult Index()
         {
-            return View ();
+            return RedirectToAction("List");
+        }
+
+        [HttpGet]
+        public ActionResult List()
+        {
+            var model = _templateService.GetTemplates();
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(Template template)
+        {
+            if(ModelState.IsValid)
+            {
+                _templateService.CreateTemplate(template);
+                return RedirectToAction("Index");
+            }
+            return View(template);
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var model = _templateService.GetTemplateById(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Template template)
+        {
+            _templateService.UpdateTemplate(template);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            var model = _templateService.GetTemplateById(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(Template template)
+        {
+            _templateService.DeleteTemplate(template);
+            return RedirectToAction("Index");
         }
     }
 }
