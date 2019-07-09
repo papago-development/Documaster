@@ -8,6 +8,7 @@ using Documaster.Business.Services;
 using Documaster.Model.Entities;
 using Documaster.Model.Enums;
 using Documaster.Business.Models;
+using Rotativa;
 
 namespace Documaster.Ui.Controllers
 {
@@ -20,6 +21,7 @@ namespace Documaster.Ui.Controllers
         private readonly IProjectService _projectService;
         private readonly INamedEntityService<Requirement> _namedEntityService;
         private readonly ICustomizeTabService _customizeTabService;
+        private readonly ITemplateService _templateService;
 
         public RequirementController(IRequirementService requirementService,
                                      ICategoryService categoryService,
@@ -27,7 +29,8 @@ namespace Documaster.Ui.Controllers
                                      IOutputDocumentService outputDocumentService,
                                      IProjectService projectService,
                                      ICustomizeTabService customizeTabService,
-                                     INamedEntityService<Requirement> namedEntityService)
+                                     INamedEntityService<Requirement> namedEntityService,
+                                     ITemplateService templateService)
         {
             _requirementService = requirementService;
             _categoryService = categoryService;
@@ -36,6 +39,7 @@ namespace Documaster.Ui.Controllers
             _projectService = projectService;
             _namedEntityService = namedEntityService;
            _customizeTabService = customizeTabService;
+            _templateService = templateService;
         }
 
         [HttpGet]
@@ -286,5 +290,42 @@ namespace Documaster.Ui.Controllers
             var doesNameExist = _namedEntityService.DoesNameExist(requirement);
             return Json(!doesNameExist, JsonRequestBehavior.AllowGet);
         }
+
+        /*
+      * Display list of templates
+      */
+        [HttpGet]
+        public ActionResult DisplayTemplate(int projectId)
+        {
+            var templates = _templateService.GetTemplates().OrderBy(x => x.Name);
+            ViewBag.ProjectId = projectId;
+            return PartialView("_DisplayTemplates", templates);
+        }
+
+     
+        public ActionResult ExportPdf(int templateId, int projectId)
+        {
+            var result = new Rotativa.ActionAsPdf("Export");
+            return result; 
+        }
+
+        [HttpGet]
+        public ActionResult Export(int templateId, int projectId)
+        {
+            var content = _templateService.ExportToPdf(templateId, projectId);
+
+            return PartialView("_Export", content);
+        }
+
+        [HttpGet]
+        public ActionResult ExportWord(int templateId, int projectId)
+        {
+            var content = _templateService.ExportToPdf(templateId, projectId);
+            Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
+            Microsoft.Office.Interop.Word.Document doc = new Microsoft.Office.Interop.Word.Document();
+            doc = app.Documents.Open(content);
+            return PartialView("_Export");
+        }
+
     }
 }

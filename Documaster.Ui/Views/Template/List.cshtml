@@ -8,16 +8,14 @@
 
     <div class="displayContent">
         <p>
-            @Html.ActionLink("Sablon nou", "Create", new { id = ViewBag.Id, @class = "btn btn-primary" })
+            @Html.ActionLink("Sablon nou", "Create")
         </p>
         <table class="table" style="width: 100%"> 
             <tr>
                 <th>
                     Nume
                 </th>
-                <th>
-                    Corp
-                </th>
+
                 <th></th>
             </tr>
             @foreach(var item in Model)
@@ -25,9 +23,6 @@
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modleItem => item.Text)
                     </td>
                     <td>
                         <a href="@Url.Action("Edit", new {id = item.Id})">

@@ -16,6 +16,9 @@ namespace Documaster.Model.Enums
         Notes = 1,
 
         [Display(Name = "Avize")]
-        OutputDocuments = 2
+        OutputDocuments = 2,
+
+        [Display(Name = "Sabloane")]
+        DisplayTemplate = 3
     }
 }

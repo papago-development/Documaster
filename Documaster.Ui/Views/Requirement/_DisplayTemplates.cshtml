@@ -1,1 +1,26 @@
-﻿
+﻿@model IEnumerable<Documaster.Model.Entities.Template>
+    @{
+        var projectId = (object)ViewBag.ProjectId;
+        var baseUrl = Url.Content("~");
+    }
+
+    <div class="container">
+        @foreach (var item in Model)
+        {
+            var href = baseUrl + "Requirement/ExportWord?templateId=" + item.Id;
+            <div class="documentLine row">
+                <div class="col-md-4">
+                    @Html.DisplayFor(modleItem => item.Name)
+                </div>
+                <div class="col-md-3">
+                    @Ajax.ActionLink("Pdf", "Export", new { projectId, templateId = item.Id }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn btn-info btn-xs" })
+                    <a class="btn btn-xs btn-info" href=@href>DOC</a>
+                </div>
+            </div>
+        }
+    </div>
+    <script type="text/javascript">
+    var showModalDialog = function () {
+    $("#myModal").modal("show");
+};
+    </script>

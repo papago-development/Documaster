@@ -104,6 +104,12 @@
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
+    <Reference Include="Rotativa">
+      <HintPath>..\packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyContainer.cs" />
@@ -148,6 +154,11 @@
     <None Include="packages.config" />
     <None Include="NLog.xsd" />
     <None Include="NLog.config" />
+    <None Include="Rotativa\wkhtmltopdf.exe" />
+    <None Include="Rotativa\wkhtmltoimage.exe" />
+    <None Include="Rotativa\help-wkhtmltopdf.txt" />
+    <None Include="Rotativa\help-wkhtmltoimage.txt" />
+    <None Include="App_Browsers\qt.browser" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Documaster.Data\Documaster.Data.csproj">

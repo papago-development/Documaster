@@ -12,5 +12,8 @@ namespace Documaster.Business.Services
         bool UpdateTemplate(Template template);
         bool DeleteTemplate(Template template);
         bool DoesNameExist(Template template);
+
+        string ExportToPdf(int templateId, int projectId);
+        Template ExportToWord(int templateId);
     }
 }

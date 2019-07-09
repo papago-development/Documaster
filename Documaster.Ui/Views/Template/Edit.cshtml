@@ -1,27 +1,35 @@
 ﻿@model Documaster.Model.Entities.Template
-
+@using System.Configuration
+@using Newtonsoft.Json;
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var path = AppDomain.CurrentDomain.BaseDirectory + "Config/Placeholders.json";
+    var configFile = File.ReadAllText(path);
+    var dictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(configFile, new JsonSerializerSettings());
 }
 
-<link href="~/Content/summernote/summernote.css" rel="stylesheet" />
-<script src="~/Scripts/summernote/summernote.min.js"></script>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+<!-- include summernote css/js -->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+
 <h2>Edit</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="col-md-8">
         <div class="form-group row">
             @Html.LabelFor(m => m.Name, "Nume", htmlAttributes: new { @class = "col-form-label col-sm-1" })
-            <div class="col-sm-10">
+            <div class="col-sm-11">
                 @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" }, autocomplete = "off" })
                 @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
             </div>
@@ -33,8 +41,20 @@
             <input type="submit" value="Salveaza" class="btn btn-default" />
         </div>
     </div>
+    <div class="col-md-4">
+        <p>Placeholders</p>
+        <hr />
+
+        @foreach (var item in dictionary.Keys)
+        {
+            <p>{ @item }</p>
+        }
+
+    </div>
+
+</div>
 }
-<div>
+<div class="col-md-9">
     @Html.ActionLink("Inapoi la lista", "Index")
 </div>
 

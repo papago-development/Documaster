@@ -130,6 +130,21 @@
     <Reference Include="PresentationCore" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.Office.Interop.Word">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\packages\iTextSharp.5.5.6\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker">
+      <HintPath>..\packages\itextsharp.xmlworker.5.5.6\lib\itextsharp.xmlworker.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfExport">
+      <HintPath>..\packages\PdfExport.1.2.0\lib\PdfExport.dll</HintPath>
+    </Reference>
+    <Reference Include="Rotativa">
+      <HintPath>..\packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -288,11 +303,19 @@
     <Content Include="Views\Template\Create.cshtml" />
     <Content Include="Views\Template\Delete.cshtml" />
     <Content Include="Views\Template\Edit.cshtml" />
-    <Content Include="Views\Template\Index.cshtml" />
     <Content Include="Views\Template\List.cshtml" />
+    <Content Include="Views\Requirement\_DisplayTemplates.cshtml" />
+    <Content Include="Views\Requirement\_Export.cshtml" />
+    <None Include="Rotativa\wkhtmltopdf.exe" />
+    <None Include="Rotativa\wkhtmltoimage.exe" />
+    <None Include="Rotativa\help-wkhtmltopdf.txt" />
+    <None Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="App_Browsers\qt.browser" />
+    <None Include="Config\Placeholders.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Config\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
