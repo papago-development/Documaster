@@ -292,6 +292,38 @@ ALTER TABLE dbo.UserProfile
 	PRIMARY KEY CLUSTERED (Id)
 GO
 
+CREATE TABLE dbo.ProjectTemplate (
+	Id INT IDENTITY(1,1) NOT NULL
+   ,ProjectId INT NOT NULL
+   ,TemplateId INT NOT NULL
+   ,CreationDate DATETIME NOT NULL
+   ,LastUpdate DATETIME NOT NULL
+   ,[Text] VARCHAR(MAX) NOT NULL
+)
+GO
+
+ALTER TABLE dbo.ProjectTemplate
+	ADD CONSTRAINT PK_ProjectTemplate
+	PRIMARY KEY CLUSTERED (Id)
+GO
+
+ALTER TABLE dbo.ProjectTemplate WITH CHECK
+	ADD CONSTRAINT FK_ProjectTemplate_ProjectId_Project_Id
+	FOREIGN KEY (ProjectId)
+	REFERENCES dbo.Project (Id)
+	ON DELETE CASCADE
+GO
+
+ALTER TABLE dbo.ProjectTemplate WITH CHECK 
+	ADD CONSTRAINT FK_ProjectTemplate_TemplateId_Template_Id
+	FOREIGN KEY (TemplateId)
+	REFERENCES dbo.Template (Id)
+	ON DELETE CASCADE
+GO
+
+CREATE UNIQUE NONCLUSTERED INDEX UX_ProjectTemplate_ProjectId_TemplateId
+	ON dbo.ProjectTemplate (ProjectId, TemplateId)
+GO
 
 -- Database modifications --
 Update CustomizeTab
@@ -314,3 +346,5 @@ GO
 
 ALTER TABLE OutputDocument ALTER COLUMN CustomizeTabId INT NOT NULL
 GO
+
+

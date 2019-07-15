@@ -1,8 +1,8 @@
 ﻿{
-  "numeProiect":  "Project.Name",
-  "numarProiect":  "Project.Number",
-  "numeClient":  "Client.Name",
-  "adresaProiect":  "Project.Address",
-  "adresaClient":  "Client.Address",
-  "numarTelefon":  "Client.PhoneNumber"
+  "{numeProiect}":  "Project.Name",
+  "{numarProiect}":  "Project.Number",
+  "{numeClient}":  "Client.Name",
+  "{adresaProiect}":  "Project.Address",
+  "{adresaClient}":  "Client.Address",
+  "{telefonClient}":  "Client.PhoneNumber"
 }

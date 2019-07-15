@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Documaster.Business.Services;
 using Documaster.Model.Entities;
-using Documaster.Model.Enums;
 using Documaster.Business.Models;
 using Rotativa;
+using System.IO;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Wordprocessing;
+using HtmlToOpenXml;
 
 namespace Documaster.Ui.Controllers
 {
@@ -22,6 +25,8 @@ namespace Documaster.Ui.Controllers
         private readonly INamedEntityService<Requirement> _namedEntityService;
         private readonly ICustomizeTabService _customizeTabService;
         private readonly ITemplateService _templateService;
+        private readonly IProjectTemplateService _projectTemplateService;
+        private readonly IReplacePlaceholderService _replacePlaceholderService;
 
         public RequirementController(IRequirementService requirementService,
                                      ICategoryService categoryService,
@@ -30,7 +35,9 @@ namespace Documaster.Ui.Controllers
                                      IProjectService projectService,
                                      ICustomizeTabService customizeTabService,
                                      INamedEntityService<Requirement> namedEntityService,
-                                     ITemplateService templateService)
+                                     ITemplateService templateService,
+                                     IProjectTemplateService projectTemplateService,
+                                     IReplacePlaceholderService replacePlaceholderService)
         {
             _requirementService = requirementService;
             _categoryService = categoryService;
@@ -40,6 +47,8 @@ namespace Documaster.Ui.Controllers
             _namedEntityService = namedEntityService;
            _customizeTabService = customizeTabService;
             _templateService = templateService;
+            _projectTemplateService = projectTemplateService;
+            _replacePlaceholderService = replacePlaceholderService;
         }
 
         [HttpGet]
@@ -302,30 +311,42 @@ namespace Documaster.Ui.Controllers
             return PartialView("_DisplayTemplates", templates);
         }
 
-     
+        [HttpGet]
         public ActionResult ExportPdf(int templateId, int projectId)
         {
-            var result = new Rotativa.ActionAsPdf("Export");
-            return result; 
+            var content = _projectTemplateService.GetTemplate(templateId, projectId);
+    
+            return new PartialViewAsPdf("_Export",content);  
         }
 
-        [HttpGet]
-        public ActionResult Export(int templateId, int projectId)
-        {
-            var content = _templateService.ExportToPdf(templateId, projectId);
 
-            return PartialView("_Export", content);
-        }
 
-        [HttpGet]
-        public ActionResult ExportWord(int templateId, int projectId)
-        {
-            var content = _templateService.ExportToPdf(templateId, projectId);
-            Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
-            Microsoft.Office.Interop.Word.Document doc = new Microsoft.Office.Interop.Word.Document();
-            doc = app.Documents.Open(content);
-            return PartialView("_Export");
-        }
+        //private static byte[] ConvertToWord(string html)
+        //{
+        //    using (MemoryStream memoryStream = new MemoryStream())
+        //    using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(
+        //        memoryStream, WordprocessingDocumentType.Document))
+        //    {
+        //        MainDocumentPart mainPart = wordDocument.MainDocumentPart;
+        //        if (mainPart == null)
+        //        {
+        //            mainPart = wordDocument.AddMainDocumentPart();
+        //            new Document(new Body()).Save(mainPart);
+        //        }
 
+        //        HtmlConverter converter = new HtmlConverter(mainPart)
+        //        {
+        //            ImageProcessing = ImageProcessing.AutomaticDownload
+
+        //        };
+        //        Body body = mainPart.Document.Body;
+
+        //        IList<OpenXmlCompositeElement> paragraphs = converter.Parse(html);
+        //        body.Append(paragraphs);
+
+        //        mainPart.Document.Save();
+        //        return memoryStream.ToArray();
+        //    }
+        //}
     }
 }
