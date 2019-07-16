@@ -30,9 +30,8 @@ namespace Documaster.Business.Services
         public ProjectTemplate GetTemplate(int templateId, int projectId)
         {
             var projectTemplate = Get(templateId, projectId);
-            if (projectTemplate == null)
+            if (projectTemplate == null || projectTemplate !=null)
             {
-               // var template = _templateRepository.Get(templateId);
                 var replacedContent = _replacePlaceholderService.Replace(templateId, projectId);
                 
                 return replacedContent;

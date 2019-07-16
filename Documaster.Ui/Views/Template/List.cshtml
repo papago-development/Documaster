@@ -1,16 +1,19 @@
 ﻿@model IEnumerable<Documaster.Model.Entities.Template>
-@{
-    ViewBag.Title = "List";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+    @{
+        ViewBag.Title = "List";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        var deleteSuccess = (TempData["DeleteSuccess"] != null).ToString().ToLower();
+        @*var createSuccess = ()*@
+    }
+    <script src="~/Scripts/bootstrap-notify/bootstrap-notify.js"></script>
 
-<h4>Lista sabloane</h4>
 
     <div class="displayContent">
+        <h2>Lista sabloane</h2>
         <p>
             @Html.ActionLink("Sablon nou", "Create")
         </p>
-        <table class="table" style="width: 100%"> 
+        <table class="table" style="width: 100%">
             <tr>
                 <th>
                     Nume
@@ -18,7 +21,7 @@
 
                 <th></th>
             </tr>
-            @foreach(var item in Model)
+            @foreach (var item in Model)
             {
                 <tr>
                     <td>
@@ -33,8 +36,26 @@
                         </a>
                     </td>
                 </tr>
-                
+
             }
         </table>
 
     </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        console.log(@deleteSuccess);
+        if(@deleteSuccess)
+       {
+            $.notify("Sablonul a fost sters cu succes", {
+               type: "success",
+               delay: 6000,
+               offset: 70,
+               z_index: 9999,
+               placement: {
+                    from: "top",
+                    align: "right"
+               }
+            });
+        }
+    });
+    </script>

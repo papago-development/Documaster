@@ -40,6 +40,8 @@ namespace Documaster.Ui.Controllers
             if (ModelState.IsValid)
             {
                 _templateService.CreateTemplate(template);
+                var isCreated = true;
+                TempData["CreateSuccess"] = isCreated;
                 return RedirectToAction("Index");
             }
             return View(template);
@@ -70,7 +72,8 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Delete(Template template)
         {
-            _templateService.DeleteTemplate(template);
+            var isDeleted = _templateService.DeleteTemplate(template);
+            TempData["DeleteSuccess"] = isDeleted;
             return RedirectToAction("Index");
         }
 
