@@ -4,5 +4,5 @@
   "{numeClient}":  "Customer.Name",
   "{adresaProiect}":  "Project.Address",
   "{adresaClient}":  "Customer.Address",
-  "{telefonClient}":  "Customer.PhoneNumber"
+  "{telefonClient}":  "Customer.Telephone"
 }

@@ -318,35 +318,5 @@ namespace Documaster.Ui.Controllers
     
             return new PartialViewAsPdf("_Export",content);  
         }
-
-
-
-        //private static byte[] ConvertToWord(string html)
-        //{
-        //    using (MemoryStream memoryStream = new MemoryStream())
-        //    using (WordprocessingDocument wordDocument = WordprocessingDocument.Create(
-        //        memoryStream, WordprocessingDocumentType.Document))
-        //    {
-        //        MainDocumentPart mainPart = wordDocument.MainDocumentPart;
-        //        if (mainPart == null)
-        //        {
-        //            mainPart = wordDocument.AddMainDocumentPart();
-        //            new Document(new Body()).Save(mainPart);
-        //        }
-
-        //        HtmlConverter converter = new HtmlConverter(mainPart)
-        //        {
-        //            ImageProcessing = ImageProcessing.AutomaticDownload
-
-        //        };
-        //        Body body = mainPart.Document.Body;
-
-        //        IList<OpenXmlCompositeElement> paragraphs = converter.Parse(html);
-        //        body.Append(paragraphs);
-
-        //        mainPart.Document.Save();
-        //        return memoryStream.ToArray();
-        //    }
-        //}
     }
 }

@@ -37,7 +37,6 @@ namespace Documaster.Business.Services
             var projectTemplate = new ProjectTemplate
             {
                 ProjectId = projectId,
-                TemplateId = templateId,
                 Text = template.Text
             };
 

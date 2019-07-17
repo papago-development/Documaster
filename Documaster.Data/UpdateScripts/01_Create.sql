@@ -348,3 +348,30 @@ ALTER TABLE OutputDocument ALTER COLUMN CustomizeTabId INT NOT NULL
 GO
 
 
+-- DROP COLUMN TemplateId FROM dbo.ProjectTemplate --
+ALTER TABLE dbo.ProjectTemplate
+DROP COLUMN TemplateId
+GO
+
+ALTER TABLE dbo.ProjectTemplate
+DROP CONSTRAINT FK_ProjectTemplate_TemplateId_Template_Id
+GO
+
+DROP INDEX UX_ProjectTemplate_ProjectId_TemplateId ON dbo.ProjectTemplate
+GO
+
+SELECT * FROM dbo.ProjectTemplate
+GO
+
+--ADD COLUMN NAME ON dbo.ProjectTemplate --
+ALTER TABLE dbo.ProjectTemplate
+ADD Name VARCHAR(200) NULL
+GO
+
+ALTER TABLE dbo.ProjectTemplate
+ALTER COLUMN Name VARCHAR(200) NOT NULL
+GO
+
+CREATE UNIQUE NONCLUSTERED INDEX UX_ProjectTemplate_Name
+ ON dbo.ProjecTTemplate ([Name])
+GO

@@ -16,12 +16,10 @@
             {
                 @Html.HiddenFor(x=>x.Id)
                 @Html.HiddenFor(x=>x.ProjectId)
-                @Html.HiddenFor(x=>x.TemplateId)
                 @Html.AntiForgeryToken()
 
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div>
-                    @*@Html.Raw(Server.HtmlDecode(Model))*@
                     @Html.TextAreaFor(x=>x.Text, new { id = "template-notes" })
                 </div>
                 <div class="form-horizontal">

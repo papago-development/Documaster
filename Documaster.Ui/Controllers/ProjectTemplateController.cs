@@ -37,7 +37,6 @@ namespace Documaster.Ui.Controllers
 
             // var replacedContentFromTemplate = _replacePlaceholderService.Replace(template, projectId);
             ViewBag.ProjectId = projectId;
-            ViewBag.TemplateId = templateId;
             return PartialView("_Edit", content);
         }
 
@@ -47,9 +46,23 @@ namespace Documaster.Ui.Controllers
         {
             var updated = _projectTemplateService.CreateOrUpdate(projectTemplate);
             ViewBag.ProjectId = projectTemplate.ProjectId;
-            return RedirectToAction("CustomerProject", "Requirement", new { projectTemplate.ProjectId});
+            return RedirectToAction("DisplayTemplate", "Requirement", new { projectTemplate.ProjectId});
         }
 
+        [HttpGet]
+        public ActionResult ProjectTemplates(int projectId)
+        {
+            var templates = _templateService.GetTemplates();
+            ViewBag.Templates = templates;
+            return PartialView("_ProjectTemplates");
+        }
 
+        [HttpPost]
+        public ActionResult ProjectTemplates(ProjectTemplate projectTemplate)
+        {
+            var created = _projectTemplateService.CreateOrUpdate(projectTemplate);
+            ViewBag.ProjectId = projectTemplate.ProjectId;
+            return RedirectToAction("DisplayTemplate", "Requirement", new { projectTemplate.ProjectId });
+        }
     }
 }

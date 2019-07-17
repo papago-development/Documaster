@@ -29,7 +29,7 @@ namespace Documaster.Business.Services
 
         public ProjectTemplate GetTemplate(int templateId, int projectId)
         {
-            var projectTemplate = Get(templateId, projectId);
+            var projectTemplate = Get(projectId);
             if (projectTemplate == null || projectTemplate !=null)
             {
                 var replacedContent = _replacePlaceholderService.Replace(templateId, projectId);
@@ -45,7 +45,7 @@ namespace Documaster.Business.Services
             var success = true;
             if(projectTemplate.Id> 0)
             {
-                success = _projectTemplateRepository.Update(projectTemplate, new List<string> { "Text" });
+                success = _projectTemplateRepository.Update(projectTemplate, new List<string> { "Text", "Name" });
             }
             else
             {
@@ -57,9 +57,9 @@ namespace Documaster.Business.Services
         }
 
 
-        private ProjectTemplate Get(int templateId, int projectId)
+        private ProjectTemplate Get(int projectId)
         {
-            var projectTemplate = _projectTemplateRepository.Get(x => x.TemplateId == templateId && x.ProjectId == projectId).SingleOrDefault();
+            var projectTemplate = _projectTemplateRepository.Get(x=>x.ProjectId == projectId).SingleOrDefault();
             return projectTemplate;
         }
     }

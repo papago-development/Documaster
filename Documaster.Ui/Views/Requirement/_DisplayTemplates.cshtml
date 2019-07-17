@@ -4,6 +4,8 @@
     var baseUrl = Url.Content("~");
 }
 <div class="container">
+     @Ajax.ActionLink("New", "ProjectTemplates", "ProjectTemplate", new { projectId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()"})
+
     @foreach (var item in Model)
     {
         var href = baseUrl + "Requirement/ExportWord?templateId=" + item.Id + "&projectId=" + projectId;
@@ -14,9 +16,7 @@
 
             </div>
             <div class="col-md-3">
-                @*@Ajax.ActionLink("Pdf", "ExportPdf", new { projectId, templateId = item.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn btn-info btn-xs" })*@
-                @Html.ActionLink("Pdf", "ExportPdf", new { projectId, templateId = item.Id }, new { @class = "button btn btn-info btn-xs", target="_blank" })
-             
+                 @Html.ActionLink("Pdf", "ExportPdf", new { projectId, templateId = item.Id }, new { @class = "button btn btn-info btn-xs", target="_blank" })
             </div>
         </div>
     }
