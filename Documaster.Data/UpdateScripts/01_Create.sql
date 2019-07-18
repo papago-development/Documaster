@@ -373,5 +373,5 @@ ALTER COLUMN Name VARCHAR(200) NOT NULL
 GO
 
 CREATE UNIQUE NONCLUSTERED INDEX UX_ProjectTemplate_Name
- ON dbo.ProjecTTemplate ([Name])
+ ON dbo.ProjectTemplate ([Name])
 GO

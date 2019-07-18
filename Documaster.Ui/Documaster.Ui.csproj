@@ -338,11 +338,12 @@
     <Content Include="Views\Template\Edit.cshtml" />
     <Content Include="Views\Template\List.cshtml" />
     <Content Include="Views\Requirement\_DisplayTemplates.cshtml" />
-    <Content Include="Views\Requirement\_Export.cshtml" />
+    <Content Include="Views\ProjectTemplate\_Export.cshtml" />
     <None Include="Config\Placeholders.json" />
     <Content Include="Views\Requirement\ExportPdf.cshtml" />
     <Content Include="Views\ProjectTemplate\_Edit.cshtml" />
-    <Content Include="Views\ProjectTemplate\_ProjectTemplates.cshtml" />
+    <Content Include="Views\ProjectTemplate\_Create.cshtml" />
+    <Content Include="Views\ProjectTemplate\_Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,13 +3,13 @@
 <link href="~/Content/summernote/summernote.css" rel="stylesheet" />
 <script src="~/Scripts/summernote/summernote.min.js"></script>
 
-<div class="modal-dialog">
+<div class="modal-dialog" id="modal-2">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                 X
             </button>
-            <h4 class="modal-title">Previzualizare sablon</h4>
+            <h4 class="modal-title">Previzualizare document/h4>
         </div>
         <div class="modal-body">
             @using (Html.BeginForm("Edit", "ProjectTemplate", FormMethod.Post))

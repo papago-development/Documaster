@@ -52,25 +52,5 @@ namespace Documaster.Business.Services
             var templates = _templateRepository.Get(x => x.Name == template.Name && x.Id != template.Id);
             return templates.Any();
         }
-
-        //public string ExportToPdf(int templateId, int projectId)
-        //{
-        //    return _templateRepository.Get(templateId).Text;
-        //}
-
-        //public Template ExportToWord(int templateId, int projectId)
-        //{
-        //    return _templateRepository.Get(templateId);
-        //}
-
-        //public Template GetContentTemplateById(int templateId, int projectId)
-        //{
-        //    return _templateRepository.Get(templateId);
-        //}
-
-        //public Template ExportToPdf(int templateId, int projectId)
-        //{
-        //    return _templateRepository.Get(templateId);
-        //}
     }
 }

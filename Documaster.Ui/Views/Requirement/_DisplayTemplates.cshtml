@@ -1,28 +1,32 @@
-﻿@model IEnumerable<Documaster.Model.Entities.Template>
-@{
-    var projectId = (object)ViewBag.ProjectId;
-    var baseUrl = Url.Content("~");
-}
-<div class="container">
-     @Ajax.ActionLink("New", "ProjectTemplates", "ProjectTemplate", new { projectId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()"})
-
-    @foreach (var item in Model)
-    {
-        var href = baseUrl + "Requirement/ExportWord?templateId=" + item.Id + "&projectId=" + projectId;
-        <div class="documentLine row">
-            <div class="col-md-4">
-
-                @Ajax.ActionLink(item.Name, "Edit", "ProjectTemplate", new { projectId, templateId = item.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" })
-
-            </div>
-            <div class="col-md-3">
-                 @Html.ActionLink("Pdf", "ExportPdf", new { projectId, templateId = item.Id }, new { @class = "button btn btn-info btn-xs", target="_blank" })
-            </div>
-        </div>
+﻿@model IEnumerable<Documaster.Model.Entities.ProjectTemplate>
+    @{
+        var projectId = (object)ViewBag.ProjectId;
+        var baseUrl = Url.Content("~");
     }
-</div>
-<script type="text/javascript">
-    var showModalDialog = function () {
-        $("#myModal").modal("show");
-    };
-</script>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    <div class="container">
+        @Ajax.ActionLink("New", "Create", "ProjectTemplate", new { projectId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn  btn-primary" })
+        @foreach (var item in Model)
+        {
+            var href = baseUrl + "Requirement/ExportWord?projectId=" + projectId + "&name=" + item.Name;
+            <div class="documentLine row">
+                <div class="col-md-4">
+                    @Ajax.ActionLink(item.Name, "Edit", "ProjectTemplate", new { id = item.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" })
+                </div>
+                <div class="col-md-3">
+                    @Html.ActionLink("Pdf", "ExportPdf", "ProjectTemplate", new { id = item.Id }, new { @class = "button btn btn-info btn-xs", target = "_blank" })
+
+                    @Ajax.ActionLink("Delete", "Delete", "ProjectTemplate", new { id = item.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn  btn-danger btn-xs" })
+
+                </div>
+            </div>
+        }
+    </div>
+    <script type="text/javascript">var showModalDialog = function () {
+            $("#myModal").modal("show");
+
+        };
+
+      </script>

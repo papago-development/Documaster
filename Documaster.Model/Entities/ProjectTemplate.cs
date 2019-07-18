@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using Documaster.Model.BaseEntities;
 
 namespace Documaster.Model.Entities
@@ -7,6 +8,7 @@ namespace Documaster.Model.Entities
     {
         public int ProjectId { get; set; }
 
+        [Remote("DoesNameExist", "ProjectTemplate", AdditionalFields = "Id", ErrorMessage = "Numele exista deja")]
         [Required(ErrorMessage = "Numele nu poate fi gol")]
         public override string Name { get; set; }
 

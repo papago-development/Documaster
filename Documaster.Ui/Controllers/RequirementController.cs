@@ -301,22 +301,16 @@ namespace Documaster.Ui.Controllers
         }
 
         /*
-      * Display list of templates
+      * Display list of projectTemplates
       */
         [HttpGet]
         public ActionResult DisplayTemplate(int projectId)
         {
-            var templates = _templateService.GetTemplates().OrderBy(x => x.Name);
+            var projectTemplates = _projectTemplateService.GetProjectTemplates(projectId);
             ViewBag.ProjectId = projectId;
-            return PartialView("_DisplayTemplates", templates);
+            return PartialView("_DisplayTemplates", projectTemplates);
         }
 
-        [HttpGet]
-        public ActionResult ExportPdf(int templateId, int projectId)
-        {
-            var content = _projectTemplateService.GetTemplate(templateId, projectId);
-    
-            return new PartialViewAsPdf("_Export",content);  
-        }
+
     }
 }

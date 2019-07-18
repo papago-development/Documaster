@@ -4,6 +4,6 @@ namespace Documaster.Business.Services
 {
     public interface IReplacePlaceholderService
     {
-        ProjectTemplate Replace(int templateId, int projectId);
+        ProjectTemplate Replace(int projectId, int templateId, string name);
     }
 }

@@ -15,6 +15,7 @@ namespace Documaster.Business.Services
         private readonly IGenericRepository<Template> _templateRepository;
         private readonly IGenericRepository<Project> _projectRepository;
         private readonly IGenericRepository<Customer> _customerRepository;
+        private readonly IGenericRepository<ProjectTemplate> _projectTemplateRepository;
 
         public ReplacePlaceholderService(IUnitOfWork unitOfWork)
         {
@@ -22,12 +23,10 @@ namespace Documaster.Business.Services
             _projectRepository = _unitOfWork.Repository<Project>();
             _customerRepository = _unitOfWork.Repository<Customer>();
             _templateRepository = unitOfWork.Repository<Template>();
-         
-
+            _projectTemplateRepository = unitOfWork.Repository<ProjectTemplate>();
         }
-
-
-        public ProjectTemplate Replace(int templateId, int projectId)
+        
+        public ProjectTemplate Replace(int projectId, int templateId, string name)
         {
             var path = AppDomain.CurrentDomain.BaseDirectory + "Config/Placeholders.json";
             var configFile = System.IO.File.ReadAllText(path);
@@ -37,9 +36,10 @@ namespace Documaster.Business.Services
             var projectTemplate = new ProjectTemplate
             {
                 ProjectId = projectId,
-                Text = template.Text
+                Text = template.Text,
+                Name = name
             };
-
+           
             foreach (var item in dictionary)
             {
                 if (template.Text.Contains(item.Key))
@@ -57,8 +57,6 @@ namespace Documaster.Business.Services
 
         private string GetValue(string table, string property, int projectId)
         {
-          
-           
             switch (table)
             {
                 case "Project":

@@ -24,19 +24,13 @@ namespace Documaster.Ui.Controllers
             _replacePlaceholderService = replacePlaceholderService;
         }
 
-        // GET: ProjectTemplate
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
-        public ActionResult Edit(int templateId, int projectId)
+        public ActionResult Edit(int id)
         {
-            var content = _projectTemplateService.GetTemplate(templateId, projectId);
+            var content = _projectTemplateService.Get(id);
 
             // var replacedContentFromTemplate = _replacePlaceholderService.Replace(template, projectId);
-            ViewBag.ProjectId = projectId;
+           // ViewBag.ProjectId = projectId;
             return PartialView("_Edit", content);
         }
 
@@ -44,25 +38,61 @@ namespace Documaster.Ui.Controllers
         [ValidateInput(false)]
         public ActionResult Edit(ProjectTemplate projectTemplate)
         {
-            var updated = _projectTemplateService.CreateOrUpdate(projectTemplate);
+            var updated = _projectTemplateService.Update(projectTemplate);
             ViewBag.ProjectId = projectTemplate.ProjectId;
             return RedirectToAction("DisplayTemplate", "Requirement", new { projectTemplate.ProjectId});
         }
 
         [HttpGet]
-        public ActionResult ProjectTemplates(int projectId)
+        public ActionResult Create(int projectId)
         {
             var templates = _templateService.GetTemplates();
             ViewBag.Templates = templates;
-            return PartialView("_ProjectTemplates");
+            ViewBag.ProjectId = projectId;
+            return PartialView("_Create");
         }
 
         [HttpPost]
-        public ActionResult ProjectTemplates(ProjectTemplate projectTemplate)
+        [ValidateInput(false)]
+        public ActionResult Create(int projectId, int templateId, string name)
         {
-            var created = _projectTemplateService.CreateOrUpdate(projectTemplate);
+            if(ModelState.IsValid)
+            {
+                var created = _projectTemplateService.Create(projectId, templateId, name);
+                ViewBag.ProjectId = projectId;
+                return RedirectToAction("CustomerProject", "Requirement", new { projectId });
+            }
+            return View();
+        }
+        
+        [HttpGet]
+        public ActionResult ExportPdf(int id)
+        {
+            var content = _projectTemplateService.Get(id);
+
+            return new PartialViewAsPdf("_Export", content);
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            var projectTemplate = _projectTemplateService.Get(id);
             ViewBag.ProjectId = projectTemplate.ProjectId;
-            return RedirectToAction("DisplayTemplate", "Requirement", new { projectTemplate.ProjectId });
+            return PartialView("_Delete", projectTemplate);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(ProjectTemplate projectTemplate)
+        {
+            var projectTemplateToDelete = _projectTemplateService.Delete(projectTemplate);
+           
+            return RedirectToAction("CustomerProject", "Requirement", new { projectTemplate.ProjectId});
+        }
+
+        public JsonResult DoesNameExist(ProjectTemplate projectTemplate)
+        {
+            var doesNameExist = _projectTemplateService.DoesNameExist(projectTemplate);
+            return Json(!doesNameExist, JsonRequestBehavior.AllowGet);
         }
     }
 }

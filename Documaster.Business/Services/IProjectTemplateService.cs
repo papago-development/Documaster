@@ -1,13 +1,19 @@
 ﻿using Documaster.Model.Entities;
+using System.Collections.Generic;
 
 namespace Documaster.Business.Services
 {
     public interface IProjectTemplateService
     {
-        bool CreateOrUpdate(ProjectTemplate projectTemplate);
+        //bool Create(int projectId, int templateId, string name);
+        ProjectTemplate Create(int projectId, int templateId, string name);
+        bool Update(ProjectTemplate projectTemplate);
+        bool Delete(ProjectTemplate projectTemplate);
+        bool DoesNameExist(ProjectTemplate projectTemplate);
 
-        ProjectTemplate Create(ProjectTemplate projectTemplate);
+        ProjectTemplate Get(int id);
 
-        ProjectTemplate GetTemplate(int templateId, int projectId);
+        IEnumerable<ProjectTemplate> GetProjectTemplates(int projectId);
+
     }
 }
