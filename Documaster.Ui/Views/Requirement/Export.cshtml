@@ -1,0 +1,23 @@
+﻿@model string
+
+@{
+    ViewBag.Title = "Export";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Export</h2>
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                X
+            </button>
+            <h4 class="modal-title">Previzualizare sablon</h4>
+        </div>
+        <div class="modal-body">
+            @*<object data="@data" type="@Model" width="1140px" height="700px"></object>*@
+            @Html.Raw(Server.HtmlDecode(Model))
+        </div>
+    </div>
+</div>

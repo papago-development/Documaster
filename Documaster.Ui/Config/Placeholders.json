@@ -1,0 +1,8 @@
+﻿{
+  "{numeProiect}":  "Project.Name",
+  "{numarProiect}":  "Project.Number",
+  "{numeClient}":  "Customer.Name",
+  "{adresaProiect}":  "Project.Address",
+  "{adresaClient}":  "Customer.Address",
+  "{telefonClient}":  "Customer.Telephone"
+}

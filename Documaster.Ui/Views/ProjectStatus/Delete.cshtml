@@ -3,41 +3,42 @@
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="displayContent">
+    <h3>Esti sigur?</h3>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Nume status proiect
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+        </dl>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-<h3>Esti sigur?</h3>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Nume status proiect
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Sterge" class="btn btn-default" id="delete" @*data-target="#myModal"
+            <div class="form-actions no-color">
+                <input type="submit" value="Sterge" class="btn btn-default" id="delete" @*data-target="#myModal"
                 data-toggle="modal"*@ /> |
-            @Html.ActionLink("Inapoi", "Index")
-        </div>
-    }
-</div>
-<div class="modal" id="myModal" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="close" data-dismiss="modal">&times;</button>
-                <h4>Informare</h4>
+                @Html.ActionLink("Inapoi", "Index")
             </div>
-            <div class="modal-body">
-                <p>Starea se afla in uz</p>
-            </div>
-            <div class="modal-footer">
-                @Html.ActionLink("Close", "Index", new { @class = "btn btn-primary", @id="close"})
+        }
+    </div>
+    <div class="modal" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <h4>Informare</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Starea se afla in uz</p>
+                </div>
+                <div class="modal-footer">
+                    @Html.ActionLink("Close", "Index", new { @class = "btn btn-primary", @id = "close" })
+                </div>
             </div>
         </div>
     </div>

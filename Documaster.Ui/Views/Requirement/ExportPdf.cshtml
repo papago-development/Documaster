@@ -1,0 +1,17 @@
+﻿@model string
+@{
+    ViewBag.Title = "ExportPdf";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ExportPdf</h2>
+
+<div>
+    <h4>Template</h4>
+    <hr />
+@Model
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

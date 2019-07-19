@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Documaster.Model.Entities.Template>
+    @{
+        ViewBag.Title = "List";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+        var deleteSuccess = (TempData["DeleteSuccess"] != null).ToString().ToLower();
+        @*var createSuccess = ()*@
+    }
+    <script src="~/Scripts/bootstrap-notify/bootstrap-notify.js"></script>
+
+
+    <div class="displayContent">
+        <h2>Lista sabloane</h2>
+        <p>
+            @Html.ActionLink("Sablon nou", "Create")
+        </p>
+        <table class="table" style="width: 100%">
+            <tr>
+                <th>
+                    Nume
+                </th>
+
+                <th></th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", new {id = item.Id})">
+                            <span class="glyphicon glyphicon-pencil" title="Modifica"></span>
+                        </a> |
+                        <a href="@Url.Action("Delete", new {id = item.Id})">
+                            <span class=" glyphicon glyphicon-trash" title="Sterge"></span>
+                        </a>
+                    </td>
+                </tr>
+
+            }
+        </table>
+
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        console.log(@deleteSuccess);
+        if(@deleteSuccess)
+       {
+            $.notify("Sablonul a fost sters cu succes", {
+               type: "success",
+               delay: 6000,
+               offset: 70,
+               z_index: 9999,
+               placement: {
+                    from: "top",
+                    align: "right"
+               }
+            });
+        }
+    });
+    </script>

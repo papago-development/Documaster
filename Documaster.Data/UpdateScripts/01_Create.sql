@@ -27,7 +27,7 @@ CREATE TABLE dbo.Project (
 	,ProjectStatusId INT NOT NULL
 	,Notes NVARCHAR(MAX)
 	,[Number] NVARCHAR(50) NOT NULL
-    ,Created DATETIME NOT NULL
+	,Created DATETIME NOT NULL
 )
 GO
 
@@ -49,6 +49,11 @@ GO
 CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Name_Number
 	ON dbo.Project ([Name], Number)
 GO
+
+ALTER TABLE Project
+ADD AllowNotification BIT NOT NULL CONSTRAINT DF_Project_AllowNotification DEFAULT (0)
+GO   
+
 
 CREATE TABLE dbo.Customer (
 	Id INT NOT NULL
@@ -197,12 +202,33 @@ CREATE UNIQUE NONCLUSTERED INDEX UX_ProjectRequirement_ProjectId_RequirementId
 GO
 
 
+CREATE TABLE dbo.CustomizeTab (
+    Id INT IDENTITY(1, 1) NOT NULL
+    ,[Name] NVARCHAR(200) NOT NULL
+    ,[Type] NVARCHAR(25) NOT NULL
+    ,Number INT NOT NULL
+    ,CreationDate DATETIME NOT NULL
+    ,LastUpdate DATETIME NOT NULL
+)
+GO
+
+ALTER TABLE dbo.CustomizeTab
+    ADD CONSTRAINT PK_CustomizeTab
+    PRIMARY KEY CLUSTERED (Id)
+GO
+
+CREATE UNIQUE NONCLUSTERED INDEX UX_CustomizeTab_Name
+     ON dbo.CustomizeTab ([Name])
+GO
+
+
 CREATE TABLE dbo.OutputDocument (
 	Id INT IDENTITY(1,1) NOT NULL
 	,ProjectId INT NOT NULL
 	,RequirementId INT  NULL
-	,ContentType VARCHAR(200) NULL
+	,CustomizeTabId INT NOT NULL
 	,DocumentType VARCHAR(200) NOT NULL
+	,ContentType VARCHAR(200) NULL
 	,[Name] NVARCHAR(200) NOT NULL
 	,DocumentData VARBINARY(max) NOT NULL
 	,CreationDate DATETIME NOT NULL
@@ -240,7 +266,112 @@ CREATE UNIQUE NONCLUSTERED INDEX UX_OutputDocument_ProjectId_RequirementId_Name
 	ON dbo.OutputDocument (ProjectId, RequirementId, [Name])
 GO
 
+ALTER TABLE dbo.OutputDocument WITH CHECK
+     ADD CONSTRAINT FK_OutputDocument_CustomizeTabId_CustomizeTab_Id
+     FOREIGN KEY (CustomizeTabId)
+     REFERENCES dbo.CustomizeTab (Id)
+     ON DELETE CASCADE
+GO
+
+ALTER TABLE dbo.OutputDocument 
+     CHECK CONSTRAINT FK_OutputDocument_CustomizeTabId_CustomizeTab_Id
+GO
 
 
+CREATE TABLE dbo.UserProfile (
+	Id INT IDENTITY(1,1) NOT NULL
+	,UserName NVARCHAR(50) NOT NULL
+	,[Password] NVARCHAR(200) NOT NULL
+	,CreationDate DATETIME NOT NULL
+	,LastUpdate DATETIME NOT NULL
+)
+GO
+
+ALTER TABLE dbo.UserProfile
+	ADD CONSTRAINT PK_UserProfile
+	PRIMARY KEY CLUSTERED (Id)
+GO
+
+CREATE TABLE dbo.ProjectTemplate (
+	Id INT IDENTITY(1,1) NOT NULL
+   ,ProjectId INT NOT NULL
+   ,TemplateId INT NOT NULL
+   ,CreationDate DATETIME NOT NULL
+   ,LastUpdate DATETIME NOT NULL
+   ,[Text] VARCHAR(MAX) NOT NULL
+)
+GO
+
+ALTER TABLE dbo.ProjectTemplate
+	ADD CONSTRAINT PK_ProjectTemplate
+	PRIMARY KEY CLUSTERED (Id)
+GO
+
+ALTER TABLE dbo.ProjectTemplate WITH CHECK
+	ADD CONSTRAINT FK_ProjectTemplate_ProjectId_Project_Id
+	FOREIGN KEY (ProjectId)
+	REFERENCES dbo.Project (Id)
+	ON DELETE CASCADE
+GO
+
+ALTER TABLE dbo.ProjectTemplate WITH CHECK 
+	ADD CONSTRAINT FK_ProjectTemplate_TemplateId_Template_Id
+	FOREIGN KEY (TemplateId)
+	REFERENCES dbo.Template (Id)
+	ON DELETE CASCADE
+GO
+
+CREATE UNIQUE NONCLUSTERED INDEX UX_ProjectTemplate_ProjectId_TemplateId
+	ON dbo.ProjectTemplate (ProjectId, TemplateId)
+GO
+
+-- Database modifications --
+Update CustomizeTab
+    SET Type = 'Documente' WHERE Type = 'DisplayDocuments'
+GO
+
+UPDATE CustomizeTab SET Type = 'Avize' WHERE Type = 'OutputDocuments'
+GO
+
+UPDATE CustomizeTab SET Type = 'Note' WHERE Type = 'Notes'
+GO
+
+ALTER TABLE OutputDocument 
+ADD CustomizeTabId INT 
+GO
+
+UPDATE OutputDocument
+SET CustomizeTabId=1
+GO
+
+ALTER TABLE OutputDocument ALTER COLUMN CustomizeTabId INT NOT NULL
+GO
 
 
+-- DROP COLUMN TemplateId FROM dbo.ProjectTemplate --
+ALTER TABLE dbo.ProjectTemplate
+DROP COLUMN TemplateId
+GO
+
+ALTER TABLE dbo.ProjectTemplate
+DROP CONSTRAINT FK_ProjectTemplate_TemplateId_Template_Id
+GO
+
+DROP INDEX UX_ProjectTemplate_ProjectId_TemplateId ON dbo.ProjectTemplate
+GO
+
+SELECT * FROM dbo.ProjectTemplate
+GO
+
+--ADD COLUMN NAME ON dbo.ProjectTemplate --
+ALTER TABLE dbo.ProjectTemplate
+ADD Name VARCHAR(200) NULL
+GO
+
+ALTER TABLE dbo.ProjectTemplate
+ALTER COLUMN Name VARCHAR(200) NOT NULL
+GO
+
+CREATE UNIQUE NONCLUSTERED INDEX UX_ProjectTemplate_Name
+ ON dbo.ProjectTemplate ([Name])
+GO

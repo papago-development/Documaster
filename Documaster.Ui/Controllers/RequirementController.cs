@@ -1,13 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Documaster.Business.Services;
 using Documaster.Model.Entities;
-using Documaster.Model.Enums;
 using Documaster.Business.Models;
+using Rotativa;
+using System.IO;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Wordprocessing;
+using HtmlToOpenXml;
 
 namespace Documaster.Ui.Controllers
 {
@@ -19,13 +23,21 @@ namespace Documaster.Ui.Controllers
         private readonly IOutputDocumentService _outputDocumentService;
         private readonly IProjectService _projectService;
         private readonly INamedEntityService<Requirement> _namedEntityService;
+        private readonly ICustomizeTabService _customizeTabService;
+        private readonly ITemplateService _templateService;
+        private readonly IProjectTemplateService _projectTemplateService;
+        private readonly IReplacePlaceholderService _replacePlaceholderService;
 
         public RequirementController(IRequirementService requirementService,
                                      ICategoryService categoryService,
                                      IProjectRequirementService projectRequirementService,
                                      IOutputDocumentService outputDocumentService,
                                      IProjectService projectService,
-                                     INamedEntityService<Requirement> namedEntityService)
+                                     ICustomizeTabService customizeTabService,
+                                     INamedEntityService<Requirement> namedEntityService,
+                                     ITemplateService templateService,
+                                     IProjectTemplateService projectTemplateService,
+                                     IReplacePlaceholderService replacePlaceholderService)
         {
             _requirementService = requirementService;
             _categoryService = categoryService;
@@ -33,6 +45,10 @@ namespace Documaster.Ui.Controllers
             _outputDocumentService = outputDocumentService;
             _projectService = projectService;
             _namedEntityService = namedEntityService;
+           _customizeTabService = customizeTabService;
+            _templateService = templateService;
+            _projectTemplateService = projectTemplateService;
+            _replacePlaceholderService = replacePlaceholderService;
         }
 
         [HttpGet]
@@ -142,12 +158,17 @@ namespace Documaster.Ui.Controllers
         public ActionResult CustomerProject(int projectId)
         {
             var project = _projectService.GetProjectById(projectId);
+
+            var customizeTabs = _customizeTabService.GetCustomizeTabs().OrderBy(x => x.Number).ToList();
+
+            ViewBag.CustomizeTabs = customizeTabs;
+
             ViewBag.ProjectId = projectId;
             return View(project);
         }
 
         [HttpGet]
-        public ActionResult OutputDocuments(int projectId)
+        public ActionResult OutputDocuments(int projectId, int customizeTabId)
         {
             var fileToUpdates = new List<FileToUpdate>();
 
@@ -155,7 +176,7 @@ namespace Documaster.Ui.Controllers
             foreach (var projectRequirement in projectRequirements)
             {
                
-                var outputDocument = _outputDocumentService.GetOutputDocuments(projectId, projectRequirement.RequirementId); 
+                var outputDocument = _outputDocumentService.GetOutputDocuments(projectId, projectRequirement.RequirementId, customizeTabId); 
                 var newFileToUpdate = new FileToUpdate
                 {
                     Id = outputDocument?.Id ?? 0,
@@ -174,7 +195,7 @@ namespace Documaster.Ui.Controllers
             }
             fileToUpdates = fileToUpdates.OrderBy(x => x.CategoryNumber).ThenBy(x => x.RequirementNumber).ToList();
             ViewBag.ProjectId = projectId;
-
+            ViewBag.CustomizeTabId = customizeTabId;
             return PartialView("_ProjectDocumentForRequirement", fileToUpdates);
         }
 
@@ -218,9 +239,9 @@ namespace Documaster.Ui.Controllers
 
         //Metoda pentru incarcarea fisierelor
         [HttpPost]
-        public void Upload(HttpPostedFileBase fileUpload, int projectId, int? requirementId, string documentType)
+        public void Upload(HttpPostedFileBase fileUpload, int projectId, int? requirementId,int customizeTabId)
         {
-            _outputDocumentService.CreateOutputDocument(fileUpload, projectId, requirementId, documentType);
+            _outputDocumentService.CreateOutputDocument(fileUpload, projectId, requirementId, customizeTabId);
             var outputDocuments = _outputDocumentService.GetOutputDocumentByProjectId(projectId);
             ViewBag.OutputDocuments = outputDocuments;
         }
@@ -246,17 +267,17 @@ namespace Documaster.Ui.Controllers
         }
 
         [HttpGet]
-        public ActionResult DisplayDocuments(int projectId, string documentType)
+        public ActionResult DisplayDocuments(int projectId, int customizeTabId)
         {
-            if (!Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType))
-            {
-                return HttpNotFound();
-            }
-
-            var model = _outputDocumentService.GetOutputDocumentByIdAndDocType(projectId, documentType);
+            //if(!Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType))
+            //{
+            //    return HttpNotFound();
+            //}
+            var documentType = _customizeTabService.GetCustomizeTabById(customizeTabId).Type;
+            var model = _outputDocumentService.GetOutputDocumentByIdAndDocType(projectId, customizeTabId, documentType);
             ViewBag.ProjectId = projectId;
-            ViewBag.DocumentType = parsedDocumentType.ToString();
-
+            ViewBag.CustomizeTabId = customizeTabId;
+            ViewBag.DocumentType = documentType;
             return PartialView("_ProjectDocument", model);
         }
 
@@ -278,5 +299,18 @@ namespace Documaster.Ui.Controllers
             var doesNameExist = _namedEntityService.DoesNameExist(requirement);
             return Json(!doesNameExist, JsonRequestBehavior.AllowGet);
         }
+
+        /*
+      * Display list of projectTemplates
+      */
+        [HttpGet]
+        public ActionResult DisplayTemplate(int projectId)
+        {
+            var projectTemplates = _projectTemplateService.GetProjectTemplates(projectId);
+            ViewBag.ProjectId = projectId;
+            return PartialView("_DisplayTemplates", projectTemplates);
+        }
+
+
     }
 }

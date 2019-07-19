@@ -22,7 +22,8 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.CreatedDay, new { id = "createdDay" })
     @Html.HiddenFor(model => model.CreatedMonth, new { id = "createdMonth" })
-    @Html.HiddenFor(model => model.CreatedYear, new {id = "createdYear"})
+    @Html.HiddenFor(model => model.CreatedYear, new { id = "createdYear" })
+
     <div class="form-horizontal">
 
         <hr />
@@ -52,9 +53,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ProjectStatus.Name, "Stare", new { @class = "control-label col-md-2" })
             <div class="col-md-10" id="color">
-                @Html.DropDownList("ProjectStatusId",
-                                                   new SelectList(ViewBag.ProjectStatuses, "Id", "Name"),
-                                                   new { @class = "form-control jscolor" })
+                @Html.DropDownList("ProjectStatusId", new SelectList(ViewBag.ProjectStatuses, "Id", "Name"), new { @class = "form-control jscolor" })
             </div>
         </div>
         <div class="form-group">
@@ -62,10 +61,8 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control", id = "creation-textbox" }, autocomplete = "off" })
                 @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
-
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-5">
                 <input type="submit" value="Adauga" class="btn btn-default" />
@@ -79,17 +76,26 @@
 </div>
 
 <script type="text/javascript">
+
     $("#projectsForm").submit(function (event) {
         var form = $(event.currentTarget);
         var createdDay = $("#projectsForm .day option:selected").text();
 
         var createdMonth = $("#projectsForm .month option:selected").text();
+
         var createdYear = $("#projectsForm .year option:selected").text();
+
         var creationDateInput = $("#creation-textbox");
         creationDateInput.val("01/01/2001");
+
         $("#createdDay").val(createdDay);
+        console.log( $("#createdDay"));
+
         $("#createdMonth").val(createdMonth);
+        console.log($("#createdMonth"));
+
         $("#createdYear").val(createdYear);
+        console.log($("#createdYear"));
     });
 
     $(document).ready(function () {
@@ -120,6 +126,5 @@
             var statusName = $(this).find("option:selected").text();
             window.documaster.colorTool.setStatusDropdownColor($(this), statusName);
         });
-
     });
 </script>
