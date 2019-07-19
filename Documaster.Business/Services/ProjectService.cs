@@ -26,9 +26,8 @@ namespace Documaster.Business.Services
             project.Created = new DateTime(project.CreatedYear, project.CreatedMonth, project.CreatedDay);
 
             var newProject = _projectRepository.Create(project);
-  
-            _unitOfWork.SaveChanges();
 
+            _unitOfWork.SaveChanges();
             return newProject;
         }
 
@@ -46,13 +45,14 @@ namespace Documaster.Business.Services
 
         public bool UpdateProject(Project project)
         {
-            if(project.ExpireDay != 0 && project.ExpireYear != 0 && project.ExpireMonth != 0)
+           if(project.ExpireDay != 0 && project.ExpireYear != 0 && project.ExpireMonth != 0)
             {
                 project.Expire = new DateTime(project.ExpireYear, project.ExpireMonth, project.ExpireDay);
                 _projectRepository.Update(project, new List<string> { "Expire" });
             }
 
             var updatedProject = _projectRepository.Update(project, new List<string> { "Name", "Number", "ProjectStatusId" });
+
             _unitOfWork.SaveChanges();
             return updatedProject;
         }

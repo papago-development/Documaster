@@ -12,7 +12,7 @@ namespace Documaster.Ui.Controllers
             return View();
         }
 
-        [HttpPost]
+         [HttpPost]
         public ActionResult Index(HttpPostedFileBase fileUpload)
         {
             if (fileUpload != null && fileUpload.ContentLength > 0)

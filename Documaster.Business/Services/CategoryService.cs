@@ -62,7 +62,7 @@ namespace Documaster.Business.Services
         //Edit category
         public bool EditCategory(Category category)
         {
-            var edit = _categoryRepository.Update(category, new List<string> { "Name", "Number" });
+            var edit = _categoryRepository.Update(category, new List<string> { "Name" });
             _unitOfWork.SaveChanges();
             return edit;
         }
@@ -72,7 +72,6 @@ namespace Documaster.Business.Services
             return _categoryRepository.GetAll().ToList();
         }
 
-        // ???
         public IEnumerable<AssignedCategory> GetCategoriesByAssignedCategory(int id)
         {
             var allCategories = _categoryRepository.GetAll();

@@ -56,6 +56,18 @@ namespace Documaster.Business
 
             //NameEntity
             unityContainer.RegisterType(typeof(INamedEntityService<>), typeof(NamedEntityService<>), new PerRequestLifetimeManager());
+
+            //Customize Tab
+            unityContainer.RegisterType(typeof(ICustomizeTabService), typeof(CustomizeTabService), new PerRequestLifetimeManager());
+
+            //Template service
+            unityContainer.RegisterType(typeof(ITemplateService), typeof(TemplateService), new PerRequestLifetimeManager());
+
+            //Project Template service
+            unityContainer.RegisterType(typeof(IProjectTemplateService), typeof(ProjectTemplateService), new PerRequestLifetimeManager());
+
+            //Replace placehorder service
+            unityContainer.RegisterType(typeof(IReplacePlaceholderService), typeof(ReplacePlaceholderService), new PerRequestLifetimeManager());
         }
     }
 }

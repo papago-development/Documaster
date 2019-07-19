@@ -231,11 +231,6 @@ div.col-md-2.switch-column {
     padding-top: 6px;
 }
 
-.displayContent {
-    padding: 50px 30px 20px;
-    margin: 0px 60px;
-}
-
 .login-page {
     width: 100vw;
     position: relative;
@@ -249,7 +244,7 @@ div.col-md-2.switch-column {
     position: fixed;
     left: 0;
     right: 500px;
-    top: 0;
+    top: 50px;
     bottom: 0;
     -webkit-transform: translateZ(0);
     overflow: hidden;
@@ -258,7 +253,7 @@ div.col-md-2.switch-column {
 
     .image-screen img {
         width: 1160px;
-        height: 837px;
+        height: 844px;
     }
 
 .login-content {
@@ -279,11 +274,56 @@ div.col-md-2.switch-column {
     background-color: #eb7f2a;
 }
 
+<<<<<<< HEAD
 /* Changed position for combodate */
 .combodate {
     padding-top: 5px;
 }
 
+=======
+#sortable {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 50%;
+}
+
+    #sortable li {
+        margin: 0 10px 3px 3px;
+        padding: 0.4em;
+        padding-left: 1.5em;
+        font-size: 1.4em;
+        height: 45px;
+    }
+
+        #sortable li span {
+            position: absolute;
+            margin-left: -1.3em;
+        }
+
+i {
+    margin: 0 5px;
+    color: #2a21b2;
+}
+
+#icon {
+    float: right;
+}
+
+i:hover {
+    color: gray;
+}
+
+.ui-sortable-handle {
+    width: 60%;
+}
+
+/* Changed position for combodate */
+.comboDate {
+    padding-top: 3px;
+}
+
+>>>>>>> master
 .day, .month, .year {
     border-radius: 4px;
     height: 30px;

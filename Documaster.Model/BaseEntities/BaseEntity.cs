@@ -8,9 +8,7 @@ namespace Documaster.Model.BaseEntities
     {
         public virtual int Id { get; set; }
 
-        //[ReadOnly( true )]
-        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}")]
-        [Editable(true)]
+        [ReadOnly( true )]
         public DateTime CreationDate { get; set; }
 
         [Editable( false )]

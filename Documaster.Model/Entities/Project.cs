@@ -13,6 +13,7 @@ namespace Documaster.Model.Entities
   
         public DateTime? Expire { get; set; }
 
+
         public byte[] ProjectData { get; set; }
 
         public string Notes { get; set; }

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Documaster.Ui.Controllers
 {
+    [Authorize]
     public class ProjectController : Controller
     {
         private readonly IProjectService _projectService;
@@ -25,32 +26,28 @@ namespace Documaster.Ui.Controllers
             _customerService = customerService;
             _projectStatusService = projectStatusService;
         }
-
         [HttpGet]
         public ActionResult Welcome()
         {
             return View();
         }
-
         [HttpGet]
         public ActionResult Index()
         {
-            return RedirectToAction("List", new {sortProperty = "Number", sortDescending = false});
+            return RedirectToAction("List", new {sortProperty = "Number", sortDescending = true});
         }
 
         [HttpGet]
         public ActionResult List(string sortProperty, bool sortDescending)
         {
             var model = sortDescending
-                    ? _projectService.GetAllProjects().OrderByDescending(sortProperty)
-                    : _projectService.GetAllProjects().OrderBy(sortProperty);
+                    ? _projectService.GetAllProjects().OrderByDescending(sortProperty).ToList()
+                    : _projectService.GetAllProjects().OrderBy(sortProperty).ToList();
 
-
-            var newModel = model.ThenBy(x => x.Number).ToList();
             var projectStatusList = _projectStatusService.GetAll();
             ViewBag.ProjectStatuses = projectStatusList;
             ViewBag.SortDescending = sortDescending;
-            return View(newModel);
+            return View(model);
         }
 
         [HttpGet]
@@ -168,5 +165,6 @@ namespace Documaster.Ui.Controllers
             var doesNameNumberCombinationExist = _projectService.DoesNameNumberCombinationExist(project);
             return Json(!doesNameNumberCombinationExist, JsonRequestBehavior.AllowGet);
         }
+
     }
 }

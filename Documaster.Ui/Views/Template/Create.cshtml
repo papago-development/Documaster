@@ -10,9 +10,9 @@
     var dictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(configFile, new JsonSerializerSettings());
 }
 
-@*@section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 
 <!-- include libraries(jQuery, bootstrap) -->
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.css" rel="stylesheet">
@@ -22,15 +22,11 @@
 <!-- include summernote css/js -->
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
-@*<link href="~/Content/summernote/summernote.css" rel="stylesheet" />
-
-    <script src="~/Scripts/summernote/summernote.min.js"></script>*@
 
 <h2>Create</h2>
 
 @using (Html.BeginForm("Create", "Template", FormMethod.Post))
 {
-
     @Html.AntiForgeryToken()
     <div class="col-md-8">
         <div class="form-horizontal">
@@ -58,9 +54,7 @@
         {
             <p>@item</p>
         }
-
     </div>
-
 }
 <div class="col-md-10">
     @Html.ActionLink("Inapoi la lista", "Index")

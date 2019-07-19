@@ -38,7 +38,7 @@ namespace Documaster.Business.Services
 
         public bool UpdateRequirement(Requirement requirement)
         {
-            var updateRequirement = _requirementRepository.Update(requirement, new List<string> { "Name", "CategoryId", "Number" });
+            var updateRequirement = _requirementRepository.Update(requirement, new List<string> { "Name", "CategoryId"});
             _unitOfWork.SaveChanges();
             return updateRequirement;
         }
