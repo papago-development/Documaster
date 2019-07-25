@@ -1,9 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using Documaster.Model.BaseEntities;
-using Documaster.Model.Enums;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Documaster.Model.Entities
 {
@@ -19,6 +16,5 @@ namespace Documaster.Model.Entities
         [Required(ErrorMessage = "Numarul nu poate fi gol")]
         [Range(1, int.MaxValue, ErrorMessage = "Numerotarea incepe de la 1")]
         public int Number { get; set; }
-
     }
 }

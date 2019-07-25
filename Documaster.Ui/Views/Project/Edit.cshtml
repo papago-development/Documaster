@@ -95,8 +95,6 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Expire, "Expira la", new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-
-
             @Html.EditorFor(model => model.Expire, new { htmlAttributes = new { @class = "form-control", id = "expire-textbox" }, autocomplete = "off" })
             @Html.ValidationMessageFor(model => model.Expire, "", new { @class = "text-danger" })
         </div>
@@ -137,10 +135,11 @@
     });
 
     $(document).ready(function () {
-
         var dateInput = $("#expire-textbox");
-        var value = dateInput.attr("value");
-
+        var expireYear = $("#expireYear").val();
+        var expireMonth = $("#expireMonth").val();
+        var expireDay = $("#expireDay").val();
+        
         dateInput.combodate({
             format: 'MM/DD/YYYY',
             template: 'DD MM YYYY',
@@ -149,8 +148,9 @@
             smartDays: true
         });
 
-        if (value != null) {
-            dateInput.combodate('setValue', new Date(value));
+        if (expireYear !== "0" && expireMonth !== "0" && expireDay !== "0") {
+            var date = new Date(expireYear, expireMonth - 1, expireDay);
+            dateInput.combodate('setValue', date);
         }
 
         var javaScriptColorDictionary = @Html.Raw(Json.Encode(colorDictionary));

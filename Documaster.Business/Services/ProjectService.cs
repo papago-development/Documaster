@@ -16,12 +16,12 @@ namespace Documaster.Business.Services
             _unitOfWork = unitOfWork;
         }
 
-        public IQueryable<Project> GetAllProjects()
+        public IQueryable<Project> GetAll()
         {
             return _projectRepository.GetAll();
         }
 
-        public Project CreateProject(Project project)
+        public Project Create(Project project)
         {
             project.Created = new DateTime(project.CreatedYear, project.CreatedMonth, project.CreatedDay);
                             var newProject = _projectRepository.Create(project);
@@ -30,19 +30,27 @@ namespace Documaster.Business.Services
             return newProject;
         }
 
-        public bool DeleteProject(Project project)
+        public bool Delete(Project project)
         {
             var deleteProject = _projectRepository.Delete(project.Id);
             _unitOfWork.SaveChanges();
             return deleteProject;
         }
 
-        public Project GetProjectById(int id)
+        public Project Get(int id)
         {
-            return _projectRepository.Get(id);
+            var project = _projectRepository.Get(id);
+            if (project.Expire.HasValue)
+            {
+                project.ExpireYear = project.Expire.Value.Year;
+                project.ExpireMonth = project.Expire.Value.Month;
+                project.ExpireDay = project.Expire.Value.Day;
+            }
+
+            return project;
         }
 
-        public bool UpdateProject(Project project)
+        public bool Update(Project project)
         {
             if (project.ExpireDay != 0 && project.ExpireYear != 0 && project.ExpireMonth != 0)
             {
@@ -55,7 +63,7 @@ namespace Documaster.Business.Services
             return updatedProject;
         }
 
-        public bool UpdateProjectNotes(Project project)
+        public bool UpdateNotes(Project project)
         {
             var updatedProjectNotes = _projectRepository.Update(project, new List<string> { "Notes" });
             _unitOfWork.SaveChanges();

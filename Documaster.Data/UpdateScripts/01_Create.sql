@@ -21,13 +21,14 @@ CREATE TABLE dbo.Project (
 	Id INT IDENTITY(1,1) NOT NULL
 	,Expire DATETIME  
 	,ProjectData VARBINARY(MAX)
-	,[Name] NVARCHAR(1000) NOT NULL
+	,[Name] NVARCHAR(400) NOT NULL
 	,CreationDate DATETIME NOT NULL
 	,LastUpdate DATETIME NOT NULL
 	,ProjectStatusId INT NOT NULL
 	,Notes NVARCHAR(MAX)
 	,[Number] NVARCHAR(50) NOT NULL
 	,Created DATETIME NOT NULL
+	,AllowNotification BIT NOT NULL CONSTRAINT DF_Project_AllowNotification DEFAULT (0)
 )
 GO
 
@@ -49,10 +50,6 @@ GO
 CREATE UNIQUE NONCLUSTERED INDEX UX_Project_Name_Number
 	ON dbo.Project ([Name], Number)
 GO
-
-ALTER TABLE Project
-ADD AllowNotification BIT NOT NULL CONSTRAINT DF_Project_AllowNotification DEFAULT (0)
-GO   
 
 
 CREATE TABLE dbo.Customer (
@@ -295,7 +292,7 @@ GO
 CREATE TABLE dbo.ProjectTemplate (
 	Id INT IDENTITY(1,1) NOT NULL
    ,ProjectId INT NOT NULL
-   ,TemplateId INT NOT NULL
+   ,[Name] NVARCHAR(200) NOT NULL
    ,CreationDate DATETIME NOT NULL
    ,LastUpdate DATETIME NOT NULL
    ,[Text] VARCHAR(MAX) NOT NULL
@@ -314,64 +311,10 @@ ALTER TABLE dbo.ProjectTemplate WITH CHECK
 	ON DELETE CASCADE
 GO
 
-ALTER TABLE dbo.ProjectTemplate WITH CHECK 
-	ADD CONSTRAINT FK_ProjectTemplate_TemplateId_Template_Id
-	FOREIGN KEY (TemplateId)
-	REFERENCES dbo.Template (Id)
-	ON DELETE CASCADE
-GO
-
-CREATE UNIQUE NONCLUSTERED INDEX UX_ProjectTemplate_ProjectId_TemplateId
-	ON dbo.ProjectTemplate (ProjectId, TemplateId)
-GO
-
--- Database modifications --
-Update CustomizeTab
-    SET Type = 'Documente' WHERE Type = 'DisplayDocuments'
-GO
-
-UPDATE CustomizeTab SET Type = 'Avize' WHERE Type = 'OutputDocuments'
-GO
-
-UPDATE CustomizeTab SET Type = 'Note' WHERE Type = 'Notes'
-GO
-
-ALTER TABLE OutputDocument 
-ADD CustomizeTabId INT 
-GO
-
-UPDATE OutputDocument
-SET CustomizeTabId=1
-GO
-
-ALTER TABLE OutputDocument ALTER COLUMN CustomizeTabId INT NOT NULL
-GO
-
-
--- DROP COLUMN TemplateId FROM dbo.ProjectTemplate --
 ALTER TABLE dbo.ProjectTemplate
-DROP COLUMN TemplateId
+	CHECK CONSTRAINT FK_ProjectTemplate_ProjectId_Project_Id
 GO
 
-ALTER TABLE dbo.ProjectTemplate
-DROP CONSTRAINT FK_ProjectTemplate_TemplateId_Template_Id
-GO
-
-DROP INDEX UX_ProjectTemplate_ProjectId_TemplateId ON dbo.ProjectTemplate
-GO
-
-SELECT * FROM dbo.ProjectTemplate
-GO
-
---ADD COLUMN NAME ON dbo.ProjectTemplate --
-ALTER TABLE dbo.ProjectTemplate
-ADD Name VARCHAR(200) NULL
-GO
-
-ALTER TABLE dbo.ProjectTemplate
-ALTER COLUMN Name VARCHAR(200) NOT NULL
-GO
-
-CREATE UNIQUE NONCLUSTERED INDEX UX_ProjectTemplate_Name
- ON dbo.ProjectTemplate ([Name])
+CREATE UNIQUE NONCLUSTERED INDEX UX_ProjectTemplate_ProjectId_Name
+	ON dbo.ProjectTemplate (ProjectId, [Name])
 GO

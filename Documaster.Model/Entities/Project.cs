@@ -10,9 +10,7 @@ namespace Documaster.Model.Entities
 {
     public class Project : NamedEntity
     {
-  
         public DateTime? Expire { get; set; }
-
 
         public byte[] ProjectData { get; set; }
 
@@ -26,12 +24,12 @@ namespace Documaster.Model.Entities
 
         [Remote("DoesNameNumberCombinationExist", "Project", AdditionalFields = "Number, Id", ErrorMessage = "Aceasta combinatie Nume + Numar exista deja")]
         [Required(ErrorMessage = "Numele nu poate fi gol")]
-         public override string Name { get; set; }
-
+        public override string Name { get; set; }
 
         public DateTime Created { get; set; }
-         
+
         public virtual Customer Customer { get; set; }
+
         public virtual ProjectStatus ProjectStatus { get; set; }
 
         [JsonIgnore]
@@ -40,21 +38,21 @@ namespace Documaster.Model.Entities
         public bool AllowNotification { get; set; }
 
         [NotMapped]
-        public short ExpireYear { get; set; }
+        public int ExpireYear { get; set; }
 
         [NotMapped]
-        public short ExpireDay { get; set; }
+        public int ExpireDay { get; set; }
 
         [NotMapped]
-        public short ExpireMonth { get; set; }
+        public int ExpireMonth { get; set; }
 
         [NotMapped]
-        public short CreatedYear { get; set; }
+        public int CreatedYear { get; set; }
 
         [NotMapped]
-        public short CreatedDay { get; set; }
+        public int CreatedDay { get; set; }
 
         [NotMapped]
-        public short CreatedMonth { get; set; }
+        public int CreatedMonth { get; set; }
     }
 }

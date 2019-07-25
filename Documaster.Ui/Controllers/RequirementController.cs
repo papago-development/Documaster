@@ -6,12 +6,6 @@ using System.Web.Mvc;
 using Documaster.Business.Services;
 using Documaster.Model.Entities;
 using Documaster.Business.Models;
-using Rotativa;
-using System.IO;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Wordprocessing;
-using HtmlToOpenXml;
 
 namespace Documaster.Ui.Controllers
 {
@@ -157,7 +151,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult CustomerProject(int projectId)
         {
-            var project = _projectService.GetProjectById(projectId);
+            var project = _projectService.Get(projectId);
 
             var customizeTabs = _customizeTabService.GetCustomizeTabs().OrderBy(x => x.Number).ToList();
 
@@ -202,7 +196,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Notes(int projectId)
         {
-            var project = _projectService.GetProjectById(projectId);
+            var project = _projectService.Get(projectId);
             if (project == null)
             {
                 return HttpNotFound();
@@ -214,14 +208,14 @@ namespace Documaster.Ui.Controllers
         [ValidateInput(false)]
         public ActionResult Notes(int id, string notes)
         {
-            var project = _projectService.GetProjectById(id);
+            var project = _projectService.Get(id);
             if (project == null)
             {
                 return HttpNotFound();
             }
 
             project.Notes = notes;
-            _projectService.UpdateProjectNotes(project);
+            _projectService.UpdateNotes(project);
             return RedirectToAction("CustomerProject", new { projectId = id });
         }
 

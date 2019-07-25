@@ -39,7 +39,7 @@ namespace Documaster.Business.Tests
             var projectService = new ProjectService(_projectRepository, _unitOfWork);
 
             //Act
-            projectService.UpdateProject(project);
+            projectService.Update(project);
 
             //Assert
             _unitOfWork.AssertWasCalled(p => p.SaveChanges());
@@ -53,7 +53,7 @@ namespace Documaster.Business.Tests
             var projectService = new ProjectService(_projectRepository, _unitOfWork);
 
             //Act
-            var result = projectService.CreateProject(project);
+            var result = projectService.Create(project);
 
             //Assert
             _unitOfWork.AssertWasCalled(p => p.SaveChanges());
@@ -68,7 +68,7 @@ namespace Documaster.Business.Tests
             var projectService = new ProjectService(_projectRepository, _unitOfWork);
 
             //Act
-            var result = projectService.DeleteProject(project);
+            var result = projectService.Delete(project);
 
             //Assert
             _unitOfWork.AssertWasCalled(p => p.SaveChanges());

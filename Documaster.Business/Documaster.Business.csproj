@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyContainer.cs" />
+    <Compile Include="Extensions\EnumTools.cs" />
     <Compile Include="Extensions\QueryableExtensions.cs" />
     <Compile Include="Models\AssignedCategory.cs" />
     <Compile Include="Models\AssignedRequirement.cs" />

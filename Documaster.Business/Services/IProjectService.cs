@@ -5,12 +5,12 @@ namespace Documaster.Business.Services
 {
     public interface IProjectService
     {
-        IQueryable<Project> GetAllProjects();
-        Project CreateProject(Project project);
-        Project GetProjectById(int id);
-        bool DeleteProject(Project project);
-        bool UpdateProject(Project project);
-        bool UpdateProjectNotes(Project project);
+        IQueryable<Project> GetAll();
+        Project Create(Project project);
+        Project Get(int id);
+        bool Delete(Project project);
+        bool Update(Project project);
+        bool UpdateNotes(Project project);
         bool DoesNameNumberCombinationExist(Project project);
     }
 }

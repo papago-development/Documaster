@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System;
 using Documaster.Model.Enums;
-using System.Web.Mvc.Html;
+using Documaster.Business.Extensions;
 
 namespace Documaster.Ui.Controllers
 {
@@ -15,8 +15,7 @@ namespace Documaster.Ui.Controllers
         private readonly ICustomizeTabService _customizeTabService;
         private readonly INamedEntityService<CustomizeTab> _namedEntityService;
 
-        public CustomizeTabController(ICustomizeTabService customizeTabService,
-                                      INamedEntityService<CustomizeTab> namedEntityService)
+        public CustomizeTabController(ICustomizeTabService customizeTabService, INamedEntityService<CustomizeTab> namedEntityService)
         {
             _customizeTabService = customizeTabService;
             _namedEntityService = namedEntityService;
@@ -33,17 +32,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var documentTypeList = new List<SelectListItem>();
-            documentTypeList.Add(new SelectListItem
-            {
-                Text = "Selecteaza tipul documentului",
-                Value = ""
-            });
-            foreach (DocumentType eVal in Enum.GetValues(typeof(DocumentType)))
-            {
-                documentTypeList.Add(new SelectListItem { Text = Enum.GetName(typeof(DocumentType), eVal), Value = eVal.ToString() });
-            }
-            ViewBag.DocumentsType = documentTypeList;
+            ViewBag.DocumentsType = GetDocumentTypeList();
             return View();
         }
 
@@ -55,19 +44,9 @@ namespace Documaster.Ui.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(int id) 
+        public ActionResult Edit(int id)
         {
-             var documentTypeList = new List<SelectListItem>();
-            documentTypeList.Add(new SelectListItem
-            {
-                Text = "Select",
-                Value = ""
-            });
-            foreach (DocumentType eVal in Enum.GetValues(typeof(DocumentType)))
-            {
-                documentTypeList.Add(new SelectListItem { Text = Enum.GetName(typeof(DocumentType), eVal), Value = eVal.ToString() });
-            }
-            ViewBag.DocumentsType = documentTypeList;
+            ViewBag.DocumentsType = GetDocumentTypeList();
 
             var model = _customizeTabService.GetCustomizeTabById(id);
             return View(model);
@@ -76,8 +55,8 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult Edit(CustomizeTab customizeTab)
         {
-                _customizeTabService.Edit(customizeTab);
-                return RedirectToAction("Index");
+            _customizeTabService.Edit(customizeTab);
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -111,6 +90,20 @@ namespace Documaster.Ui.Controllers
         {
             _customizeTabService.SaveOrder(sortedList, entityName);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+
+        private static IList<SelectListItem> GetDocumentTypeList()
+        {
+            var documentTypeList = new List<SelectListItem>
+            {
+                new SelectListItem {Text = "Selecteaza tipul documentului", Value = ""}
+            };
+            foreach (DocumentType eVal in Enum.GetValues(typeof(DocumentType)))
+            {
+                documentTypeList.Add(new SelectListItem {Text = eVal.GetDescription(), Value = eVal.ToString()});
+            }
+            return documentTypeList;
         }
     }
 }

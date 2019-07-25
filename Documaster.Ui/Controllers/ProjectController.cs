@@ -37,8 +37,8 @@ namespace Documaster.Ui.Controllers
         public ActionResult List(string sortProperty, bool sortDescending)
         {
             var model = sortDescending
-                    ? _projectService.GetAllProjects().OrderByDescending(sortProperty).ToList()
-                    : _projectService.GetAllProjects().OrderBy(sortProperty).ToList();
+                    ? _projectService.GetAll().OrderByDescending(sortProperty).ToList()
+                    : _projectService.GetAll().OrderBy(sortProperty).ToList();
 
             var projectStatusList = _projectStatusService.GetAll();
             ViewBag.ProjectStatuses = projectStatusList;
@@ -60,7 +60,7 @@ namespace Documaster.Ui.Controllers
         {
             if (ModelState.IsValid)
             {
-                _projectService.CreateProject(project);
+                _projectService.Create(project);
                 return RedirectToAction("Index");
             }
             return View(project);
@@ -72,7 +72,7 @@ namespace Documaster.Ui.Controllers
             var projectStatusesList = _projectStatusService.GetAll();
             ViewBag.ProjectStatuses = projectStatusesList;
 
-            var model = _projectService.GetProjectById(id);
+            var model = _projectService.Get(id);
             return View(model);
         }
 
@@ -96,7 +96,7 @@ namespace Documaster.Ui.Controllers
             else
             {
                 _customerService.UpdateCustomer(project.Customer);
-                _projectService.UpdateProject(project);
+                _projectService.Update(project);
             }
 
             return RedirectToAction("Index");
@@ -105,7 +105,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var model = _projectService.GetProjectById(id);
+            var model = _projectService.Get(id);
             return View(model);
         }
 
@@ -124,7 +124,7 @@ namespace Documaster.Ui.Controllers
                 _customerService.Delete(item);
             }
 
-            _projectService.DeleteProject(project);
+            _projectService.Delete(project);
 
             return RedirectToAction("Index");
         }
@@ -132,27 +132,27 @@ namespace Documaster.Ui.Controllers
         [HttpPost]
         public ActionResult ToggleProjectState(int projectId, bool state)
         {
-            var project = _projectService.GetProjectById(projectId);
+            var project = _projectService.Get(projectId);
             if (project == null)
             {
                 return HttpNotFound();
             }
 
-            _projectService.UpdateProject(project);
+            _projectService.Update(project);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         [HttpPost]
         public ActionResult ChangeProjectStatus(int projectId, int projectStatusId)
         {
-            var project = _projectService.GetProjectById(projectId);
+            var project = _projectService.Get(projectId);
             if(project == null)
             {
                 return HttpNotFound();
             }
 
             project.ProjectStatusId = projectStatusId;
-            _projectService.UpdateProject(project);
+            _projectService.Update(project);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 

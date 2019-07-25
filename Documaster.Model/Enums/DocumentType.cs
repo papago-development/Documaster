@@ -1,11 +1,9 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace Documaster.Model.Enums
 {
-
     [JsonConverter(typeof(StringEnumConverter))]
     public enum DocumentType
     {

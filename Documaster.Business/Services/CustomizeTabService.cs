@@ -11,9 +11,7 @@ namespace Documaster.Business.Services
         private readonly IGenericRepository<CustomizeTab> _customizeTabRepository;
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public CustomizeTabService(IUnitOfWork unitOfWork,
-                            IGenericRepository<CustomizeTab> customizeTabRepository)
-
+        public CustomizeTabService(IUnitOfWork unitOfWork, IGenericRepository<CustomizeTab> customizeTabRepository)
         {
             _unitOfWork = unitOfWork;
             _customizeTabRepository = customizeTabRepository;
@@ -26,7 +24,8 @@ namespace Documaster.Business.Services
 
         public CustomizeTab Create(CustomizeTab customizeTab)
         {
-
+            var lastNumber = _customizeTabRepository.GetAll().Max(x => x.Number);
+            customizeTab.Number = lastNumber + 1;
             var createdCustomizeTab = _customizeTabRepository.Create(customizeTab);
 
             _unitOfWork.SaveChanges();
@@ -67,8 +66,6 @@ namespace Documaster.Business.Services
                 _logger.Info($"Customize tab: {customizeTab.Name}");
                 customizeTab.Number = sortedList.IndexOf(id)+1;
                 _customizeTabRepository.Update(customizeTab, new List<string> { "Number" });
-               
-
             }
             _unitOfWork.SaveChanges();
         }
