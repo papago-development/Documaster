@@ -36,7 +36,7 @@ namespace Documaster.Business.Services
 
         public bool Update(ProjectTemplate projectTemplate)
         {
-            var updated = _projectTemplateRepository.Update(projectTemplate, new List<string> { "Name", "Text" });
+            var updated = _projectTemplateRepository.Update(projectTemplate, new List<string> { "Text" });
             _unitOfWork.SaveChanges();
 
             return updated;
