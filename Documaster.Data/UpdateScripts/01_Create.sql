@@ -318,3 +318,4 @@ GO
 CREATE UNIQUE NONCLUSTERED INDEX UX_ProjectTemplate_ProjectId_Name
 	ON dbo.ProjectTemplate (ProjectId, [Name])
 GO
+
