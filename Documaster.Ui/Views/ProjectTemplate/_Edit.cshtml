@@ -23,7 +23,7 @@
                     @Html.TextAreaFor(x=>x.Text, new { id = "template-notes" })
                 </div>
                 <div class="form-horizontal">
-                   <a class="btn btn-default" onclick="editProjectTemplate()">Salveaza</a>
+                   <a href="javascript:;" class="btn btn-default" onclick="editProjectTemplate()">Salveaza</a>
                 </div>
             }
         </div>
@@ -44,7 +44,7 @@
         console.log(formData);
         var url = '@Url.Action("Edit", "ProjectTemplate")';
         $.ajax({
-            url: url,
+            url: '@Url.Action("Edit", "ProjectTemplate")',
             type: 'POST',
             contentType: false,
             processData: false,

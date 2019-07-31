@@ -8,18 +8,18 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
     <div class="container">
-        @Ajax.ActionLink("New", "Create", "ProjectTemplate", new { projectId, customizeTabId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn  btn-primary" })
+        @Ajax.ActionLink("Adauga", "Create", "ProjectTemplate", new { projectId, customizeTabId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn  btn-primary" })
         @foreach (var item in Model)
         {
             var href = baseUrl + "Requirement/ExportWord?projectId=" + projectId + "&name=" + item.Name;
             <div class="documentLine row">
                 <div class="col-md-4">
-                    @Ajax.ActionLink(item.Name, "Edit", "ProjectTemplate", new { id = item.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" })
+                    @Ajax.ActionLink(item.Name, "Edit", "ProjectTemplate", new { id = item.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @style = "color: #428bca;" })
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" style="padding-top: 10px;">
                     @Html.ActionLink("Pdf", "ExportPdf", "ProjectTemplate", new { id = item.Id }, new { @class = "button btn btn-info btn-xs", target = "_blank" })
 
-                    <a class="deleteButton btn btn-danger btn-xs" onclick="deleteProjectTemplate(@item.Id)" data-id="@item.Id">Sterge</a>
+                    <a href="" class="deleteButton btn btn-danger btn-xs" onclick="deleteProjectTemplate(@item.Id)" data-id="@item.Id">Sterge</a>
 
                 </div>
             </div>
