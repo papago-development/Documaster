@@ -263,10 +263,6 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult DisplayDocuments(int projectId, int customizeTabId)
         {
-            //if(!Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType))
-            //{
-            //    return HttpNotFound();
-            //}
             var documentType = _customizeTabService.GetCustomizeTabById(customizeTabId).Type;
             var model = _outputDocumentService.GetOutputDocumentByIdAndDocType(projectId, customizeTabId, documentType);
             ViewBag.ProjectId = projectId;
@@ -295,8 +291,8 @@ namespace Documaster.Ui.Controllers
         }
 
         /*
-      * Display list of projectTemplates
-      */
+         * Display list of projectTemplates
+         */
         [HttpGet]
         public ActionResult DisplayTemplate(int projectId)
         {

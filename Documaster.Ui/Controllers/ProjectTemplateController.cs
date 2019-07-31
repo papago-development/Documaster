@@ -29,8 +29,6 @@ namespace Documaster.Ui.Controllers
         {
             var content = _projectTemplateService.Get(id);
 
-            // var replacedContentFromTemplate = _replacePlaceholderService.Replace(template, projectId);
-           // ViewBag.ProjectId = projectId;
             return PartialView("_Edit", content);
         }
 
@@ -60,7 +58,10 @@ namespace Documaster.Ui.Controllers
             {
                 var created = _projectTemplateService.Create(projectId, templateId, name);
                 ViewBag.ProjectId = projectId;
-                return RedirectToAction("CustomerProject", "Requirement", new { projectId });
+                // return RedirectToAction("CustomerProject", "Requirement", new { projectId });
+                // return Redirect(Url.Action("CustomerProject", "Requirement", new { projectId }) + "#tabs");
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
+
             }
             return View();
         }
@@ -73,20 +74,9 @@ namespace Documaster.Ui.Controllers
             return new PartialViewAsPdf("_Export", content);
         }
 
-        [HttpGet]
-        public ActionResult Delete(int id)
+        public void Delete(int id)
         {
-            var projectTemplate = _projectTemplateService.Get(id);
-            ViewBag.ProjectId = projectTemplate.ProjectId;
-            return PartialView("_Delete", projectTemplate);
-        }
-
-        [HttpPost]
-        public ActionResult Delete(ProjectTemplate projectTemplate)
-        {
-            var projectTemplateToDelete = _projectTemplateService.Delete(projectTemplate);
-           
-            return RedirectToAction("CustomerProject", "Requirement", new { projectTemplate.ProjectId});
+            _projectTemplateService.Delete(id);
         }
 
         public JsonResult DoesNameExist(ProjectTemplate projectTemplate)

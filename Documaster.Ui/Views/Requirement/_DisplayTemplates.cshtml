@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<Documaster.Model.Entities.ProjectTemplate>
     @{
         var projectId = (object)ViewBag.ProjectId;
+        var customizeTabId = (object)ViewBag.CustomizeTabId;
         var baseUrl = Url.Content("~");
     }
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
     <div class="container">
-        @Ajax.ActionLink("New", "Create", "ProjectTemplate", new { projectId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn  btn-primary" })
+        @Ajax.ActionLink("New", "Create", "ProjectTemplate", new { projectId, customizeTabId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn  btn-primary" })
         @foreach (var item in Model)
         {
             var href = baseUrl + "Requirement/ExportWord?projectId=" + projectId + "&name=" + item.Name;
@@ -18,15 +19,36 @@
                 <div class="col-md-3">
                     @Html.ActionLink("Pdf", "ExportPdf", "ProjectTemplate", new { id = item.Id }, new { @class = "button btn btn-info btn-xs", target = "_blank" })
 
-                    @Ajax.ActionLink("Delete", "Delete", "ProjectTemplate", new { id = item.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn  btn-danger btn-xs" })
+                    <a class="deleteButton btn btn-danger btn-xs" onclick="deleteProjectTemplate(@item.Id)" data-id="@item.Id">Sterge</a>
 
                 </div>
             </div>
         }
     </div>
-    <script type="text/javascript">var showModalDialog = function () {
-            $("#myModal").modal("show");
 
-        };
+<script type="text/javascript">
+    var showModalDialog = function () {
+        $("#myModal").modal("show");
+    };
 
-      </script>
+    var reloadCurrentTab = function () {
+        const currentIndex = $("#tabs").tabs("option", "active");
+        $("#tabs").tabs('load', currentIndex);
+    };
+
+    var deleteProjectTemplate = function (id) {
+        const formData = new FormData();
+        formData.append("id", id);
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Delete", "ProjectTemplate")',
+            contentType: false,
+            processData: false,
+            data: formData
+        }).success(function () {
+            reloadCurrentTab();
+        })
+        .fail(function (jqXhr) {
+        });
+    };
+ </script>

@@ -48,9 +48,9 @@ namespace Documaster.Business.Services
             return _projectTemplateRepository.GetAll().Where(x => x.ProjectId == projectId).OrderByDescending(x => x.CreationDate);
         }
 
-        public bool Delete(ProjectTemplate projectTemplate)
+        public bool Delete(int id)
         {
-            var deleted = _projectTemplateRepository.Delete(projectTemplate.Id);
+            var deleted = _projectTemplateRepository.Delete(id);
             _unitOfWork.SaveChanges();
             return deleted;
         }

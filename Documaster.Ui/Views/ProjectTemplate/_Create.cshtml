@@ -8,7 +8,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-<div class="modal-dialog" id="createModal">
+<div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -27,21 +27,20 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Name, "Nume", new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" }, autocomplete = "off" })
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", id = "docName" }, autocomplete = "off" })
                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Text, "Sablon", new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.DropDownList("TemplateId", new SelectList(ViewBag.Templates, "Id", "Name"), new { @class = "form-control" })
+                            @Html.DropDownList("TemplateId", new SelectList(ViewBag.Templates, "Id", "Name"), new { @class = "form-control", id = "templateId" })
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-5">
 
-                            <input type="submit" value="Salveaza" class="btn btn-default" id="closeModal" />
-
+                            <a class="btn btn-primary" id="saveProjectTemplate" onclick="saveProjectTemplate()">Salveaza</a>
                         </div>
                     </div>
                 </div>
@@ -49,10 +48,30 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $('.modal-dialog').change(
 
-        function() {
-            $.validator.unobtrusive.parse("#createForm");
-        });
-</script>
+<script type="text/javascript">
+    var reloadCurrentTab = function () {
+        const currentIndex = $("#tabs").tabs();
+        $("#tabs").tabs('load', currentIndex);
+    };
+
+    var saveProjectTemplate = function() {
+
+        var projectId = @projectId;
+        var templateId = $("#templateId").val();
+        var name = $("#docName").val();
+
+        var url = '@Url.Action("Create", "ProjectTemplate")';
+
+        $.post(url, { projectId, templateId, name})
+            .done(function() {
+
+                    $("#myModal").modal("hide");
+                        reloadCurrentTab();
+
+            });
+    };
+
+    $('.modal-dialog').change(function () {
+        $.validator.unobtrusive.parse("#createForm");
+    });</script>

@@ -343,7 +343,6 @@
     <Content Include="Views\Requirement\ExportPdf.cshtml" />
     <Content Include="Views\ProjectTemplate\_Edit.cshtml" />
     <Content Include="Views\ProjectTemplate\_Create.cshtml" />
-    <Content Include="Views\ProjectTemplate\_Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

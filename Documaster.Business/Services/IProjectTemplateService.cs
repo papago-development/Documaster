@@ -5,10 +5,9 @@ namespace Documaster.Business.Services
 {
     public interface IProjectTemplateService
     {
-        //bool Create(int projectId, int templateId, string name);
         ProjectTemplate Create(int projectId, int templateId, string name);
         bool Update(ProjectTemplate projectTemplate);
-        bool Delete(ProjectTemplate projectTemplate);
+        bool Delete(int id);
         bool DoesNameExist(ProjectTemplate projectTemplate);
 
         ProjectTemplate Get(int id);
