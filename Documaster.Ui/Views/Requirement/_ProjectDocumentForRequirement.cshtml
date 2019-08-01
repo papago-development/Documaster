@@ -83,8 +83,8 @@ var showModalDialog = function () {
 
 $(document).ready (function () {
     var projectId = @projectId;
-    @*var documentType = "@Documaster.Model.Enums.DocumentType.OutputDocuments.ToString()";*@
     var customizeTabId = @customizeTabId;
+
     $ ("input[type='file']").each (function (index, value) {
         var requirementId = $ (value).parent().find ("input[name='requirementId']").val();
         $ (value).change (function (element) {
@@ -99,8 +99,8 @@ $(document).ready (function () {
     $(".switch-column input[type='checkbox']").change(function () {
         var projectRequirementId = $(this).parent().parent().find("input[type='hidden']").val();
         var state = $(this).prop("checked");
-        $.post("ToggleDocumentState", { projectRequirementId, state }, function () {
 
+        $.post("ToggleDocumentState", { projectRequirementId, state }, function () {
         });
     });
 });

@@ -15,6 +15,7 @@
 <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
 @Scripts.Render("~/bundles/jqueryunobtrusive")
 <script src="~/Scripts/Documaster/ProjectDocument.js"></script>
+<script src="~/Scripts/Documaster/ReloadTabs.js"></script>
 <br />
 <div class="displayContent">
     <div>
@@ -37,10 +38,10 @@
     </div>
     <div class="modal fade" id="myModal"></div>
 </div>
-@section scripts{
+
 <script>
-$(document).ready(function () {
-            $("#tabs").tabs();
-    
-        });</script>
-}
+    $(document).ready(function () {
+        $("#tabs").tabs();
+    });
+</script>
+

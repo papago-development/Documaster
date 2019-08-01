@@ -23,7 +23,7 @@
                     @Html.TextAreaFor(x=>x.Text, new { id = "template-notes" })
                 </div>
                 <div class="form-horizontal">
-                   <a href="javascript:;" class="btn btn-default" onclick="editProjectTemplate()">Salveaza</a>
+                   <a name="editProjectTemplate" class="btn btn-default" onclick="editProjectTemplate()">Salveaza</a>
                 </div>
             }
         </div>
@@ -31,17 +31,11 @@
 </div>
 
 <script type="text/javascript">
-    var reloadCurrentTab = function () {
-        const currentIndex = $("#tabs").tabs();
-        $("#tabs").tabs('load', currentIndex);
-    };
-
     var editProjectTemplate = function() {
         var formData = new FormData();
         formData.append("projectTemplateId", $("#projectTemplateId").val());
         formData.append("projectId", $("#projectId").val());
         formData.append("text", $("#template-notes").val());
-        console.log(formData);
         var url = '@Url.Action("Edit", "ProjectTemplate")';
         $.ajax({
             url: '@Url.Action("Edit", "ProjectTemplate")',
@@ -51,7 +45,7 @@
             data: formData
         }).success (function () {
             $("#myModal").modal("hide");
-            reloadCurrentTab();
+            reloadTabs.reloadCurrentTab();
         });
     };
 

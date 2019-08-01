@@ -5,9 +5,9 @@
     var projectId = ViewBag.ProjectId;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
+@Scripts.Render("~/bundles/jqueryval")
+
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
@@ -50,10 +50,6 @@
 </div>
 
 <script type="text/javascript">
-    var reloadCurrentTab = function () {
-        const currentIndex = $("#tabs").tabs();
-        $("#tabs").tabs('load', currentIndex);
-    };
 
     var saveProjectTemplate = function() {
 
@@ -65,13 +61,12 @@
 
         $.post(url, { projectId, templateId, name})
             .done(function() {
-
-                    $("#myModal").modal("hide");
-                        reloadCurrentTab();
-
-            });
+                $("#myModal").modal("hide");
+                reloadTabs.reloadCurrentTab();
+        });
     };
 
     $('.modal-dialog').change(function () {
         $.validator.unobtrusive.parse("#createForm");
-    });</script>
+    });
+</script>
