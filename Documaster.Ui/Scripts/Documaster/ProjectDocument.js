@@ -12,7 +12,7 @@
         processData: false,
         data: formData
     }).success(function () {
-        reloadCurrentTab();
+        reloadTabs.reloadCurrentTab();
     })
         .fail(function (jqXhr) {
             console.log(jqXhr);
@@ -36,7 +36,7 @@ var deleteDocument = function (documentId) {
         processData: false,
         data: formData
     }).success(function () {
-        reloadCurrentTab();
+        reloadTabs.reloadCurrentTab();
     })
         .fail(function (jqXhr) {
         });

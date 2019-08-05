@@ -6,7 +6,10 @@
     }
 
     @Scripts.Render("~/bundles/jqueryval")
-                      <script src="~/Scripts/Documaster/ProjectDocument.js"></script>
+
+
+    <script src="~/Scripts/Documaster/ReloadTabs.js"></script>
+    <script src="~/Scripts/Documaster/ProjectDocument.js"></script>
     <div class="container">
         @Ajax.ActionLink("Adauga", "Create", "ProjectTemplate", new { projectId, customizeTabId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn  btn-primary" })
         @foreach (var item in Model)
