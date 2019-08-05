@@ -15,7 +15,6 @@ namespace Documaster.Business.Services
         private readonly IGenericRepository<Template> _templateRepository;
         private readonly IGenericRepository<Project> _projectRepository;
         private readonly IGenericRepository<Customer> _customerRepository;
-        private readonly IGenericRepository<ProjectTemplate> _projectTemplateRepository;
 
         public ReplacePlaceholderService(IUnitOfWork unitOfWork)
         {
@@ -23,7 +22,6 @@ namespace Documaster.Business.Services
             _projectRepository = _unitOfWork.Repository<Project>();
             _customerRepository = _unitOfWork.Repository<Customer>();
             _templateRepository = unitOfWork.Repository<Template>();
-            _projectTemplateRepository = unitOfWork.Repository<ProjectTemplate>();
         }
         
         public ProjectTemplate Replace(int projectId, int templateId, string name)

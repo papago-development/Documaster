@@ -16,9 +16,7 @@ namespace Documaster.Ui.Controllers
         private readonly IProjectStatusService _projectStatusService;
 
 
-        public ProjectController(IProjectService projectService,
-                                 IProjectRequirementService projectRequirementService,
-                                 ICustomerService customerService,
+        public ProjectController(IProjectService projectService, IProjectRequirementService projectRequirementService, ICustomerService customerService,
                                  IProjectStatusService projectStatusService)
         {
             _projectService = projectService;
@@ -49,7 +47,7 @@ namespace Documaster.Ui.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            //Populate dropdownlist with project status 
+            //Populate dropdownlist with project statuses
             var projectStatusList = _projectStatusService.GetAll();
             ViewBag.ProjectStatuses = projectStatusList;
             return View();

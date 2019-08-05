@@ -31,13 +31,7 @@
     </div>
     @section scripts{
         <script>
-             $(document).ready(function () {
-        $("#sortable").sortable({
-            stop: function(event, ui){
-                saveOrder();
-            }
-        });
-    });
+
       var saveOrder = function() {
           var items = $("#sortable").children();
           console.log(items);
@@ -51,7 +45,17 @@
           });
            console.log("Sorted list: " + sortedList);
 
-          $.post("SaveOrder", {sortedList, entityName});
+          $.post(entityName+"/SaveOrder", {sortedList, entityName}, function() {
+
+          });
       }
+
+    $(document).ready(function () {
+        $("#sortable").sortable({
+            stop: function(event, ui){
+                saveOrder();
+            }
+        });
+    });
         </script>
     }

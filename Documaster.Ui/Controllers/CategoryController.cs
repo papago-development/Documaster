@@ -9,8 +9,7 @@ namespace Documaster.Ui.Controllers
         private readonly ICategoryService _categoryService;
         private readonly INamedEntityService<Category> _namedEntityService;
 
-        public CategoryController(ICategoryService categoryService,
-                                  INamedEntityService<Category> namedEntityService)
+        public CategoryController(ICategoryService categoryService, INamedEntityService<Category> namedEntityService)
         {
             _categoryService = categoryService;
             _namedEntityService = namedEntityService;

@@ -7,15 +7,12 @@ namespace Documaster.Business.Services
     public class ProjectTemplateService : IProjectTemplateService
     {
         private readonly IGenericRepository<ProjectTemplate> _projectTemplateRepository;
-        private readonly IGenericRepository<Template> _templateRepository;
         private readonly IReplacePlaceholderService _replacePlaceholderService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ProjectTemplateService(IUnitOfWork unitOfWork,
-                                      IReplacePlaceholderService replacePlaceholderService)
+        public ProjectTemplateService(IUnitOfWork unitOfWork, IReplacePlaceholderService replacePlaceholderService)
         {
             _unitOfWork = unitOfWork;
-            _templateRepository = _unitOfWork.Repository<Template>();
             _projectTemplateRepository = _unitOfWork.Repository<ProjectTemplate>();
             _replacePlaceholderService = replacePlaceholderService;
         }

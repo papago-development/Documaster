@@ -9,11 +9,10 @@ namespace Documaster.Business.Services
         private readonly IGenericRepository<Template> _templateRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public TemplateService(IGenericRepository<Template> templateRepository,
-                               IUnitOfWork unitOfWork)
+        public TemplateService(IUnitOfWork unitOfWork)
         {
-            _templateRepository = templateRepository;
             _unitOfWork = unitOfWork;
+            _templateRepository = _unitOfWork.Repository<Template>();
         }
 
         public IEnumerable<Template> GetTemplates()

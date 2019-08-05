@@ -15,9 +15,8 @@ namespace Documaster.Ui.Controllers
         private readonly IReplacePlaceholderService _replacePlaceholderService;
         private readonly ITemplateService _templateService;
 
-        public ProjectTemplateController(IProjectTemplateService projectTemplateService,
-                                         ITemplateService templateService,
-                                         IReplacePlaceholderService replacePlaceholderService)
+        public ProjectTemplateController(IProjectTemplateService projectTemplateService, ITemplateService templateService, 
+             IReplacePlaceholderService replacePlaceholderService)
         {
             _projectTemplateService = projectTemplateService;
             _templateService = templateService;
@@ -58,10 +57,7 @@ namespace Documaster.Ui.Controllers
             {
                 var created = _projectTemplateService.Create(projectId, templateId, name);
                 ViewBag.ProjectId = projectId;
-                // return RedirectToAction("CustomerProject", "Requirement", new { projectId });
-                // return Redirect(Url.Action("CustomerProject", "Requirement", new { projectId }) + "#tabs");
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
-
             }
             return View();
         }

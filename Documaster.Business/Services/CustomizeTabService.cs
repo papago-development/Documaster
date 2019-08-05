@@ -11,10 +11,10 @@ namespace Documaster.Business.Services
         private readonly IGenericRepository<CustomizeTab> _customizeTabRepository;
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public CustomizeTabService(IUnitOfWork unitOfWork, IGenericRepository<CustomizeTab> customizeTabRepository)
+        public CustomizeTabService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _customizeTabRepository = customizeTabRepository;
+            _customizeTabRepository = _unitOfWork.Repository<CustomizeTab>();
         }
 
         public List<CustomizeTab> GetCustomizeTabs()

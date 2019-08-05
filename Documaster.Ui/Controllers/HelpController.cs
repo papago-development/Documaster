@@ -11,7 +11,7 @@ namespace Documaster.Ui.Controllers
     {
         public ActionResult Index()
         {
-            return View ();
+            return View();
         }
     }
 }

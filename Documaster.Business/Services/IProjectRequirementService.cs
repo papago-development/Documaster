@@ -13,7 +13,6 @@ namespace Documaster.Business.Services
         IEnumerable<ProjectRequirement> GetProjectRequirementByProjectId(int id);
         bool DeleteProjectRequirement(ProjectRequirement projectRequirement);
         IEnumerable<ProjectRequirement> GetListOfProjectRequirements(int id);
-
         ProjectRequirement CreateProjectRequirement(ProjectRequirement projectRequirement);
         ProjectRequirement GetProjectRequirementById(int id);
         bool UpdateProjectRequirement(ProjectRequirement projectRequirement);

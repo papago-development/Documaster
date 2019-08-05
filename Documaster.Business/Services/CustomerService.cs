@@ -1,9 +1,5 @@
 ﻿using Documaster.Model.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Documaster.Business.Services
 {
@@ -12,11 +8,10 @@ namespace Documaster.Business.Services
         private readonly IGenericRepository<Customer> _customerRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CustomerService(IGenericRepository<Customer> customerRepository,
-                               IUnitOfWork unitOfWork)
+        public CustomerService(IUnitOfWork unitOfWork)
         {
-            _customerRepository = customerRepository;
             _unitOfWork = unitOfWork;
+            _customerRepository = _unitOfWork.Repository<Customer>();
         }
 
         public Customer CreateCustomer(Customer customer)

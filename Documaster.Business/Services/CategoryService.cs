@@ -11,11 +11,10 @@ namespace Documaster.Business.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IGenericRepository<Category> _categoryRepository;
 
-        public CategoryService(IGenericRepository<Category> categoryRepository,
-                               IUnitOfWork unitOfWork)
+        public CategoryService(IUnitOfWork unitOfWork)
         {
-            _categoryRepository = categoryRepository;
             _unitOfWork = unitOfWork;
+            _categoryRepository = _unitOfWork.Repository<Category>();
         }
 
         //Create new category

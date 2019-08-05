@@ -8,18 +8,8 @@ namespace Documaster.Business.Services
         IEnumerable<Template> GetTemplates();
         Template CreateTemplate(Template template);
         Template GetTemplateById(int id);
-
         bool UpdateTemplate(Template template);
         bool DeleteTemplate(Template template);
         bool DoesNameExist(Template template);
-
-        // string ExportToPdf(int templateId, int projectId);
-        //Template ExportToPdf(int templateId, int projectId);
-        //Template ExportToWord(int templateId, int projectId);
-
-       // Template GetContentTemplateById(int templateId, int projectId);
-
-       
-       
     }
 }

@@ -9,9 +9,7 @@ namespace Documaster.Business.Services
         bool Update(ProjectTemplate projectTemplate);
         bool Delete(int id);
         bool DoesNameExist(ProjectTemplate projectTemplate);
-
         ProjectTemplate Get(int id);
-
         IEnumerable<ProjectTemplate> GetProjectTemplates(int projectId);
 
     }

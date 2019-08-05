@@ -10,10 +10,10 @@ namespace Documaster.Business.Services
         private readonly IGenericRepository<Project> _projectRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ProjectService(IGenericRepository<Project> projectRepository, IUnitOfWork unitOfWork)
+        public ProjectService(IUnitOfWork unitOfWork)
         {
-            _projectRepository = projectRepository;
             _unitOfWork = unitOfWork;
+            _projectRepository = _unitOfWork.Repository<Project>();
         }
 
         public IQueryable<Project> GetAll()

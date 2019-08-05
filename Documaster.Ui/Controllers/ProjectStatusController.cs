@@ -9,8 +9,7 @@ namespace Documaster.Ui.Controllers
         private readonly IProjectStatusService _projectStatusService;
         private readonly INamedEntityService<ProjectStatus> _namedEntityService;
 
-        public ProjectStatusController(IProjectStatusService projectStatusService,
-                                       INamedEntityService<ProjectStatus> namedEntityService)
+        public ProjectStatusController(IProjectStatusService projectStatusService, INamedEntityService<ProjectStatus> namedEntityService)
         {
             _projectStatusService = projectStatusService;
             _namedEntityService = namedEntityService;

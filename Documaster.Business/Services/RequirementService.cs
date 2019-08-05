@@ -10,11 +10,10 @@ namespace Documaster.Business.Services
         private readonly IGenericRepository<Requirement> _requirementRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public RequirementService(IGenericRepository<Requirement> requirementRepository,
-                                  IUnitOfWork unitOfWork)
+        public RequirementService(IUnitOfWork unitOfWork)
         {
-            _requirementRepository = requirementRepository;
             _unitOfWork = unitOfWork;
+            _requirementRepository = _unitOfWork.Repository<Requirement>();
         }
 
         public Requirement CreateRequirement(Requirement requirement)

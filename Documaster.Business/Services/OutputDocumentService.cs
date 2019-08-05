@@ -30,7 +30,6 @@ namespace Documaster.Business.Services
             }
 
             var documentType = _customizeTabRepository.Get(customizeTabId).Type;
-            //!Enum.TryParse<DocumentType>(documentType, true, out var parsedDocumentType)
 
             var length = fileUpload.ContentLength;
             var tempImage = new byte[length];

@@ -10,11 +10,10 @@ namespace Documaster.Business.Services
         private readonly IGenericRepository<ProjectStatus> _projectStatusRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ProjectStatusService(IGenericRepository<ProjectStatus> projectStatusRepository,
-                                   IUnitOfWork unitOfWork)
+        public ProjectStatusService(IUnitOfWork unitOfWork)
         {
-            _projectStatusRepository = projectStatusRepository;
             _unitOfWork = unitOfWork;
+            _projectStatusRepository = _unitOfWork.Repository<ProjectStatus>();
         }
 
         public ProjectStatus CreateProjectStatus(ProjectStatus projectStatus)
