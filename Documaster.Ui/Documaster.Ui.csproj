@@ -262,7 +262,6 @@
     <Content Include="Content\summernote\font\summernote.eot" />
     <Content Include="Content\summernote\font\summernote.ttf" />
     <Content Include="Content\summernote\font\summernote.woff" />
-    <Content Include="App_Browsers\qt.browser" />
     <None Include="Properties\PublishProfiles\Documaster - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Zip file.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
