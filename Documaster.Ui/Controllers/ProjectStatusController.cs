@@ -4,6 +4,7 @@ using Documaster.Model.Entities;
 
 namespace Documaster.Ui.Controllers
 {
+    [Authorize]
     public class ProjectStatusController : Controller
     {
         private readonly IProjectStatusService _projectStatusService;

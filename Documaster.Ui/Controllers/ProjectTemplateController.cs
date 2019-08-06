@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Documaster.Ui.Controllers
 {
+    [Authorize]
     public class ProjectTemplateController : Controller
     {
         private readonly IProjectTemplateService _projectTemplateService;

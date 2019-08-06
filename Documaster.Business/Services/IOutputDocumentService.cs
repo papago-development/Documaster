@@ -11,7 +11,7 @@ namespace Documaster.Business.Services
         OutputDocument CreateOutputDocument(HttpPostedFileBase fileUpload, int projectId, int? requirementId, int customizeTabId);
         OutputDocument GetOutputDocumentById(int documentId);
         IEnumerable<OutputDocument> GetOutputDocumentByProjectId(int projectId);
-        List<FileToUpdate> GetOutputDocumentByIdAndDocType(int projectId, int customizeTabId, string documentType);
+        List<FileToUpdate> GetOutputDocumentByProjectIdAndTabId(int projectId, int customizeTabId);
         bool DeleteOutputDocument(int id);
              
     }

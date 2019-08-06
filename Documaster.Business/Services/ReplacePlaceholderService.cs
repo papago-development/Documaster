@@ -46,10 +46,10 @@ namespace Documaster.Business.Services
                     var property = item.Value.Split('.')[1];
 
                     var valueToReplace = GetValue(table, property, projectId);
-                  template.Text = template.Text.Replace(item.Key, valueToReplace);
+                  projectTemplate.Text = projectTemplate.Text.Replace(item.Key, valueToReplace);
                 }
             }
-            projectTemplate.Text = template.Text;
+           // projectTemplate.Text = template.Text;
             return projectTemplate;
         }
 
@@ -63,6 +63,8 @@ namespace Documaster.Business.Services
                     {
                         case "Name":
                             return project.Name;
+                        case "Number":
+                            return project.Number;
                         default:
                             return String.Empty ;
                     }
@@ -72,6 +74,10 @@ namespace Documaster.Business.Services
                     {
                         case "Name":
                             return customer.Name;
+                        case "Address":
+                            return customer.Address;
+                        case "Telephone":
+                            return customer.Telephone;
                         default:
                             return String.Empty;
                     }

@@ -9,6 +9,7 @@ using Documaster.Business.Models;
 
 namespace Documaster.Ui.Controllers
 {
+    [Authorize]
     public class RequirementController : Controller
     {
         private readonly IRequirementService _requirementService;
@@ -264,7 +265,7 @@ namespace Documaster.Ui.Controllers
         public ActionResult DisplayDocuments(int projectId, int customizeTabId)
         {
             var documentType = _customizeTabService.GetCustomizeTabById(customizeTabId).Type;
-            var model = _outputDocumentService.GetOutputDocumentByIdAndDocType(projectId, customizeTabId, documentType);
+            var model = _outputDocumentService.GetOutputDocumentByProjectIdAndTabId(projectId, customizeTabId);
             ViewBag.ProjectId = projectId;
             ViewBag.CustomizeTabId = customizeTabId;
             ViewBag.DocumentType = documentType;

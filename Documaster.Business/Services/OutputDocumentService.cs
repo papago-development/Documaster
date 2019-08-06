@@ -40,7 +40,6 @@ namespace Documaster.Business.Services
                 Name = fileUpload.FileName,
                 DocumentData = tempImage,
                 ContentType = fileUpload.ContentType,
-                DocumentType = documentType,
                 ProjectId = projectId,
                 RequirementId = requirementId,
                 CustomizeTabId = customizeTabId
@@ -83,10 +82,10 @@ namespace Documaster.Business.Services
            return _outputDocumentRepository.Get(documentId);
         }
 
-        public List<FileToUpdate> GetOutputDocumentByIdAndDocType(int projectId, int customizeTabId, string documentType)
+        public List<FileToUpdate> GetOutputDocumentByProjectIdAndTabId(int projectId, int customizeTabId)
         {
             return _outputDocumentRepository
-                            .Get(x => x.ProjectId == projectId && x.DocumentType == documentType && x.CustomizeTabId == customizeTabId)
+                            .Get(x => x.ProjectId == projectId && x.CustomizeTabId == customizeTabId)
                             .Select(item => new FileToUpdate
                             {
                                 Id = item?.Id ?? 0,

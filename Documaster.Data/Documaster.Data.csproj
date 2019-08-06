@@ -52,6 +52,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="UpdateScripts\02_Template.sql" />
+    <None Include="UpdateScripts\03_UpdateOutputDocument.sql" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Documaster.Model\Documaster.Model.csproj">

@@ -33,7 +33,7 @@
         <ul>
             @foreach (var item in customizeTabs)
             {
-                <li><a href="@Url.Action(item.Type, "Requirement", new {projectId, documentType = item.Type, customizeTabId = item.Id})">@item.Name</a></li>
+                <li><a href="@Url.Action(item.Type, "Requirement", new {projectId, customizeTabId = item.Id})">@item.Name</a></li>
             }
         </ul>
     </div>

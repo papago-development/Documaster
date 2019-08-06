@@ -19,10 +19,6 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
 
 <h2>Edit</h2>
-<div class="alert alert-warning alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <strong>Warning!</strong> Orice modificare a sablonului conduce la pierderea documentelor intermediare salvate
-</div>
 
 @using (Html.BeginForm())
 {
@@ -62,7 +58,8 @@
     @Html.ActionLink("Inapoi la lista", "Index")
 </div>
 
-<script>$(document).ready(function () {
+<script>
+    $(document).ready(function () {
         $("#template-notes").summernote({
             height: 500,
             toolbar: [
@@ -75,4 +72,5 @@
                 ["inserts", ["link", "picture", "video"]],
             ]
         });
-    });</script>
+    });
+</script>

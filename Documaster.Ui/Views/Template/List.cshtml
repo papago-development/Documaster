@@ -2,8 +2,6 @@
     @{
         ViewBag.Title = "List";
         Layout = "~/Views/Shared/_Layout.cshtml";
-        var deleteSuccess = (TempData["DeleteSuccess"] != null).ToString().ToLower();
-        @*var createSuccess = ()*@
     }
     <script src="~/Scripts/bootstrap-notify/bootstrap-notify.js"></script>
 
@@ -39,23 +37,5 @@
 
             }
         </table>
+</div>
 
-    </div>
-    <script type="text/javascript">
-        $(document).ready(function() {
-        console.log(@deleteSuccess);
-        if(@deleteSuccess)
-       {
-            $.notify("Sablonul a fost sters cu succes", {
-               type: "success",
-               delay: 6000,
-               offset: 70,
-               z_index: 9999,
-               placement: {
-                    from: "top",
-                    align: "right"
-               }
-            });
-        }
-    });
-    </script>

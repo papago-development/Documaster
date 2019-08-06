@@ -10,6 +10,7 @@ using Documaster.Business.Extensions;
 
 namespace Documaster.Ui.Controllers
 {
+    [Authorize]
     public class CustomizeTabController : Controller
     {
         private readonly ICustomizeTabService _customizeTabService;
