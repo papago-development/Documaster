@@ -51,8 +51,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="UpdateScripts\02_Template.sql" />
-    <None Include="UpdateScripts\03_UpdateOutputDocument.sql" />
+    <None Include="UpdateScripts\Tapusi.sql" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Documaster.Model\Documaster.Model.csproj">
@@ -61,7 +60,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="UpdateScripts\01_Create.sql" />
+    <Content Include="UpdateScripts\01_Create.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

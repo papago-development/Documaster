@@ -32,43 +32,7 @@ INSERT dbo.CustomizeTab VALUES
 GO
 
 ALTER TABLE OutputDocument 
-     ADD CustomizeTabId INT 
-GO
-
-/**/
-UPDATE dbo.OutputDocument
-SET CustomizeTabId = 1
-WHERE DocumentType = 'Document'
-GO
-
-/**/
-UPDATE dbo.OutputDocument
-SET CustomizeTabId = 2
-WHERE DocumentType = 'SpecialDocumentType'
-GO
-
-/**/
-UPDATE dbo.OutputDocument
-SET CustomizeTabId = 3
-WHERE DocumentType = 'OutputDocument'
-GO
-
-/**/
-UPDATE dbo.OutputDocument
-SET CustomizeTabId = 4
-WHERE DocumentType = 'GroundDrawing'
-GO
-
-/**/
-UPDATE dbo.OutputDocument
-SET CustomizeTabId = 5
-WHERE DocumentType = 'Photo'
-GO
-
-/**/
-UPDATE dbo.OutputDocument
-SET CustomizeTabId = 6
-WHERE DocumentType = 'Drawing'
+	ADD CustomizeTabId INT 
 GO
 
 UPDATE dbo.OutputDocument
@@ -76,7 +40,38 @@ SET DocumentType = 'DisplayDocuments'
 WHERE RequirementId IS NULL
 GO
 
-ALTER TABLE OutputDocument ALTER COLUMN CustomizeTabId INT NOT NULL
+UPDATE dbo.OutputDocument
+SET CustomizeTabId = 1
+WHERE DocumentType = 'Document'
+GO
+
+UPDATE dbo.OutputDocument
+SET CustomizeTabId = 2
+WHERE DocumentType = 'SpecialDocumentType'
+GO
+
+UPDATE dbo.OutputDocument
+SET CustomizeTabId = 3
+WHERE DocumentType = 'OutputDocument'
+GO
+
+UPDATE dbo.OutputDocument
+SET CustomizeTabId = 4
+WHERE DocumentType = 'GroundDrawing'
+GO
+
+UPDATE dbo.OutputDocument
+SET CustomizeTabId = 5
+WHERE DocumentType = 'Photo'
+GO
+
+UPDATE dbo.OutputDocument
+SET CustomizeTabId = 6
+WHERE DocumentType = 'Drawing'
+GO
+
+ALTER TABLE OutputDocument 
+	ALTER COLUMN CustomizeTabId INT NOT NULL
 GO
 
 ALTER TABLE dbo.OutputDocument WITH CHECK

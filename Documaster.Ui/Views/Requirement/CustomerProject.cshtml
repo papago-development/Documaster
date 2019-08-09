@@ -1,5 +1,4 @@
-﻿@using System.Configuration
-@using Documaster.Model.Entities
+﻿@using Documaster.Model.Entities
 @model Documaster.Model.Entities.Project
 
 @{
@@ -7,8 +6,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var projectId = (object)ViewBag.ProjectId;
     var customizeTabs = (IList<CustomizeTab>)ViewBag.CustomizeTabs;
-    var specialDocumentTypeText = ConfigurationManager.AppSettings["SpecialDocumentType"];
-
 }
 
 <link href="~/Content/themes/base/tabs.css" rel="stylesheet" />

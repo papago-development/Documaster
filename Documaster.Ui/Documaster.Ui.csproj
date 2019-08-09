@@ -338,7 +338,9 @@
     <Content Include="Views\Template\List.cshtml" />
     <Content Include="Views\Requirement\_DisplayTemplates.cshtml" />
     <Content Include="Views\ProjectTemplate\_Export.cshtml" />
-    <None Include="Config\Placeholders.json" />
+    <Content Include="Config\Placeholders.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Views\Requirement\ExportPdf.cshtml" />
     <Content Include="Views\ProjectTemplate\_Edit.cshtml" />
     <Content Include="Views\ProjectTemplate\_Create.cshtml" />
