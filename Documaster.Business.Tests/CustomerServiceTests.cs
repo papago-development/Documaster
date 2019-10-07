@@ -22,17 +22,17 @@ namespace Documaster.Business.Tests
         }
 
 
-        [TestMethod]
-        public void WhenCreatingCustomerExpectSuccess()
-        {
-            //Arrange
-            var customerService = new CustomerService(_customerRepository, _unitOfWork);
+        //[TestMethod]
+        //public void WhenCreatingCustomerExpectSuccess()
+        //{
+        //    //Arrange
+        //    var customerService = new CustomerService(_customerRepository, _unitOfWork);
 
-            //Act
-            var result = customerService.CreateCustomer(customer);
+        //    //Act
+        //    var result = customerService.CreateCustomer(customer);
 
-            //Assert
-            _customerRepository.Create(result);
-        }
+        //    //Assert
+        //    _customerRepository.Create(result);
+        //}
     }
 }

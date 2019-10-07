@@ -320,3 +320,14 @@ i:hover {
     border-radius: 4px;
     height: 30px;
 }
+
+tr.year,
+tr.year:hover {
+    background-color: #ddd !important;
+ 
+}
+
+.displayContent {
+    padding-top: 20px;
+}
+

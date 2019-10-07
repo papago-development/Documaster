@@ -71,6 +71,9 @@ namespace Documaster.Business
 
             //Replace placehorder service
             unityContainer.RegisterType(typeof(IReplacePlaceholderService), typeof(ReplacePlaceholderService), new PerRequestLifetimeManager());
+
+            //Note
+            unityContainer.RegisterType(typeof(INoteService), typeof(NoteService), new PerRequestLifetimeManager());
         }
     }
 }

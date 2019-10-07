@@ -58,7 +58,7 @@ namespace Documaster.Business.Services
                 _projectRepository.Update(project, new List<string> { "Expire" });
             }
 
-            var updatedProject = _projectRepository.Update(project, new List<string> { "Name", "Number", "ProjectStatusId", "AllowNotification" });
+            var updatedProject = _projectRepository.Update(project, new List<string> { "Name", "Number", "ProjectStatusId", "AllowNotification", "Address" });
             _unitOfWork.SaveChanges();
             return updatedProject;
         }

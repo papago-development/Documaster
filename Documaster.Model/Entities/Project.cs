@@ -26,6 +26,8 @@ namespace Documaster.Model.Entities
         [Required(ErrorMessage = "Numele nu poate fi gol")]
         public override string Name { get; set; }
 
+        public string Address { get; set; }
+
         public DateTime Created { get; set; }
 
         public virtual Customer Customer { get; set; }

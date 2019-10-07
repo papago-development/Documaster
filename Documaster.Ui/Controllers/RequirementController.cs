@@ -22,6 +22,7 @@ namespace Documaster.Ui.Controllers
         private readonly ITemplateService _templateService;
         private readonly IProjectTemplateService _projectTemplateService;
         private readonly IReplacePlaceholderService _replacePlaceholderService;
+        private readonly INoteService _noteService;
 
         public RequirementController(IRequirementService requirementService,
                                      ICategoryService categoryService,
@@ -32,7 +33,8 @@ namespace Documaster.Ui.Controllers
                                      INamedEntityService<Requirement> namedEntityService,
                                      ITemplateService templateService,
                                      IProjectTemplateService projectTemplateService,
-                                     IReplacePlaceholderService replacePlaceholderService)
+                                     IReplacePlaceholderService replacePlaceholderService,
+                                     INoteService noteService)
         {
             _requirementService = requirementService;
             _categoryService = categoryService;
@@ -44,6 +46,7 @@ namespace Documaster.Ui.Controllers
             _templateService = templateService;
             _projectTemplateService = projectTemplateService;
             _replacePlaceholderService = replacePlaceholderService;
+            _noteService = noteService;
         }
 
         [HttpGet]
@@ -195,29 +198,27 @@ namespace Documaster.Ui.Controllers
         }
 
         [HttpGet]
-        public ActionResult Notes(int projectId)
+        public ActionResult Notes(int projectId, int customizeTabId)
         {
-            var project = _projectService.Get(projectId);
-            if (project == null)
-            {
-                return HttpNotFound();
-            }
-            return PartialView("_ProjectNotes", project);
+            var note = _noteService.Get(projectId, customizeTabId);
+            return PartialView("_ProjectNotes", note);
         }
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Notes(int id, string notes)
+        public ActionResult Notes(int projectId, int customizeTabId, string text)
         {
-            var project = _projectService.Get(id);
-            if (project == null)
+            var note = _noteService.Get(projectId, customizeTabId);
+            if(note == null)
             {
-                return HttpNotFound();
+                _noteService.CreateNote(projectId, customizeTabId, text);
             }
-
-            project.Notes = notes;
-            _projectService.UpdateNotes(project);
-            return RedirectToAction("CustomerProject", new { projectId = id });
+            else
+            {
+                note.Text = text;
+                _noteService.UpdateNotes(note);
+            }
+            return RedirectToAction("CustomerProject", new { projectId });
         }
 
         [HttpPost]

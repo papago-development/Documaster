@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Documaster.Model.Entities;
 using Newtonsoft.Json;
 
@@ -65,6 +62,8 @@ namespace Documaster.Business.Services
                             return project.Name;
                         case "Number":
                             return project.Number;
+                        case "Address":
+                            return project.Address;
                         default:
                             return String.Empty ;
                     }

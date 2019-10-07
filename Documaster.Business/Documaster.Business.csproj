@@ -128,6 +128,7 @@
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\GenericRepository.cs" />
     <Compile Include="Services\ICategoryService.cs" />
+    <Compile Include="Services\INoteService.cs" />
     <Compile Include="Services\IProjectTemplateService.cs" />
     <Compile Include="Services\IReplacePlaceholderService.cs" />
     <Compile Include="Services\ISecurityService.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Services\IProjectService.cs" />
     <Compile Include="Services\IProjectRequirementService.cs" />
     <Compile Include="Services\IRequirementService.cs" />
+    <Compile Include="Services\NoteService.cs" />
     <Compile Include="Services\OutputDocumentService.cs" />
     <Compile Include="Services\ProjectTemplateService.cs" />
     <Compile Include="Services\ReplacePlaceholderService.cs" />

@@ -1,10 +1,6 @@
 ﻿using Documaster.Business.Services;
 using Documaster.Model.Entities;
 using Rotativa;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Documaster.Ui.Controllers

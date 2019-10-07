@@ -59,5 +59,6 @@ namespace Documaster.Data.DataAccess
         public IDbSet<UserProfile> UserProfiles { get; set; }
         public IDbSet<CustomizeTab> CustomizeTabs { get; set; }
         public IDbSet<ProjectTemplate> projectTemplates { get; set; }
+        public IDbSet<Note> Notes { get; set; }
     }
 }

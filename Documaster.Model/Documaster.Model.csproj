@@ -79,6 +79,7 @@
     <Compile Include="Entities\ProjectStatus.cs" />
     <Compile Include="Entities\CustomizeTab.cs" />
     <Compile Include="Entities\LogMessage.cs" />
+    <Compile Include="Entities\Note.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -318,3 +318,44 @@ CREATE UNIQUE NONCLUSTERED INDEX UX_ProjectTemplate_ProjectId_Name
 	ON dbo.ProjectTemplate (ProjectId, [Name])
 GO
 
+-- Add tabel Notes --
+CREATE TABLE dbo.Notes (
+   Id INT IDENTITY(1, 1) NOT NULL,
+   CustomizeTabId INT NOT NULL,
+   ProjectId INT NOT NULL,
+   [Text] NVARCHAR(MAX),
+   CreationDate DATETIME NOT NULL,
+   LastUpdate DATETIME NOT NULL
+)
+GO
+
+ALTER TABLE dbo.Notes 
+     ADD CONSTRAINT PK_Notes
+     PRIMARY KEY CLUSTERED(Id)
+GO
+
+ALTER TABLE dbo.Notes WITH CHECK
+    ADD CONSTRAINT FK_Notes_ProjectId_Project_Id
+    FOREIGN KEY (ProjectId)
+    REFERENCES dbo.Project(Id)
+    ON DELETE CASCADE
+GO
+
+ALTER TABLE dbo.Notes
+    CHECK CONSTRAINT FK_Notes_ProjectId_Project_Id
+GO
+
+ALTER TABLE dbo.Notes WITH CHECK
+    ADD CONSTRAINT FK_Notes_CustomizeTabId_CustomizeTab_Id
+    FOREIGN KEY (CustomizeTabId)
+    REFERENCES dbo.CustomizeTab (Id)
+    ON DELETE CASCADE
+GO
+
+CREATE UNIQUE NONCLUSTERED INDEX UX_Notes_CustomizeTabId_ProjectId
+    ON dbo.Notes (CustomizeTabId, ProjectId)
+GO
+
+ALTER TABLE dbo.Project
+	ADD [Address] NVARCHAR(256) NOT NULL
+GO
