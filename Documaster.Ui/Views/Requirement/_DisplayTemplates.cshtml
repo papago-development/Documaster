@@ -3,15 +3,14 @@
         var projectId = (object)ViewBag.ProjectId;
         var customizeTabId = (object)ViewBag.CustomizeTabId;
         var baseUrl = Url.Content("~");
+        Layout = "~/Views/Shared/_Layout.cshtml";
     }
-
-    @Scripts.Render("~/bundles/jqueryval")
-
 
     <script src="~/Scripts/Documaster/ReloadTabs.js"></script>
     <script src="~/Scripts/Documaster/ProjectDocument.js"></script>
-    <div class="container">
-        @Ajax.ActionLink("Adauga", "Create", "ProjectTemplate", new { projectId, customizeTabId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn  btn-primary" })
+
+    <div class="displayContent">
+        @Ajax.ActionLink("Creaza document dintr-un sablon", "Create", "ProjectTemplate", new { projectId, customizeTabId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "myModal", OnSuccess = "showModalDialog()" }, new { @class = "button btn  btn-primary" })
         @foreach (var item in Model)
         {
             var href = baseUrl + "Requirement/ExportWord?projectId=" + projectId + "&name=" + item.Name;

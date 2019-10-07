@@ -1,4 +1,4 @@
-﻿@model Documaster.Model.Entities.Project
+﻿@model Documaster.Model.Entities.Note
 
 <link href="~/Content/summernote/summernote.css" rel="stylesheet" />
 
@@ -7,16 +7,18 @@
 @using (Html.BeginForm("Notes", "Requirement", FormMethod.Post))
 {
     <div class="form-horizontal">
-        @Html.TextAreaFor(x => x.Notes, new { id = "project-notes" })
+        @Html.TextAreaFor(x => x.Text, new { id = "project-notes" })
     </div>
-    @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.ProjectId, new { id = "projectId" })
+    @Html.HiddenFor(x => x.CustomizeTabId, new { id = "customizeTabId" })
     <div class="form-horizontal">
         <input type="submit" value="Salveaza" class="btn btn-default" />
     </div>
 }
 
 <script>
-$(document).ready(function () {
+    $(document).ready(function () {
+
         $("#project-notes").summernote({
             height: 500,
             toolbar: [
@@ -32,4 +34,4 @@ $(document).ready(function () {
             ]
         });
     });
-    </script>
+</script>

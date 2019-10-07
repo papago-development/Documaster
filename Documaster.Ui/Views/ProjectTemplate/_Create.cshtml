@@ -3,10 +3,7 @@
 
 @{
     var projectId = ViewBag.ProjectId;
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-@Scripts.Render("~/bundles/jqueryval")
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
 
 <div class="modal-dialog">
     <div class="modal-content">
@@ -25,6 +22,12 @@
                 <div class="form-horizontal">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
+                        @Html.LabelFor(model => model.Text, "Sablon", new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("TemplateId", new SelectList(ViewBag.Templates, "Id", "Name"), "Selecteaza sablon", new { @class = "form-control", id = "templateId" })
+                        </div>
+                    </div>
+                    <div class="form-group">
                         @Html.LabelFor(model => model.Name, "Nume", new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", id = "docName" }, autocomplete = "off" })
@@ -32,15 +35,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Text, "Sablon", new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownList("TemplateId", new SelectList(ViewBag.Templates, "Id", "Name"), new { @class = "form-control", id = "templateId" })
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <div class="col-md-offset-2 col-md-5">
 
-                            <a class="btn btn-primary" id="saveProjectTemplate" onclick="saveProjectTemplate()">Salveaza</a>
+                            <a class="btn btn-primary" data-dismiss="modal" id="saveProjectTemplate" onclick="saveProjectTemplate()">Salveaza</a>
                         </div>
                     </div>
                 </div>
@@ -61,12 +58,14 @@
 
         $.post(url, { projectId, templateId, name})
             .done(function() {
-                $("#myModal").modal("hide");
                 reloadTabs.reloadCurrentTab();
         });
     };
 
-    $('.modal-dialog').change(function () {
-        $.validator.unobtrusive.parse("#createForm");
+    $(document).ready(function() {
+        $("#templateId").change(function () {
+            $('#docName').val($(this).find(':selected').text());
+            console.log("#docName");
+        });
     });
 </script>
